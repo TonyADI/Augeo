@@ -1,10 +1,16 @@
 # Augeo
 Augeo is latin for enlarge/expand.
-The basis of the application is to allow users create products which other users can then bid on. 
+
+The basis of the application is to allow users create products which other users can then bid on.
+
 All the products in a category are assumed to be new and of the same model and type. No discrenpancies are allowed.
+
 The products also have a duration which gives a sense of urgency to the whole thing.
-The project is a long way from being complete but I would say there is some basic functionality in it. 
+
+The project is a long way from being complete but I would say there is some basic functionality in it.
+
 The platform is supposed to be somewhat similar to a free market seeing as the users control the price of each category.
+
 I do not intend to make this an actual platform/website rather I am using it as a learning experience and a place to hone my skills.
 
 ## Current Functionalities
