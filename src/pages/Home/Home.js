@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ProductList } from '../ProductList/ProductList';
+import { ProductList } from '../../components/ProductList/ProductList';
 import { retrieveData } from '../../utilities/projectAPI';
 import './Home.css'
 

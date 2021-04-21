@@ -28,7 +28,7 @@
 
 .product-carousel .track{
     display: inline-flex;
-    transition: transform 0.1s;
+    transition: transform 0.5s;
     padding-bottom: 10px;
 }
 

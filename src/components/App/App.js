@@ -14,7 +14,7 @@ import './App.css';
 
 
 const App = () => {
-  const [authenticated, setAuthenticated] = useState(true);
+  const [authenticated, setAuthenticated] = useState(false);
   const verifyAuthentication = () => {
     retrieveData('https://localhost:3000/verify-authentication').then(data => {
       if(data){

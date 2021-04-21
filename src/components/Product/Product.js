@@ -142,8 +142,6 @@ export const Product = props => {
         }
     }
 
-    
-
     useEffect(()=> {
         const durationFunction = () => {
             const now = new Date().getTime();
@@ -175,11 +173,13 @@ export const Product = props => {
         handleTimeout();
     }, [seconds])
 
+    /* currently unavailable because it might inhibit performance
     useEffect(() => {
         if((minutes < 5) && (hours === 0) && (days === 0)){
             setTimer('timer');
         }
     }, [minutes])
+    */
 
     useEffect(() => {
         handleImageChange();

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
-import { Category } from '../Category/Category';
-import { CategoryList } from '../CategoryList/CategoryList';
-import { Product } from '../Product/Product';
-import { SearchBar } from '../SearchBar/SearchBar';
+import { Category } from '../../components/Category/Category';
+import { CategoryList } from '../../components/CategoryList/CategoryList';
+import { Product } from '../../components/Product/Product';
+import { SearchBar } from '../../components/SearchBar/SearchBar';
 import { createData, retrieveData } from '../../utilities/projectAPI';
 import 'react-notifications/lib/notifications.css';
 import './Sell.css';

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
-import { ProductList } from '../ProductList/ProductList';
+import { ProductList } from '../../components/ProductList/ProductList';
 import { deleteData, retrieveData, updateData, createData } from '../../utilities/projectAPI';
 import './Account.css';
 

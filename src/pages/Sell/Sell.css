@@ -25,6 +25,7 @@
     background-color: rgba(0,0,0,0.3);
     z-index: 1;
     padding-bottom: 200px;
+    animation: fade-down 0.5s forwards;
 }
 
 #sample-flex{

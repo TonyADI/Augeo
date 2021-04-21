@@ -1,15 +1,15 @@
   .account-container{
     position: relative;
+    margin: 50px;
 }
 
 .accmenu-container{
     border-radius: 5px;
-    box-shadow: 2px 2px 10px rgb(235, 235, 235);
-    margin: 20px;
+    box-shadow: 0px 1px 5px rgb(235, 235, 235);
+    margin: 40px 20px;
     text-align: left;
-    padding: 0.5px 20px 20px 20px;
+    padding: 0.5px 20px 20px;
     position: relative;
-    font-size: 20px;
 }
 
 #password-modal{
@@ -24,6 +24,7 @@
     overflow: auto;
     background-color: #555;
     background-color: rgba(0,0,0,0.1);
+    animation: fade-down 0.5s forwards;
   }
   
 .password-container {
@@ -51,7 +52,7 @@
 }
 
 .account-container .email{
-    margin-left: 60px !important;
+    margin-left: 50px !important;
 }
 
 .account-container .edit-container{
@@ -81,4 +82,4 @@
 .account-container .sign-out{
       position: absolute;
       right: 20px;
-  }
+}

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { CategoryList } from '../CategoryList/CategoryList';
-import { ProductList } from '../ProductList/ProductList';
+import { CategoryList } from '../../components/CategoryList/CategoryList';
+import { ProductList } from '../../components/ProductList/ProductList';
 import { retrieveData } from '../../utilities/projectAPI';
 import './Browse.css';
 

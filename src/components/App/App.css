@@ -1,11 +1,16 @@
 #app-body{
   font-family: Segoe UI,SegoeUI,"Helvetica Neue",Helvetica,Arial,sans-serif;
   text-align: center;
-  margin: auto 60px;
+  max-width: 1400px; /* added this */
+  margin: auto; /* was formerly auto 60px */
 }
 
 html {
   overflow-y: scroll;
+}
+
+h1, h2, h3, h4 {
+  font-weight: 400;
 }
 
 .full-width{
@@ -117,7 +122,16 @@ button:hover{
 
 .large-text{
   font-size: 35px;
-  font-weight: 600;
+}
+
+@keyframes fade-down{
+  from {transform: translateY(-75px);}
+  to {transform: translateY(0);}
+}
+
+@keyframes drop-down {
+  from {opacity: 0; transform: translateY(-50px);}
+  to {opacity: 1; transform: translateY(0);} 
 }
 
 @media only screen and (max-width: 768px) {

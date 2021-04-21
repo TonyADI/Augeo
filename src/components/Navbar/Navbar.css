@@ -4,6 +4,7 @@ ul {
   padding: 0;
   overflow: hidden;
   background-color: #fff;
+  border-bottom: 0.5px solid #ccc; /* added this */
 }
 
 li {
@@ -40,5 +41,5 @@ li a:hover:not(.active) {
 
 #nav-container {
   margin: auto 100px;
-  height: 65px;
+  height: 62.5px;
 }
