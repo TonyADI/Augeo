@@ -1,0 +1,35 @@
+{
+  "files": {
+    "main.css": "/apps/augeo/static/css/main.2feb4803.chunk.css",
+    "main.js": "/apps/augeo/static/js/main.e203a05e.chunk.js",
+    "main.js.map": "/apps/augeo/static/js/main.e203a05e.chunk.js.map",
+    "runtime-main.js": "/apps/augeo/static/js/runtime-main.22a91fef.js",
+    "runtime-main.js.map": "/apps/augeo/static/js/runtime-main.22a91fef.js.map",
+    "static/css/2.b184d97a.chunk.css": "/apps/augeo/static/css/2.b184d97a.chunk.css",
+    "static/js/2.0f0770ef.chunk.js": "/apps/augeo/static/js/2.0f0770ef.chunk.js",
+    "static/js/2.0f0770ef.chunk.js.map": "/apps/augeo/static/js/2.0f0770ef.chunk.js.map",
+    "static/js/3.f695c790.chunk.js": "/apps/augeo/static/js/3.f695c790.chunk.js",
+    "static/js/3.f695c790.chunk.js.map": "/apps/augeo/static/js/3.f695c790.chunk.js.map",
+    "index.html": "/apps/augeo/index.html",
+    "static/css/2.b184d97a.chunk.css.map": "/apps/augeo/static/css/2.b184d97a.chunk.css.map",
+    "static/css/main.2feb4803.chunk.css.map": "/apps/augeo/static/css/main.2feb4803.chunk.css.map",
+    "static/js/2.0f0770ef.chunk.js.LICENSE.txt": "/apps/augeo/static/js/2.0f0770ef.chunk.js.LICENSE.txt",
+    "static/media/NotFound.css": "/apps/augeo/static/media/404.a6b92039.jpg",
+    "static/media/Home.css": "/apps/augeo/static/media/image2.7e3029a7.jfif",
+    "static/media/bid.9ce01a89.png": "/apps/augeo/static/media/bid.9ce01a89.png",
+    "static/media/gshock.86944fdb.jfif": "/apps/augeo/static/media/gshock.86944fdb.jfif",
+    "static/media/image-error.3a94e212.png": "/apps/augeo/static/media/image-error.3a94e212.png",
+    "static/media/notifications.css": "/apps/augeo/static/media/notification.c5d9251e.ttf",
+    "static/media/product.f7ca1dc6.png": "/apps/augeo/static/media/product.f7ca1dc6.png",
+    "static/media/running.2a8b9725.svg": "/apps/augeo/static/media/running.2a8b9725.svg",
+    "static/media/sell-form.b07873b9.png": "/apps/augeo/static/media/sell-form.b07873b9.png",
+    "static/media/Landing.css": "/apps/augeo/static/media/test.a7d26820.jfif"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.22a91fef.js",
+    "static/css/2.b184d97a.chunk.css",
+    "static/js/2.0f0770ef.chunk.js",
+    "static/css/main.2feb4803.chunk.css",
+    "static/js/main.e203a05e.chunk.js"
+  ]
+}
