@@ -36,4 +36,4 @@ I do not intend to make this an actual platform/website rather I am using it as 
 - A minimum and maximum constraint will be placed on the product prices.
 
 ## ERD Image
-![plot](./src/backend/ERD image.png)
+![ERD Image](https://github.com/TonyADI/Augeo/blob/main/src/backend/ERD%20Image.png?raw=true)
