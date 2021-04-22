@@ -34,3 +34,6 @@ I do not intend to make this an actual platform/website rather I am using it as 
 - Delete expired bid records upon the users request.
 - A robust search functionality for a product list.
 - A minimum and maximum constraint will be placed on the product prices.
+
+## ERD Image
+![plot](./src/backend/ERD image.png)
