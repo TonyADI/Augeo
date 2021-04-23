@@ -1,6 +1,6 @@
 export const createData = async (url, data) => {
     try{
-        let response = await fetch(url, {method: 'POST', 
+        let response = await fetch(url, {method: 'POST', credentials: 'include',
         headers:{'Content-type': 'application/json'}, body: JSON.stringify(data)});
         if(response.ok){
             if(response.status === 201){
@@ -30,7 +30,15 @@ export const createData = async (url, data) => {
 
 export const retrieveData = async (url) => {
     try{
-        let response = await fetch(url);
+        let response = await fetch(url, {
+            method: "GET",
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+              'Cache': 'no-cache'
+            },
+            credentials: 'include'
+          });
         if(response.ok){
             let jsonResponse = await response.json();
             return jsonResponse;
@@ -44,7 +52,7 @@ export const retrieveData = async (url) => {
 
 export const updateData = async (url, data) => {
     try{
-        let response = await fetch(url, {method: 'PUT', 
+        let response = await fetch(url, {method: 'PUT', credentials: 'include',
         headers:{'Content-type': 'application/json'}, body: JSON.stringify(data)});
         if(response.ok){
             console.log('Connection worked, PUT worked');
@@ -62,7 +70,8 @@ export const updateData = async (url, data) => {
 
 export const deleteData = async (url, data = []) => {
     try{
-        let response = await fetch(url, {method: 'DELETE', headers: {
+        let response = await fetch(url, {method: 'DELETE', credentials: 'include',
+        headers: {
             'Content-Type': 'application/json'
           }, body: JSON.stringify(data)});
         if(response.ok){
