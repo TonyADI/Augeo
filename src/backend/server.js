@@ -1,9 +1,8 @@
-const https = require('https');
-const fs = require('fs');
 const express = require('express');
 const mysql = require('mysql');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const app = express();
@@ -11,7 +10,7 @@ const app = express();
 const connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: '',
+    password: 'Roman618!',
     database: 'database',
     port: 3307
   });
@@ -30,7 +29,17 @@ app.use(bodyParser.json());
 // parse cookies from request
 app.use(cookieParser());
 
-const accessTokenSecret = '';
+app.use(cors({credentials: true, origin: 'http://localhost:3001'}));
+
+const accessTokenSecret = 'c7ba8766ee42ae68303d1e3cff5ea649';
+
+app.use(function(req, res, next) {  
+    res.header('Access-Control-Allow-Origin', 'http://localhost:3001');
+    res.header('Access-Control-Allow-Credentials', true);
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,UPDATE,OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept');
+    next();
+});  
 
 // Initialize the req.user variable
 app.use((req, res, next) => {
@@ -43,7 +52,7 @@ app.use((req, res, next) => {
         catch(error){
             console.log(error);
             // Assuming jwt has expired
-            res.clearCookie('AccessToken');
+            res.clearCookie('AccessToken', {domain: 'http://localhost:3001', path: '/'});
         }
 
     }
@@ -128,7 +137,7 @@ app.post('/users/session', (req, res) => {
                 if(result.length){
                     console.log('Account found, password verification successful'); 
                     const accessToken = jwt.sign({id: result[0].id}, accessTokenSecret, {expiresIn: '24h'});
-                    res.cookie('AccessToken', accessToken);
+                    res.cookie('AccessToken', accessToken, {secure:true, sameSite: 'None'});
                     res.sendStatus(204);
                 }
                 else{
@@ -263,7 +272,7 @@ app.put('/users/password', checkAuth, (req, res) => {
 
 // Logout the user
 app.delete('/users/session', checkAuth, (req, res) => {
-    res.clearCookie('AccessToken');
+    res.clearCookie('AccessToken', {domain: 'http://localhost:3001', path: '/'});
     console.log('Session has been terminated.')
     res.sendStatus(204);
 })
@@ -472,8 +481,4 @@ app.get('/categories', (req, res) => {
 })
 
 
-https.createServer({
-    key: fs.readFileSync('../project/src/backend/key.pem'),
-    cert: fs.readFileSync('../project/src/backend/cert.pem'),
-    passphrase: ''
-}, app).listen(3000);
+app.listen(3000);
