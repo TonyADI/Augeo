@@ -1,24 +1,25 @@
 {
   "files": {
-    "main.css": "/augeo/static/css/main.3cdbae81.chunk.css",
-    "main.js": "/augeo/static/js/main.3e16c92a.chunk.js",
-    "main.js.map": "/augeo/static/js/main.3e16c92a.chunk.js.map",
-    "runtime-main.js": "/augeo/static/js/runtime-main.9414dfd5.js",
-    "runtime-main.js.map": "/augeo/static/js/runtime-main.9414dfd5.js.map",
+    "main.css": "/augeo/static/css/main.4164f56e.chunk.css",
+    "main.js": "/augeo/static/js/main.60540cf3.chunk.js",
+    "main.js.map": "/augeo/static/js/main.60540cf3.chunk.js.map",
+    "runtime-main.js": "/augeo/static/js/runtime-main.d5896625.js",
+    "runtime-main.js.map": "/augeo/static/js/runtime-main.d5896625.js.map",
     "static/css/2.5a615b71.chunk.css": "/augeo/static/css/2.5a615b71.chunk.css",
-    "static/js/2.0f0770ef.chunk.js": "/augeo/static/js/2.0f0770ef.chunk.js",
-    "static/js/2.0f0770ef.chunk.js.map": "/augeo/static/js/2.0f0770ef.chunk.js.map",
-    "static/js/3.f695c790.chunk.js": "/augeo/static/js/3.f695c790.chunk.js",
-    "static/js/3.f695c790.chunk.js.map": "/augeo/static/js/3.f695c790.chunk.js.map",
+    "static/js/2.33ad1f7c.chunk.js": "/augeo/static/js/2.33ad1f7c.chunk.js",
+    "static/js/2.33ad1f7c.chunk.js.map": "/augeo/static/js/2.33ad1f7c.chunk.js.map",
+    "static/js/3.274ef7de.chunk.js": "/augeo/static/js/3.274ef7de.chunk.js",
+    "static/js/3.274ef7de.chunk.js.map": "/augeo/static/js/3.274ef7de.chunk.js.map",
     "index.html": "/augeo/index.html",
     "static/css/2.5a615b71.chunk.css.map": "/augeo/static/css/2.5a615b71.chunk.css.map",
-    "static/css/main.3cdbae81.chunk.css.map": "/augeo/static/css/main.3cdbae81.chunk.css.map",
-    "static/js/2.0f0770ef.chunk.js.LICENSE.txt": "/augeo/static/js/2.0f0770ef.chunk.js.LICENSE.txt",
+    "static/css/main.4164f56e.chunk.css.map": "/augeo/static/css/main.4164f56e.chunk.css.map",
+    "static/js/2.33ad1f7c.chunk.js.LICENSE.txt": "/augeo/static/js/2.33ad1f7c.chunk.js.LICENSE.txt",
     "static/media/NotFound.css": "/augeo/static/media/404.a6b92039.jpg",
     "static/media/Home.css": "/augeo/static/media/image2.7e3029a7.jfif",
     "static/media/bid.9ce01a89.png": "/augeo/static/media/bid.9ce01a89.png",
     "static/media/gshock.86944fdb.jfif": "/augeo/static/media/gshock.86944fdb.jfif",
     "static/media/image-error.3a94e212.png": "/augeo/static/media/image-error.3a94e212.png",
+    "static/media/logo-transparent.e36dff0a.svg": "/augeo/static/media/logo-transparent.e36dff0a.svg",
     "static/media/notifications.css": "/augeo/static/media/notification.c5d9251e.ttf",
     "static/media/product.f7ca1dc6.png": "/augeo/static/media/product.f7ca1dc6.png",
     "static/media/running.2a8b9725.svg": "/augeo/static/media/running.2a8b9725.svg",
@@ -26,10 +27,10 @@
     "static/media/Landing.css": "/augeo/static/media/test.a7d26820.jfif"
   },
   "entrypoints": [
-    "static/js/runtime-main.9414dfd5.js",
+    "static/js/runtime-main.d5896625.js",
     "static/css/2.5a615b71.chunk.css",
-    "static/js/2.0f0770ef.chunk.js",
-    "static/css/main.3cdbae81.chunk.css",
-    "static/js/main.3e16c92a.chunk.js"
+    "static/js/2.33ad1f7c.chunk.js",
+    "static/css/main.4164f56e.chunk.css",
+    "static/js/main.60540cf3.chunk.js"
   ]
 }
