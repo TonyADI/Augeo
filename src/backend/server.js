@@ -29,12 +29,12 @@ app.use(bodyParser.json());
 // parse cookies from request
 app.use(cookieParser());
 
-app.use(cors({credentials: true, origin: 'http://localhost:3001'}));
+app.use(cors({credentials: true, origin: 'https://tonyadi.github.io'}));
 
 const accessTokenSecret = 'c7ba8766ee42ae68303d1e3cff5ea649';
 
-app.use(function(req, res, next) {  
-    res.header('Access-Control-Allow-Origin', 'http://localhost:3001');
+app.use(function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', 'https://tonyadi.github.io');
     res.header('Access-Control-Allow-Credentials', true);
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,UPDATE,OPTIONS');
     res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept');
@@ -52,7 +52,7 @@ app.use((req, res, next) => {
         catch(error){
             console.log(error);
             // Assuming jwt has expired
-            res.clearCookie('AccessToken', {domain: 'http://localhost:3001', path: '/'});
+            res.cookie('AccessToken', '', {secure:true, sameSite: 'None'});
         }
 
     }
@@ -106,7 +106,7 @@ app.post('/users', (req, res) => {
                 else{
                     console.log('Account Created');
                     const accessToken = jwt.sign({id: result.insertId}, accessTokenSecret, {expiresIn: '24h'});
-                    res.cookie('AccessToken', accessToken);
+                    res.cookie('AccessToken', accessToken, {secure:true, sameSite: 'None'});
                     res.sendStatus(201);
                 }
             });
@@ -202,7 +202,7 @@ app.get('/users/products', checkAuth, (req, res) => {
             break;
         case 'listing':
             // Get the product listings for this account
-            connection.query(`SELECT * FROM PRODUCT WHERE user_id = ? ORDER BY sold, duration;`, [req.user],
+            connection.query(`SELECT * FROM PRODUCT WHERE user_id = ? ORDER BY id desc, duration;`, [req.user],
              (error, result) => {
                 if (error) throw error;
                 if(result.length){
@@ -272,7 +272,8 @@ app.put('/users/password', checkAuth, (req, res) => {
 
 // Logout the user
 app.delete('/users/session', checkAuth, (req, res) => {
-    res.clearCookie('AccessToken', {domain: 'http://localhost:3001', path: '/'});
+    // Current fix as clearCookie was not working
+    res.cookie('AccessToken', '', {secure:true, sameSite: 'None'});
     console.log('Session has been terminated.')
     res.sendStatus(204);
 })
