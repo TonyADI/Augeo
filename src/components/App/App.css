@@ -1,8 +1,8 @@
 #app-body{
   font-family: Segoe UI,SegoeUI,"Helvetica Neue",Helvetica,Arial,sans-serif;
   text-align: center;
-  max-width: 1400px; /* added this */
-  margin: auto; /* was formerly auto 60px */
+  max-width: 1400px;
+  margin: auto;
 }
 
 html {
@@ -11,31 +11,6 @@ html {
 
 h1, h2, h3, h4 {
   font-weight: 400;
-}
-
-.full-width{
-  width: 98.9vw; /* fix? */
-  left: -60px; /* fix? */
-  position: relative;
-}
-
-.jumbo{
-  background-image: url('https://images.unsplash.com/photo-1513151233558-d860c5398176?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=2100&q=80');
-  background-size: cover;
-  height: 80vh;
-}
-
-.browse-jumbo{
-  background-image: url('https://images.unsplash.com/photo-1508341421810-36b8fc06075b?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=2134&q=80');
-}
-
-.jumbo-header{
-  padding-top: 50vh;
-  color: #fff;
-  margin: auto;
-  text-align: center;
-  font-size: 100px;
-  opacity: 0.6;
 }
 
 .inline-display{
@@ -63,7 +38,7 @@ h1, h2, h3, h4 {
 }
 
 .button{
-  background-color: #000;
+  background-color: #050F19;
   color: #fff;
   border-style: none;
   border-radius: 5px;
@@ -115,9 +90,9 @@ button:hover{
   font-size: 40px;
 }
 
-.large-text-container{
+.greeting-container{
   width: 70%;
-  margin: 100px auto;
+  margin: 0px auto;
 }
 
 .large-text{
@@ -137,6 +112,55 @@ button:hover{
 @media only screen and (max-width: 768px) {
   .large-text{
     font-size: 25px;
+  }#nav-container li:not(.mobile-menu-item){
+    display: none;
+  }
+  #nav-container #home{
+    left: 10px;
+  }
+  #nav-container #burger, #nav-container #logo{
+    display: block;
+  }
+  .jumbo-header{
+    font-size: 2.1em;
+    padding: 3em 0.5em 0;
+  }
+  .home-container .greeting-container .jumbo-info{
+    font-size: 13px;
+    line-height: 1.5;
+    margin: auto 10px;
+  }
+  .greeting-container{
+    width: 100% !important;
+  }
+  .greeting-container .button{
+    margin: auto 10px;
+    font-size: 13px;
+  }
+  .home-container .jumbo{
+    height: 60vh;
+  }
+  .home-container .banner-container{
+    min-height: auto;
+  }
+  .banner-container .collection-text{
+    font-size: 22px;
+  }
+  .banner-container .button {
+    padding: 15px 20px;
+    font-size: 13px;
+  }
+  #sell-body #searchbar-heading{
+    margin-top: 20vh;
+  }
+  #sell-body #search-bar{
+    width: auto;
+  }
+  .account-container .email {
+    margin-left: 10px;
+  }
+  #footer{
+    font-size: 13px;
   }
 }
 
@@ -150,4 +174,17 @@ button:hover{
   .large-text{
     font-size: 15px;
   }
+}
+
+@media only screen and (min-width: 1400px){
+  .full-width{
+    width: 98.9vw;
+    left: -60px;
+    position: relative;
+  }
+}
+
+
+.button{
+  transition: background-color 0.5s;
 }
