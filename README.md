@@ -41,4 +41,4 @@ I do not intend to make this an actual platform/website rather I am using it as 
 ## ToDo
 - Add cookie policy page.
 - Add Api Documentation.
-- Optimize for mobile.
+- <s>Optimize for mobile.</s>
