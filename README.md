@@ -39,7 +39,22 @@ I do not intend to make this an actual platform/website rather I am using it as 
 ## ERD Image
 ![ERD Image](https://github.com/TonyADI/Augeo/blob/main/src/backend/ERD%20Image.png?raw=true)
 
+## API Documentation
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Type</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>Jill</td>
+    <td>Smith</td>
+    <td>50</td>
+  </tr>
+</table>
+
 ## ToDo
 - Add cookie policy page.
 - Add Api Documentation.
 - <s>Optimize for mobile.</s>
+- Integrate React Redux.
