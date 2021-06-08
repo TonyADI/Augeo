@@ -47,9 +47,9 @@ I do not intend to make this an actual platform/website rather I am using it as 
     <th>Description</th>
   </tr>
   <tr>
-    <td>Jill</td>
-    <td>Smith</td>
-    <td>50</td>
+    <td>Category</td>
+    <td>String</td>
+    <td>Returns a list of products with the specified category name.</td>
   </tr>
 </table>
 
