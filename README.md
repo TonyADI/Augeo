@@ -1,6 +1,4 @@
 # Augeo
-Augeo is latin for enlarge/expand.
-
 The basis of the application is to allow users create products which other users can then bid on.
 
 All the products in a category are assumed to be new and of the same model and type. No discrenpancies are allowed.
@@ -11,7 +9,7 @@ The project is a long way from being complete but I would say there is some basi
 
 The platform is supposed to be somewhat similar to a free market seeing as the users control the price of each category.
 
-I do not intend to make this an actual platform/website rather I am using it as a learning experience and a place to hone my skills.
+I do not intend to make this an actual platform/website but rather to use it as a learning experience and a place to hone my skills and bring together all the technologies I have learnt.
 
 ## Current Functionalities
 - Users can currently create an account, login, logout, create a product/listing, bid on products or outright buy them.
@@ -39,7 +37,27 @@ I do not intend to make this an actual platform/website rather I am using it as 
 ## ERD Image
 ![ERD Image](https://github.com/TonyADI/Augeo/blob/main/src/backend/ERD%20Image.png?raw=true)
 
+## API Documentation
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Type</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>Category</td>
+    <td>String</td>
+    <td>Returns a list of products with the specified category name.</td>
+  </tr>
+  <tr>
+    <td>Category</td>
+    <td>String</td>
+    <td>Returns a list of products with the specified category name.</td>
+  </tr>
+</table>
+
 ## ToDo
 - Add cookie policy page.
 - Add Api Documentation.
 - <s>Optimize for mobile.</s>
+- Integrate React Redux.
