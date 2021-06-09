@@ -12,10 +12,6 @@
     animation: drop-down 0.5s forwards;
 }
 
-#authenticate-container .button{
-    transition: background-color 0.5s;
-}
-
 #authenticate-container .input-container{
     position: relative;
 }

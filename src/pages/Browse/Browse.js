@@ -10,13 +10,13 @@ export const Browse = props => {
     const [products, setProducts] = useState([]);
     
     const retrieveCategories = () => {
-        retrieveData('https://localhost:3000/categories').then(data => {
+        retrieveData('https://tonyadi.loca.lt/categories').then(data => {
             setCategories(data);
         })
     }
 
     const retrieveProducts = name => {
-        retrieveData(`https://localhost:3000/categories/${encodeURI(name)}/products`).then(data => {
+        retrieveData(`https://tonyadi.loca.lt/categories/${encodeURI(name)}/products`).then(data => {
             setProducts(data)});
     }
 

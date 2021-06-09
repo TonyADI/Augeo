@@ -16,7 +16,7 @@ import './App.css';
 const App = () => {
   const [authenticated, setAuthenticated] = useState(false);
   const verifyAuthentication = () => {
-    retrieveData('https://localhost:3000/verify-authentication').then(data => {
+    retrieveData('https://tonyadi.loca.lt/verify-authentication').then(data => {
       if(data){
         setAuthenticated(true);
       }
@@ -28,7 +28,7 @@ const App = () => {
   }, []);
   
   return (
-    <Router>
+    <Router basename={process.env.PUBLIC_URL}>
       <div id="app-body">
         <Navbar authenticated={authenticated}/>
         <Switch>

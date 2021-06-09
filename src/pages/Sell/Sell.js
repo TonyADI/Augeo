@@ -18,7 +18,7 @@ export const Sell = props => {
     const [display, setDisplay] = useState('none');
 
     const retrieveCategories = () => {
-        retrieveData('https://localhost:3000/categories').then(data => {
+        retrieveData('https://tonyadi.loca.lt/categories').then(data => {
             setCategories(data)});
     }
 
@@ -66,7 +66,7 @@ export const Sell = props => {
     const createListing = e => {
         const data = {category: category, buy_now: buyNow,
              initial_ask: initialAsk, duration: duration};
-        createData('https://localhost:3000/products', data).then(value => {
+        createData('https://tonyadi.loca.lt/products', data).then(value => {
             if(value){
                 NotificationManager.success('Listing was created.');
                 //alert('Listing was created.');
@@ -143,7 +143,7 @@ export const Sell = props => {
                                 {!duration && <div className="error-message">Duration needs to be at least an hour</div>}
                             </div>
                             <input  type="submit" style={{cursor: validData ? 'pointer' : 'default', 
-                            backgroundColor: validData ? '#000' : 'grey'}}
+                            backgroundColor: validData ? '#050F19' : 'grey'}}
                             value="List Product" className="button" disabled={!validData}/>
                         </form>
                     </div>

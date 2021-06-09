@@ -1,24 +1,65 @@
-.home-container .aside-container{
-    height: 300px;
+.home-container .banner-container{
+    min-height: 300px;
     width: 90%;
     margin: auto;
-    background-image: url('../../utilities/images/aside-background.jfif');
+    background-image: url('../../utilities/images/banner-background.jfif');
     background-position: center;
     background-size: cover;
+    border: 0;
+    border-radius: 5px;
 }
 
-.aside-container .collection-text{
+.jumbo{
+  background-image: url('../../utilities/images/image2.jfif');
+  background-size: cover;
+  background-position: bottom;
+  height: 80vh;
+  width: 100%;
+  margin-bottom: 100px;
+}
+
+.jumbo-header{
+  padding-top: 30vh;
+  color: #fff;
+  margin: auto;
+  text-align: center;
+  font-size: 60px;
+}
+
+.banner-container .collection-text{
     font-size: 30px;
     font-weight: bolder;
     color: #fff;
     padding: 80px 20px 20px;
 }
 
-.aside-container .button{
+.banner-container .button{
     border: 0px;
     border-radius: 5px;
     padding: 20px;
     font-size: 20px;
     width: auto;
+}
+
+.home-container .jumbo span{
+    margin: 20px auto;
+    color: #fff;
+}
+
+.home-container .jumbo-overlay{
+    position: absolute;
+    height: inherit;
+    width: inherit;
+    background-color: rgba(0, 0, 0, 0.226);
+}
+
+.home-container .greeting-container .jumbo-info{
+    color: #fff;
+}
+
+.home-container .greeting-container .button{
+    width: auto;
+    padding: 15px 25px;
+    margin: 40px 20px;
 
 }

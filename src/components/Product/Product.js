@@ -66,7 +66,7 @@ export const Product = props => {
     const handleTimeout = () => {
         if(hours === 0 && minutes === 0 && seconds === 0){
             if(currentAsk){
-                createData(`https://localhost:3000/products/${props.id}/?action=timeout`, data)
+                createData(`https://tonyadi.loca.lt/products/${props.id}/?action=timeout`, data)
                 .then(value => {
                     if(value){
                         console.log('Product time ran out. Someone won the product.');
@@ -84,23 +84,20 @@ export const Product = props => {
 
     const placeBid = e => {
         if(validAsk > currentAsk && validAsk < props.buyNow){
-            /*
-            createData(`https://localhost:3000/products/${props.id}/?action=bid`, data)
+            createData(`https://tonyadi.loca.lt/products/${props.id}/?action=bid`, data)
             .then(value => {
                if(value){
-                   */
                     console.log('Bid was accepted');
                     setDisplay('none');
                     setCurrentAsk(validAsk);
-               /* }
+                }
                 else{
-                    NotificationManager.warning('Bid could not be placed. Please refresh.')
-                   // alert('Bid could not be placed. Please refresh.');
-                }*/
-           // });
+                   alert('Bid could not be placed. Please refresh.');
+                }
+            });
         }
         else if(validAsk === props.buyNow){
-            createData(`https://localhost:3000/products/${props.id}/?action=sell`, data)
+            createData(`https://tonyadi.loca.lt/products/${props.id}/?action=sell`, data)
             .then(value => {
                 if(value){
                     alert('Congratulations, you just won this item!');

@@ -29,12 +29,12 @@ app.use(bodyParser.json());
 // parse cookies from request
 app.use(cookieParser());
 
-app.use(cors({credentials: true, origin: 'https://tonyadi.github.io'}));
+app.use(cors({credentials: true, origin: 'https://tonyadi.com'}));
 
 const accessTokenSecret = 'c7ba8766ee42ae68303d1e3cff5ea649';
 
 app.use(function(req, res, next) {
-    res.header('Access-Control-Allow-Origin', 'https://tonyadi.github.io');
+    res.header('Access-Control-Allow-Origin', 'https://tonyadi.com');
     res.header('Access-Control-Allow-Credentials', true);
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,UPDATE,OPTIONS');
     res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept');

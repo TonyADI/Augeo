@@ -22,18 +22,20 @@ export const Account = props => {
     const [errorMessage, setErrorMessage] = useState('');
 
     const signOut = () => {
-        deleteData(`https://localhost:3000/users/session`).then(value => {
+        deleteData(`https://tonyadi.loca.lt/users/session`).then(value => {
             if(value){
                 props.setAuthenticated(false);
             }
-            console.log('Logout was unsuccessful.')
+            else{
+                console.log('Logout was unsuccessful.');
+            }
         })
     }
 
     // Not currently in use
     const deleteAccount = e => { 
         const data = {email: email, password: password};
-        deleteData(`https://localhost:3000/users/${props.userId}`, data).then(value => {
+        deleteData(`https://tonyadi.loca.lt/users/${props.userId}`, data).then(value => {
             if(value){
                 signOut();
             }
@@ -58,7 +60,7 @@ export const Account = props => {
         const data = {first_name: firstName, last_name: lastName, email: email};
         if(firstName && lastName){
             if(firstName.match(/^(?:[A-Za-z]+|)$/) && lastName.match(/^(?:[A-Za-z]+|)$/)){
-                updateData('https://localhost:3000/users/details', data).then(value => {
+                updateData('https://tonyadi.loca.lt/users/details', data).then(value => {
                     if(value){
                         NotificationManager.success('Your modifications have been saved!', '', 4000)
                         console.log('Data was modified');
@@ -81,7 +83,7 @@ export const Account = props => {
     const updatePassword = () => {
         const data = {email: email, password: password, new_password: newPassword};
         if(newPassword.length >= 6){
-            updateData(`https://localhost:3000/users/password`, data).then(value => {
+            updateData(`https://tonyadi.loca.lt/users/password`, data).then(value => {
                 if(value){
                     NotificationManager.success('Password successfully changed!')
                     console.log('Password successfully updated.');
@@ -101,7 +103,7 @@ export const Account = props => {
 
     const verifyPassword = () => {
         const data = {email: email, password: password};
-        createData(`https://localhost:3000/users/password`, data).then(value => {
+        createData(`https://tonyadi.loca.lt/users/password`, data).then(value => {
             if(value){
                 NotificationManager.info('Password was good.')
                 console.log('Password was good.')
@@ -130,7 +132,7 @@ export const Account = props => {
                                                                         // Retrieve Data
 
     const retrieveDetails = () => {
-        retrieveData(`https://localhost:3000/users/details`).then(data => {
+        retrieveData(`https://tonyadi.loca.lt/users/details`).then(data => {
             if(data){
                 setFirstName(data.first_name);
                 setLastname(data.last_name);
@@ -140,19 +142,19 @@ export const Account = props => {
     }
 
     const retrieveListings = () => {
-        retrieveData(`https://localhost:3000/users/products?type=listing`).then(data => {
+        retrieveData(`https://tonyadi.loca.lt/users/products?type=listing`).then(data => {
             setListings(data);
         })
     }
 
     const retrieveBids = () => {
-        retrieveData(`https://localhost:3000/users/products?type=bid`).then(data => {
+        retrieveData(`https://tonyadi.loca.lt/users/products?type=bid`).then(data => {
             setBids(data);
         })
     }
 
     const retrievePurchases = () => {
-        retrieveData(`https://localhost:3000/users/products?type=purchase`).then(data => {
+        retrieveData(`https://tonyadi.loca.lt/users/products?type=purchase`).then(data => {
             setPurchases(data);
         })
     }
@@ -257,7 +259,7 @@ export const Account = props => {
                     </div>
                     </form>
                     <div><button className="button" onClick={modifyDetails} disabled={disabled} 
-                    style={{backgroundColor: disabled ? 'grey' : '#000'}}>Save Changes</button></div>
+                    style={{backgroundColor: disabled ? 'grey' : '#050F19'}}>Save Changes</button></div>
                     <div className="edit-container" onClick={() => {setDisabled(false)}}><span><i className="fa fa-pencil"></i>Edit</span></div>
                 </div>
 

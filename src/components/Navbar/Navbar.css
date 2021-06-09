@@ -1,17 +1,22 @@
-ul {
+#nav-container {
+  height: 62.5px;
+  border-bottom: 0.5px solid #ccc;
+}
+
+#nav-container ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
   overflow: hidden;
   background-color: #fff;
-  border-bottom: 0.5px solid #ccc; /* added this */
+  margin: auto 100px;
 }
 
-li {
+#nav-container li {
   float: right;
 }
 
-li a {
+#nav-container li a {
   display: block;
   color: black;
   text-align: center;
@@ -20,17 +25,14 @@ li a {
   border-bottom: 0px;
   transition: border-bottom 0.2s, color 0.2s;
 }
-/*
-li div {
-  margin: 12px 16px;
-}*/
-
 /* make color white? */
-li a:hover:not(.active) {
-  border-bottom: 3px solid #007bff;
+@media only screen and (min-width: 769px){
+  li a:hover:not(.active) {
+    border-bottom: 3px solid #007bff;
+  }
+  
 }
-
-#home{
+#nav-container #home{
   font-size: 24px;
   position: absolute;
   height: 100%;
@@ -39,7 +41,79 @@ li a:hover:not(.active) {
   font-family: Bradley Hand, cursive !important;
 }
 
-#nav-container {
-  margin: auto 100px;
-  height: 62.5px;
+#nav-container #burger{
+  display: none;
+  position: absolute;
+  right: 20px;
+  font-size: 25px;
+  padding: 18px 16px 16px;
+  cursor: pointer;
+}
+
+#nav-container #burger:hover{
+  background-color: #eee;
+}
+
+#nav-container #logo{
+  height: 50px;
+  width: 50px;
+  position: absolute;
+  top: 6px;
+  left: 25px;
+  display: none;
+}
+
+.mobile-menu-container{
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background-color: rgba(221, 221, 221, 0.281);
+  backdrop-filter: blur(3px);
+  display: none;
+  transition: 0.5s;
+}
+
+.mobile-menu{
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 1;
+  height: 100%;
+  width: 70%;
+  background-color: #fff;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.mobile-menu .close-button {
+  position: absolute;
+  top: 20px;
+  right: 25px;
+  font-size: 25px;
+  cursor: pointer;
+}
+
+.mobile-menu ul{
+  list-style-type: none;
+  padding: 0;
+}
+
+.mobile-menu ul li{
+  padding: 8px 30px;
+  font-size: 25px;
+  transition: 0.5s;
+  text-align: left;
+}
+
+.mobile-menu li a{
+  color: #050F19;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.mobile-menu li a:hover{
+  color: #007bff;
 }

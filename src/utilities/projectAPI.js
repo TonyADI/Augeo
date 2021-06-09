@@ -18,8 +18,12 @@ export const createData = async (url, data) => {
         }
         
         else if(response.status === 401){
-            console.log('Credentials do not exist.')
+            console.log('Credentials do not exist.');
             return(false);
+        }
+        else if(response.status === 403){
+            console.log('User already logged in.');
+            window.location.reload();
         }
         throw new Error('Create request was invalid.');
     }

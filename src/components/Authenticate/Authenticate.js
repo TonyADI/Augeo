@@ -104,7 +104,7 @@ export const Authenticate = (props) => {
 
   const submitForm = e => {
     const data = {email: email, password: password, first_name: firstName, last_name: lastName};
-    const url = (props.type === 'Register') ? 'https://localhost:3000/users' : `https://localhost:3000/users/session`;
+    const url = (props.type === 'Register') ? 'https://tonyadi.loca.lt/users' : `https://tonyadi.loca.lt/users/session`;
     createData(url, data).then(value => {
       if(value){
         props.setAuthenticated(true);
@@ -177,7 +177,7 @@ export const Authenticate = (props) => {
                 , you agree to the Terms of Service and Privacy Policy</span>
               </div>
             <input style={{cursor: validData ? 'pointer' : 'default', 
-            backgroundColor: validData ? '#000' : 'grey'}} type="submit" 
+            backgroundColor: validData ? '#050F19' : 'grey'}} type="submit" 
             value={props.type} className="button" disabled={!validData}/>
             {props.type === 'Register' ? <div className="small-font">
               Already have an account? <Link to="/login">Sign in.</Link></div>
