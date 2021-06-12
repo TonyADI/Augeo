@@ -32,8 +32,7 @@ I do not intend to make this an actual platform/website but rather to use it as 
 - A robust search functionality for a product list.
 - A minimum and maximum constraint to be placed on the product prices.
 - Ability to reset password.
-- The platform is going to work based on its own currency. Seeing as users need to be able to bid as soon as possible and getting them to fill in their bank information while trying to bid for a product that ends in 5 seconds is not very user friendly.
-
+- Internal currency system.
 ## ERD Image
 ![ERD Image](https://github.com/TonyADI/Augeo/blob/main/src/backend/ERD%20Image.png?raw=true)
 
