@@ -108,6 +108,10 @@
   text-align: left;
 }
 
+.mobile-menu-item a{
+  padding: 0 !important;
+}
+
 .mobile-menu li a{
   color: #050F19;
   text-decoration: none;
