@@ -37,6 +37,11 @@ I do not intend to make this an actual platform/website but rather to use it as 
 ![ERD Image](https://github.com/TonyADI/Augeo/blob/main/src/backend/ERD%20Image.png?raw=true)
 
 ## API Documentation
+### Category Endpoints
+<b>Request</b>
+<br>
+GET https://tonyadi.loca.lt/categories
+<br>
 <table>
   <tr>
     <th>Name</th>
@@ -44,14 +49,88 @@ I do not intend to make this an actual platform/website but rather to use it as 
     <th>Description</th>
   </tr>
   <tr>
-    <td>Category</td>
-    <td>String</td>
-    <td>Returns a list of products with the specified category name.</td>
+    <td>category</td>
+    <td>string</td>
+    <td>Returns a list of categories.</td>
+  </tr>
+</table>
+<b>Request</b>
+<br>
+GET https://tonyadi.loca.lt/categories/:category/products
+<br>
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Type</th>
+    <th>Description</th>
   </tr>
   <tr>
-    <td>Category</td>
-    <td>String</td>
-    <td>Returns a list of products with the specified category name.</td>
+    <td>category</td>
+    <td>string</td>
+    <td>Required. Returns a list of products with the specified category name.</td>
+  </tr>
+</table>
+<br>
+
+### Product Endpoints
+<b>Request</b>
+<br>
+POST https://tonyadi.loca.lt/products
+<br>
+<b>Request</b>
+<br>
+GET https://tonyadi.loca.lt/products
+<br>
+<b>Parameters in query</b>
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Type</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>sortBy</td>
+    <td>string</td>
+    <td>Required. Returns a list of products based on the string provided. Supported strings include
+    'popular', 'trending', 'recent', 'featured', and 'latest'.</td>
+  </tr>
+</table>
+
+### Users Endpoints
+<b>Request</b>
+<br>
+GET https://tonyadi.loca.lt/users/products
+<br>
+<b>Paramters in query</b>
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Type</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>type</td>
+    <td>string</td>
+    <td>Required. Returns a list of products associated with the authenticated user. Supported strings include 
+    'bid', 'purchase', and 'listing'.</td>
+  </tr>
+</table>
+
+
+<b>Request</b>
+<br>
+GET https://tonyadi.loca.lt/users/details
+<br>
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Type</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>user</td>
+    <td>string</td>
+    <td>Returns a user object containing the authenticted users email, first name and last name.</td>
   </tr>
 </table>
 
