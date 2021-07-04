@@ -136,6 +136,6 @@ GET https://tonyadi.loca.lt/users/details
 
 ## ToDo
 - Add cookie policy page.
-- Add Api Documentation.
+- Complete Api Documentation.
 - <s>Optimize for mobile.</s>
 - Integrate React Redux.
