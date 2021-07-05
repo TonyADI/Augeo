@@ -25,7 +25,7 @@ I do not intend to make this an actual platform/website but rather to use it as 
 
 ## Future Functionalities
 - New categories can be added but they would need to be authorized first.
-- An address table will be added as well as an address form in the account page.
+- <s>An address table will be added</s> as well as an address form in the account page.
 - Ability to send messages between the seller and the buyer of the product.
 - Archive a listing if it has no current bids or if it has been purchased.
 - Delete expired bid records upon the users request.
