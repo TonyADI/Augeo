@@ -297,7 +297,8 @@ app.post('/products', checkAuth, (req, res) => {
     }
 })
 
-// User does not need to be authenticated for timeout to function
+/* Updates product records as well as creates purchase and bid
+   records when timer runs out*/
 app.post('/products/:productId', (req, res, next) => {
     if(req.query.action === 'timeout'){
         // Set sold to true and create a sale record when product times out
@@ -472,7 +473,7 @@ app.get('/categories/:category/products', (req, res) => {
     })
 
 })
-// Retrieve categories for browse page
+// Retrieve categories
 app.get('/categories', (req, res) => {
     connection.query(`SELECT * FROM CATEGORY`, (error, result) => {
         if (error) throw error;
