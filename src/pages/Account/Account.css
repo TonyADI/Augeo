@@ -51,10 +51,6 @@
     font-size: 17px;
 }
 
-.account-container .email{
-    margin-left: 50px !important;
-}
-
 .account-container .edit-container{
     position: absolute;
     right: 15px;
@@ -73,13 +69,27 @@
     width: 100%;
 }
 .accmenu-container .input-field{
-    display: inline-block;
-    width: auto;
-    margin: 10px;
+    display: block;
+    margin: 10px 10px 10px 0px;
     height: 45px;
 }
 
 .account-container .sign-out{
       position: absolute;
       right: 20px;
+}
+
+/* move to app.css */
+.space-between{
+  display: flex;            
+  justify-content: space-between;
+}
+
+.personal-details-form{
+    width: 45%;
+}
+
+.details-heading{
+    color: #888;
+    font-weight: 500;
 }
