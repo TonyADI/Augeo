@@ -241,22 +241,48 @@ export const Account = props => {
             <div>
                 <div className="accmenu-container">
                     <div><h2>Personal Details</h2></div>
-                    <form>
+                    <form className="personal-details-form">
                         {errorMessage && <div><span className="error-message">{errorMessage}</span></div>}
-                        <div>
-                            <span><b>First Name</b><input className="input-field" type="text" name="first-name" 
-                            placeholder={firstName} value={firstName} 
-                            onChange={handleChange} disabled={disabled}/></span>
+                        <div className="space-between">
+                            <div>
+                                <span className="details-heading">First Name</span><input className="input-field" type="text" name="first-name" 
+                                placeholder={firstName} value={firstName} 
+                                onChange={handleChange} disabled={disabled}/>
+                            </div>
+                            <div>
+                                <span className="details-heading">Last Name</span><input className="input-field" type="text" name="last-name" 
+                                placeholder={lastName} value={lastName} 
+                                onChange={handleChange} disabled={disabled}/>
+                            </div>
                         </div>
                         <div>
-                            <span><b>Last Name</b><input className="input-field" type="text" name="last-name" 
-                            placeholder={lastName} value={lastName} 
-                            onChange={handleChange} disabled={disabled}/></span>
+                            <span className="details-heading">Email</span><input className="input-field email" type="email" name="email" 
+                            value={email} onChange={handleChange} disabled/>
                         </div>
-                    <div>
-                        <span><b>Email</b><input className="input-field email" type="email" name="email" 
-                        value={email} onChange={handleChange} disabled/></span>
-                    </div>
+                        <div>
+                            <span className="details-heading">Address Line</span><input className="input-field email" type="email" name="email" 
+                            value={email} onChange={handleChange} disabled/>
+                        </div>
+                        <div className="space-between">
+                            <div>
+                                <span className="details-heading">City</span><input className="input-field email" type="email" name="email" 
+                                value={email} onChange={handleChange} disabled/>
+                            </div>
+                            <div>
+                                <span className="details-heading">Province</span><input className="input-field email" type="email" name="email" 
+                                value={email} onChange={handleChange} disabled/>
+                            </div>
+                        </div>
+                        <div className="space-between">
+                            <div>
+                                <span className="details-heading">Postal Code</span><input className="input-field email" type="email" name="email" 
+                                value={email} onChange={handleChange} disabled/>
+                            </div>
+                            <div className="inline-block">
+                                <span className="details-heading">Country</span><input className="input-field email" type="email" name="email" 
+                                value={email} onChange={handleChange} disabled/>
+                            </div>
+                        </div>
                     </form>
                     <div><button className="button" onClick={modifyDetails} disabled={disabled} 
                     style={{backgroundColor: disabled ? 'grey' : '#050F19'}}>Save Changes</button></div>
