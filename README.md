@@ -100,6 +100,10 @@ GET https://tonyadi.loca.lt/products
 ### Users Endpoints
 <b>Request</b>
 <br>
+POST https://tonyadi.loca.lt/users
+<br>
+<b>Request</b>
+<br>
 GET https://tonyadi.loca.lt/users/products
 <br>
 <b>Paramters in query</b>
