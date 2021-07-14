@@ -21,7 +21,7 @@ I do not intend to make this an actual platform/website but rather to use it as 
 - Users cannot view their own listings on the home or browse page.
 - Users can modify their personal details and password.
 - Improved security in server and backend.
-- Users can hide or show their password when entering it.
+- Users can toggle password visibility.
 - Users can now add their address.
 
 ## Future Functionalities
