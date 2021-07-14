@@ -10,10 +10,7 @@ export const Account = props => {
     const [newPassword, setNewPassword] = useState('');
     const [validPassword, setValidPassword] = useState(true);
     const [authenticated, setAuthenticated] = useState(false);
-    const [disabled, setDisabled] = useState(true);
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastname] = useState('');
-    const [email, setEmail] = useState('');
+    const [personalDetails, setPersonalDetails] = useState({});
     const [purchases, setPurchases] = useState([]);
     const [listings, setListings] = useState([]);
     const [bids, setBids] = useState([]);
@@ -34,7 +31,7 @@ export const Account = props => {
 
     // Not currently in use
     const deleteAccount = e => { 
-        const data = {email: email, password: password};
+        const data = {email: personalDetails.email, password: password};
         deleteData(`https://tonyadi.loca.lt/users/${props.userId}`, data).then(value => {
             if(value){
                 signOut();
@@ -56,16 +53,15 @@ export const Account = props => {
 
                                                                             // Manage Account
 
-    const modifyDetails = () => {
-        const data = {first_name: firstName, last_name: lastName, email: email};
-        if(firstName && lastName){
-            if(firstName.match(/^(?:[A-Za-z]+|)$/) && lastName.match(/^(?:[A-Za-z]+|)$/)){
-                updateData('https://tonyadi.loca.lt/users/details', data).then(value => {
+    const modifyDetails = () => {;
+        if(personalDetails.first_name && personalDetails.last_name){
+            if(personalDetails.first_name.match(/^(?:[A-Za-z]+|)$/) && 
+            personalDetails.last_name.match(/^(?:[A-Za-z]+|)$/)){
+                updateData('https://tonyadi.loca.lt/users/details', personalDetails).then(value => {
                     if(value){
                         NotificationManager.success('Your modifications have been saved!', '', 4000)
                         console.log('Data was modified');
                         setErrorMessage('');
-                        setDisabled(true);
                     }
                     else{
                         setErrorMessage('Something went wrong. Try again.')
@@ -81,7 +77,8 @@ export const Account = props => {
         }
     }
     const updatePassword = () => {
-        const data = {email: email, password: password, new_password: newPassword};
+        const data = {email: personalDetails.email, password: password, 
+            new_password: newPassword};
         if(newPassword.length >= 6){
             updateData(`https://tonyadi.loca.lt/users/password`, data).then(value => {
                 if(value){
@@ -102,7 +99,7 @@ export const Account = props => {
     }
 
     const verifyPassword = () => {
-        const data = {email: email, password: password};
+        const data = {email: personalDetails.email, password: password};
         createData(`https://tonyadi.loca.lt/users/password`, data).then(value => {
             if(value){
                 NotificationManager.info('Password was good.')
@@ -134,9 +131,7 @@ export const Account = props => {
     const retrieveDetails = () => {
         retrieveData(`https://tonyadi.loca.lt/users/details`).then(data => {
             if(data){
-                setFirstName(data.first_name);
-                setLastname(data.last_name);
-                setEmail(data.email);
+                setPersonalDetails(data);
             }
         });
     }
@@ -171,10 +166,25 @@ export const Account = props => {
                 }
                 break;
             case 'first-name':
-                setFirstName(e.target.value);
+                setPersonalDetails({...personalDetails, first_name: e.target.value})
                 break;
             case 'last-name':
-                setLastname(e.target.value);
+                setPersonalDetails({...personalDetails, last_name: e.target.value})
+                break;
+            case 'address-line':
+                setPersonalDetails({...personalDetails, address_line: e.target.value});
+                break;
+            case 'city':
+                setPersonalDetails({...personalDetails, city: e.target.value});
+                break;
+            case 'province':
+                setPersonalDetails({...personalDetails, province: e.target.value});
+                break;
+            case 'postal-code':
+                setPersonalDetails({...personalDetails, postal_code: e.target.value});
+                break;
+            case 'country':
+                setPersonalDetails({...personalDetails, country: e.target.value});
                 break;
             default:
                 console.log('The selected input does not exist.');
@@ -242,51 +252,62 @@ export const Account = props => {
                 <div className="accmenu-container">
                     <div><h2>Personal Details</h2></div>
                     <form className="personal-details-form">
-                        {errorMessage && <div><span className="error-message">{errorMessage}</span></div>}
+                        {errorMessage && <div><span className="error-message">
+                            {errorMessage}</span></div>}
                         <div className="space-between">
                             <div>
-                                <span className="details-heading">First Name</span><input className="input-field" type="text" name="first-name" 
-                                placeholder={firstName} value={firstName} 
-                                onChange={handleChange} disabled={disabled}/>
+                                <span className="details-heading">First Name</span>
+                                <input className="input-field" type="text" name="first-name" 
+                                 value={personalDetails.first_name} 
+                                onChange={handleChange}/>
                             </div>
                             <div>
-                                <span className="details-heading">Last Name</span><input className="input-field" type="text" name="last-name" 
-                                placeholder={lastName} value={lastName} 
-                                onChange={handleChange} disabled={disabled}/>
+                                <span className="details-heading">Last Name</span>
+                                <input className="input-field" type="text" name="last-name" 
+                                 value={personalDetails.last_name} 
+                                onChange={handleChange}/>
                             </div>
                         </div>
                         <div>
-                            <span className="details-heading">Email</span><input className="input-field email" type="email" name="email" 
-                            value={email} onChange={handleChange} disabled/>
+                            <span className="details-heading">Email</span><input 
+                            className="input-field email" type="email" name="email" 
+                            value={personalDetails.email} disabled/>
                         </div>
                         <div>
-                            <span className="details-heading">Address Line</span><input className="input-field email" type="email" name="email" 
-                            value={email} onChange={handleChange} disabled/>
+                            <span className="details-heading">Address Line</span>
+                            <input className="input-field email" type="text" name="address-line" 
+                            value={personalDetails.address_line} onChange={handleChange}/>
                         </div>
                         <div className="space-between">
                             <div>
-                                <span className="details-heading">City</span><input className="input-field email" type="email" name="email" 
-                                value={email} onChange={handleChange} disabled/>
+                                <span className="details-heading">City</span>
+                                <input className="input-field email" type="text" name="city" 
+                                value={personalDetails.city} onChange={handleChange}/>
                             </div>
                             <div>
-                                <span className="details-heading">Province</span><input className="input-field email" type="email" name="email" 
-                                value={email} onChange={handleChange} disabled/>
+                                <span className="details-heading">Province</span>
+                                <input className="input-field email" type="text" name="province" 
+                                value={personalDetails.province} onChange={handleChange}/>
                             </div>
                         </div>
                         <div className="space-between">
                             <div>
-                                <span className="details-heading">Postal Code</span><input className="input-field email" type="email" name="email" 
-                                value={email} onChange={handleChange} disabled/>
+                                <span className="details-heading">Postal Code</span>
+                                <input className="input-field email" type="text" name="postal-code" 
+                                value={personalDetails.postal_code} onChange={handleChange}/>
                             </div>
-                            <div className="inline-block">
-                                <span className="details-heading">Country</span><input className="input-field email" type="email" name="email" 
-                                value={email} onChange={handleChange} disabled/>
+                            <div>
+                                <span className="details-heading">Country</span>
+                                <input className="input-field email" type="text" name="country" 
+                                value={personalDetails.country} onChange={handleChange}/>
                             </div>
                         </div>
                     </form>
-                    <div><button className="button" onClick={modifyDetails} disabled={disabled} 
-                    style={{backgroundColor: disabled ? 'grey' : '#050F19'}}>Save Changes</button></div>
+                    <div><button className="button" onClick={modifyDetails}>
+                        Save Changes</button></div>
+                    {/* Remove, currently redundant
                     <div className="edit-container" onClick={() => {setDisabled(false)}}><span><i className="fa fa-pencil"></i>Edit</span></div>
+                    */}
                 </div>
 
                 <div className="accmenu-container">
@@ -301,15 +322,18 @@ export const Account = props => {
 
                 <div className="accmenu-container">
                     <div><h2>Bids</h2></div>
-                   <div><ProductList products={bids} authenticated={props.authenticated}/></div>
+                   <div><ProductList products={bids} 
+                   authenticated={props.authenticated}/></div>
                 </div>
 
                 <div className="accmenu-container">
                     <div><h2>Manage Account</h2></div>
                     <div>
                         <span><b>Change Password</b></span>
-                        <p>Once you change your current password, you will not be able to use it again.</p>
-                        <div><button className="button" onClick={handlePassword}>Change Password</button></div>
+                        <p>Once you change your current password, 
+                            you will not be able to use it again.</p>
+                        <div><button className="button" onClick={handlePassword}>
+                            Change Password</button></div>
                     </div>
                     <hr></hr>
                     <div>
@@ -321,7 +345,8 @@ export const Account = props => {
                             Delete Account</button></div>
                     </div>
                 </div>
-                <div><button className="sign-out button" onClick={signOut}>Sign Out</button></div>
+                <div><button className="sign-out button" onClick={signOut}>
+                    Sign Out</button></div>
 
 
 
@@ -333,11 +358,15 @@ export const Account = props => {
                             <div className="input-container">
                                 <h2>Enter {authenticated ? 'new' : 'your'} password</h2>
                                 <div className="input-container">
-                                    <input className="input-field" type={passwordType} name="password" placeholder="Password" 
-                                    value={authenticated ? newPassword : password} onChange={handleChange} onKeyPress={handleKeyPress}/>
-                                    <i className={`${iconType} password-toggle cursor-pointer`} onClick={togglePassword}></i>
+                                    <input className="input-field" type={passwordType}
+                                     name="password" placeholder="Password" 
+                                    value={authenticated ? newPassword : password} 
+                                    onChange={handleChange} onKeyPress={handleKeyPress}/>
+                                    <i className={`${iconType} password-toggle cursor-pointer`} 
+                                    onClick={togglePassword}></i>
                                 </div>
-                                {(!validPassword && password) && <span className="error-message">Password was entered incorrectly.</span>
+                                {(!validPassword && password) && <span className=
+                                "error-message">Password was entered incorrectly.</span>
                                 }
                                 <input type="submit" className="button" />
                             </div>
