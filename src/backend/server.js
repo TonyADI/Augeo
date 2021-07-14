@@ -29,12 +29,12 @@ app.use(bodyParser.json());
 // parse cookies from request
 app.use(cookieParser());
 
-app.use(cors({credentials: true, origin: 'https://tonyadi.com'}));
+app.use(cors({credentials: true, origin: 'https://localhost:3001'}));
 
 const accessTokenSecret = 'c7ba8766ee42ae68303d1e3cff5ea649';
 
 app.use(function(req, res, next) {
-    res.header('Access-Control-Allow-Origin', 'https://tonyadi.com');
+    res.header('Access-Control-Allow-Origin', 'https://localhost:3001');
     res.header('Access-Control-Allow-Credentials', true);
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,UPDATE,OPTIONS');
     res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept');
@@ -234,8 +234,12 @@ app.get('/users/products', checkAuth, (req, res) => {
 
 // Modify personal details of the current authenticated user.
 app.put('/users/details', checkAuth, (req, res) => {
-    connection.query(`UPDATE user SET first_name = ?, last_name = ? 
-    WHERE id = ?;`, [req.body.first_name, req.body.last_name, req.user], 
+    connection.query(`UPDATE user, address, useraddress SET user.first_name = ?, 
+    user.last_name = ?, address.address_line = ?, address.city = ?, 
+    address.province = ?, address.postal_code = ?, address.country = ? 
+    WHERE user.id = ? and useraddress.user_id = ?;`, [req.body.first_name, 
+        req.body.last_name, req.body.address_line, req.body.city, req.body.province,
+        req.body.postal_code, req.body.country, req.user, req.user], 
         (error, result) => {
             if (error) throw error;
             if(result.changedRows){
