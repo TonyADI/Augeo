@@ -145,7 +145,7 @@ GET https://tonyadi.loca.lt/users/details
 </table>
 
 ## Installation
-The project is currently live at https://tonyadi.com/augeo/ or you can clone it to your machine using `git clone https://github.com/TonyADI/Augeo.git`
+The project is currently live at https://tonyadi.com/augeo/ or clone it to your machine using `git clone https://github.com/TonyADI/Augeo.git`
 
 ## Instructions
 - Frontend
