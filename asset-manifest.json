@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.css": "/augeo/static/css/main.4164f56e.chunk.css",
-    "main.js": "/augeo/static/js/main.0ab6a359.chunk.js",
-    "main.js.map": "/augeo/static/js/main.0ab6a359.chunk.js.map",
-    "runtime-main.js": "/augeo/static/js/runtime-main.9414dfd5.js",
-    "runtime-main.js.map": "/augeo/static/js/runtime-main.9414dfd5.js.map",
-    "static/css/2.5a615b71.chunk.css": "/augeo/static/css/2.5a615b71.chunk.css",
-    "static/js/2.39e7fe68.chunk.js": "/augeo/static/js/2.39e7fe68.chunk.js",
-    "static/js/2.39e7fe68.chunk.js.map": "/augeo/static/js/2.39e7fe68.chunk.js.map",
-    "static/js/3.f695c790.chunk.js": "/augeo/static/js/3.f695c790.chunk.js",
-    "static/js/3.f695c790.chunk.js.map": "/augeo/static/js/3.f695c790.chunk.js.map",
+    "main.css": "/augeo/static/css/main.2884421a.chunk.css",
+    "main.js": "/augeo/static/js/main.96111ab8.chunk.js",
+    "main.js.map": "/augeo/static/js/main.96111ab8.chunk.js.map",
+    "runtime-main.js": "/augeo/static/js/runtime-main.d5896625.js",
+    "runtime-main.js.map": "/augeo/static/js/runtime-main.d5896625.js.map",
+    "static/css/2.83623b1b.chunk.css": "/augeo/static/css/2.83623b1b.chunk.css",
+    "static/js/2.a5a57b6e.chunk.js": "/augeo/static/js/2.a5a57b6e.chunk.js",
+    "static/js/2.a5a57b6e.chunk.js.map": "/augeo/static/js/2.a5a57b6e.chunk.js.map",
+    "static/js/3.274ef7de.chunk.js": "/augeo/static/js/3.274ef7de.chunk.js",
+    "static/js/3.274ef7de.chunk.js.map": "/augeo/static/js/3.274ef7de.chunk.js.map",
     "index.html": "/augeo/index.html",
-    "static/css/2.5a615b71.chunk.css.map": "/augeo/static/css/2.5a615b71.chunk.css.map",
-    "static/css/main.4164f56e.chunk.css.map": "/augeo/static/css/main.4164f56e.chunk.css.map",
-    "static/js/2.39e7fe68.chunk.js.LICENSE.txt": "/augeo/static/js/2.39e7fe68.chunk.js.LICENSE.txt",
+    "static/css/2.83623b1b.chunk.css.map": "/augeo/static/css/2.83623b1b.chunk.css.map",
+    "static/css/main.2884421a.chunk.css.map": "/augeo/static/css/main.2884421a.chunk.css.map",
+    "static/js/2.a5a57b6e.chunk.js.LICENSE.txt": "/augeo/static/js/2.a5a57b6e.chunk.js.LICENSE.txt",
     "static/media/NotFound.css": "/augeo/static/media/404.a6b92039.jpg",
     "static/media/Home.css": "/augeo/static/media/image2.7e3029a7.jfif",
     "static/media/bid.9ce01a89.png": "/augeo/static/media/bid.9ce01a89.png",
@@ -27,10 +27,10 @@
     "static/media/Landing.css": "/augeo/static/media/test.a7d26820.jfif"
   },
   "entrypoints": [
-    "static/js/runtime-main.9414dfd5.js",
-    "static/css/2.5a615b71.chunk.css",
-    "static/js/2.39e7fe68.chunk.js",
-    "static/css/main.4164f56e.chunk.css",
-    "static/js/main.0ab6a359.chunk.js"
+    "static/js/runtime-main.d5896625.js",
+    "static/css/2.83623b1b.chunk.css",
+    "static/js/2.a5a57b6e.chunk.js",
+    "static/css/main.2884421a.chunk.css",
+    "static/js/main.96111ab8.chunk.js"
   ]
 }
