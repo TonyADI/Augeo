@@ -4,24 +4,6 @@
     position: relative;
 }
 
-@media screen and (max-width: 768px){
-    .product-carousel{
-        width:80%;
-    }
-}
-
-@media screen and (max-width: 1024px){
-    .product-carousel{
-        width:85%;
-    }
-}
-
-@media screen and (max-width: 1440px){
-    .product-carousel{
-        width:90%;
-    }
-}
-
 .product-carousel .carousel-inner{
     overflow: hidden;
 }
@@ -47,7 +29,6 @@
 }
 
 .carousel-nav button{
-    width: 60px;
     height: 60px;
     background-color: rgb(255, 255, 255, 0);
     border: 0px;
@@ -70,11 +51,35 @@
 }
 
 .carousel-nav .next{
-    right: -30px;
+    right: -12.5px;
     display: none;
 }
 
 .carousel-nav .prev{
-    left: -30px;
+    left: -12.5px;
     display: none;
+}
+
+@media screen and (max-width: 1440px){
+    .product-carousel{
+        width: 90%;
+    }
+}
+
+@media screen and (max-width: 1024px){
+    .product-carousel{
+        width: 85%;
+    }
+}
+
+@media screen and (max-width: 768px){
+    .product-carousel{
+        width: 80%;
+    }
+}
+
+@media only screen and (max-width: 480px){
+    .product-carousel {
+        width: 70%;
+    }
 }
