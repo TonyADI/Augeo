@@ -148,6 +148,9 @@ GET https://tonyadi.loca.lt/users/details
 The project is currently live at https://tonyadi.com/augeo/ or clone it to your machine using `git clone https://github.com/TonyADI/Augeo.git`
 
 ## Instructions
+- Dummy account for testing purposes
+  - Email: test@test.com
+  - Password: tester
 - Frontend
   - `cd components` to view frontend components.
   - `npm start` to run the application.
