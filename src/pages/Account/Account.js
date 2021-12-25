@@ -305,9 +305,6 @@ export const Account = props => {
                     </form>
                     <div><button className="button" onClick={modifyDetails}>
                         Save Changes</button></div>
-                    {/* Remove, currently redundant
-                    <div className="edit-container" onClick={() => {setDisabled(false)}}><span><i className="fa fa-pencil"></i>Edit</span></div>
-                    */}
                 </div>
 
                 <div className="accmenu-container">
@@ -365,7 +362,7 @@ export const Account = props => {
                                     <i className={`${iconType} password-toggle cursor-pointer`} 
                                     onClick={togglePassword}></i>
                                 </div>
-                                {(!validPassword && password) && <span className=
+                                {(!validPassword && (password.length >= 6)) && <span className=
                                 "error-message">Password was entered incorrectly.</span>
                                 }
                                 <input type="submit" className="button" />

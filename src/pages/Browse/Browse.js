@@ -20,11 +20,16 @@ export const Browse = props => {
             setProducts(data)});
     }
 
-
     const handleClick = name => {
         setCategory(name);
         retrieveProducts(name);
     }
+
+    // Dummy Categories to show functionality
+    const dummyCategories = [{id: 1, name: 'iPhone 11', image_src: 
+    'https://img.icons8.com/pastel-glyph/564/000000/iphone-x--v1.png'},
+    {id: 2, name: 'HP Spectre x360', image_src: 'https://img.icons8.com/cotton/564/000000/laptop--v1.png'},
+    {id: 3, name: 'G-Shock', image_src: 'https://img.icons8.com/officel/564/000000/apple-watch-apps.png'}]
 
     useEffect(() => {
         retrieveCategories();
@@ -50,10 +55,14 @@ export const Browse = props => {
                     {/*<input type="submit"/>*/}
                 </form>
             </div>
+            {!categories ? <div>
+                <div><h1>Dummy Categories</h1></div>
+                <div><CategoryList categories={dummyCategories} handleClick={handleClick}/></div>
+            </div>:
             <div>
                 <div><h1>Categories</h1></div>
                 <div><CategoryList categories={categories} handleClick={handleClick}/></div>
-            </div>
+            </div>}
             <div>
                 <div><h2>{category}</h2></div>
                 <div className="browse-products">

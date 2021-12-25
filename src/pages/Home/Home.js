@@ -45,6 +45,16 @@ export const Home = props => {
             setRecentBids(data);
         })
     }
+    
+    // Dummy products to test functionality
+    const countDownDate = new Date("Jan 10, 2022 10:49:25").getTime();
+    const countDownDate2 = new Date("Feb 22, 2022 15:58:25").getTime();
+    const countDownDate3 = new Date("Mar 29, 2022 20:59:25").getTime();
+    const product = { category_name: 'HP Spectre x360', initial_price: 1840, current_ask: 0, buy_now: 2500, duration: countDownDate}
+    const product2 = { category_name: 'iPhone 11', initial_price: 670, current_ask:845, buy_now: 1600, duration: countDownDate2}
+    const product3 = { category_name: 'G-Shock', initial_price: 70, current_ask:0, buy_now: 200, duration: countDownDate3}
+    const dummyProducts = [product, product2, product3,product, product2, product3,
+        product, product, product2, product3,product, product2]
 
     useEffect(()=> {
         retrieveFeaturedProduct();
@@ -65,15 +75,18 @@ export const Home = props => {
                         </h1>
                         <div className="greeting-container">
                             <p className="jumbo-info">If you are looking for a platform to resell your product in a relatively free market, or
-                                trying to find a bargain on one then look no further
+                                trying to find a bargain on one then look no further.
                             </p>
                             <div className="button-container">
-                                <Link to="/register"><button className="button">Start Bidding</button></Link>
-                                <Link to="/register"><button className="button">Start Selling</button></Link>
+                                <Link to="/register"><button className="button">Get Started</button></Link>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
+            <div>
+                <div><h1>Dummy Products</h1></div>
+                <div><ProductList products={dummyProducts} authenticated={props.authenticated}/></div>
             </div>
             <div>
                 <div><h1>Featured Product</h1></div>
