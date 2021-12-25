@@ -1,6 +1,6 @@
 .category-container{
     display: inline-block;
-    margin: 15px;
+    margin: 15px 30px;
     width: 120px;
 }
 
@@ -13,4 +13,8 @@
 .category-container .category-name{
     font-weight: 500;
     width: 120px;
+}
+
+.category-container img {
+    width: 100%;
 }
