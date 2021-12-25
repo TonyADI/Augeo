@@ -13,6 +13,11 @@ h1, h2, h3, h4 {
   font-weight: 400;
 }
 
+input, select, form {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
 .inline-display{
   display: inline;
 }
@@ -92,7 +97,7 @@ button:hover{
 
 .greeting-container{
   width: 70%;
-  margin: 0px auto;
+  margin: 50px auto 0;
 }
 
 .large-text{
@@ -122,11 +127,11 @@ button:hover{
     display: block;
   }
   .jumbo-header{
-    font-size: 2.1em;
+    font-size: 2.6em;
     padding: 3em 0.5em 0;
   }
   .home-container .greeting-container .jumbo-info{
-    font-size: 13px;
+    font-size: 15px;
     line-height: 1.5;
     margin: auto 10px;
   }
@@ -138,13 +143,18 @@ button:hover{
     font-size: 13px;
   }
   .home-container .jumbo{
-    height: 60vh;
+    height: 65vh;
   }
   .home-container .banner-container{
     min-height: auto;
+    height: 250px;
+  }
+  .home-container .jumbo-overlay {
+    background-color: rgba(0,0,0,0.5);
   }
   .banner-container .collection-text{
     font-size: 22px;
+    padding-top: 60px;
   }
   .banner-container .button {
     padding: 15px 20px;
