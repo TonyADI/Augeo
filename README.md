@@ -3,6 +3,7 @@
 ## Live Demo
 <a href="https://tonyadi.com/augeo/" target="_blank">Demo</a>
 
+## Description
 The basis of the application is to allow users list products which other users can then bid on. In order for users to list products or bid on them they will have to make an account first. Creating an account requires an email address, a password with 6 or more characters, and a first and last name. When listing a product the user needs to input the initial ask, final ask and duration of the product. All the products in a category are assumed to be new and of the same model and type. No discrenpancies are allowed. Bidding involves inputting a value that is higher than the current ask and that is not greater than the final ask. 
 The user with the current ask when the time runs out is assigned the product. If a user inputs the final ask as his bid value he buys the product outirght. 
 On the account page users can view/update their personal information, view their bids, listings and purchased, and delete their account.
