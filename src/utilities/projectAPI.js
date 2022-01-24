@@ -16,7 +16,6 @@ export const createData = async (url, data) => {
             console.log('Data could not be created/updated!')
             return(false);
         }
-        
         else if(response.status === 401){
             console.log('Credentials do not exist.');
             return(false);
@@ -28,7 +27,7 @@ export const createData = async (url, data) => {
         throw new Error('Create request was invalid.');
     }
     catch(error){
-        console.log(error)
+        console.log(error.message)
     }
 }
 
@@ -50,7 +49,7 @@ export const retrieveData = async (url) => {
         throw new Error('Fetch request was invalid');
     }
     catch(error){
-        console.log(error)
+        console.log(error.message);
     }
 }
 
@@ -68,7 +67,7 @@ export const updateData = async (url, data) => {
         throw new Error('Update request was invalid.')
     }
     catch(error){
-        console.log(error);
+        console.log(error.message);
     }
 }
 
@@ -85,7 +84,7 @@ export const deleteData = async (url, data = []) => {
         throw new Error('Delete request was invalid.');
     }
     catch(error){
-        console.log(error);
+        console.log(error.message);
     }
 }
 
