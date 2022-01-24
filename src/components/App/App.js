@@ -5,7 +5,6 @@ import { Authenticate } from '../Authenticate/Authenticate';
 import { Browse } from '../../pages/Browse/Browse';
 import { Footer } from '../Footer/Footer';
 import { Home } from '../../pages/Home/Home';
-import { Landing } from '../../pages/Landing/Landing';
 import { Navbar } from '../Navbar/Navbar';
 import { NotFound } from '../../pages/NotFound/NotFound';
 import { Sell } from '../../pages/Sell/Sell';
@@ -20,7 +19,7 @@ const App = () => {
       if(data){
         setAuthenticated(true);
       }
-      console.log('User is not logged in')
+      console.log('User is not logged in');
     })
   }
   useEffect(() => {
@@ -40,21 +39,30 @@ const App = () => {
           </Route>
           <Route path="/register">
               {!authenticated ? 
-              <Authenticate type='Register' setAuthenticated={setAuthenticated}/>: 
-              <Redirect to="/" />}
+                <Authenticate 
+                  type='Register' 
+                  setAuthenticated={setAuthenticated}
+                />  : 
+                <Redirect to="/" />
+              }
           </Route>
           <Route path="/login">
               {!authenticated ? 
-              <Authenticate type='Login' setAuthenticated={setAuthenticated}/> : 
-              <Redirect to="/" />}
+                <Authenticate 
+                  type='Login' 
+                  setAuthenticated={setAuthenticated}
+                /> : 
+                <Redirect to="/" />
+              }
           </Route>
           <Route path="/account">
               {authenticated ? 
-              <Account authenticated={authenticated} setAuthenticated={setAuthenticated}/> : 
-              <Redirect to="/login" />}
-          </Route>
-          <Route path="/made-for-you">
-              <Landing />
+                <Account 
+                  authenticated={authenticated} 
+                  setAuthenticated={setAuthenticated}
+                /> : 
+                <Redirect to="/login" />
+              }
           </Route>
           <Route exact path="/">
               <Home authenticated={authenticated}/>
