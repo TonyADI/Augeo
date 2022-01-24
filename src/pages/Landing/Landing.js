@@ -9,6 +9,7 @@ import sampleBid from '../../utilities/images/bid.png';
 import speed from '../../utilities/images/running.svg'
 
 export const Landing = props => {
+    /*
     const [text, setText] = useState('');
     const [index, setIndex] = useState(0);
     const [eraser, setEraser] = useState(false);
@@ -146,4 +147,5 @@ export const Landing = props => {
             </div>
         </div>
     );
+    */
 }
