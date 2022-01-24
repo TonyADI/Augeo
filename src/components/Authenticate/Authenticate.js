@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { NotificationContainer, NotificationManager } from 'react-notifications';
 import { Link } from "react-router-dom";
 import { createData }  from '../../utilities/projectAPI';
 import './Authenticate.css';
@@ -107,8 +106,14 @@ export const Authenticate = (props) => {
     if(email === 'test@test.com' && password === 'tester'){
       props.setAuthenticated(true)
     }
-    const data = {email: email, password: password, first_name: firstName, last_name: lastName};
-    const url = (props.type === 'Register') ? 'https://tonyadi.loca.lt/users' : `https://tonyadi.loca.lt/users/session`;
+    const data = {email: email, 
+                  password: password, 
+                  first_name: firstName, 
+                  last_name: lastName
+                 };
+    const url = (props.type === 'Register') ? 
+                  'https://tonyadi.loca.lt/users' :
+                  `https://tonyadi.loca.lt/users/session`;
     createData(url, data).then(value => {
       if(value){
         props.setAuthenticated(true);
@@ -148,48 +153,119 @@ export const Authenticate = (props) => {
 
   return (
     <div>
-        <div><h1>{props.type}</h1></div>
+        <h1>
+          {props.type}
+        </h1>
         <div id="authenticate-container">
           <div id="authenticate-form">
-          <form onSubmit={submitForm}>
-              <div><span className="error-message">{errorMessage}</span></div>
-              <div className="input-container">
-                <input className="input-field" type="email" name="email" placeholder="Email Address" 
-                value={email} onChange={handleChange} onKeyPress={handleKeyPress} onBlur={handleBlur}/>
-              </div>
-              <div className="input-container">
-                <input className="input-field" type={passwordType} name="password" placeholder="Password (6 or more characters)" 
-                value={password} onChange={handleChange}onKeyPress={handleKeyPress} onBlur={handleBlur}/>
-                <i className={`${iconType} password-toggle cursor-pointer`} onClick={togglePassword}></i>
-              </div>
-              {props.type === 'Register' && <div>
-                    <div className="input-container">
-                        <input className="input-field" type="text" name="first-name" placeholder="First Name" 
-                        value={firstName} onChange={handleChange} onKeyPress={handleKeyPress} onBlur={handleBlur}/>
-                    </div>
-                    <div className="input-container">
-                        <input className="input-field" type="text" name="last-name" placeholder="Last Name" 
-                        value={lastName} onChange={handleChange} onKeyPress={handleKeyPress} onBlur={handleBlur}/>
-                    </div>
-              </div> 
-              }
-              <div className="terms-container cursor-pointer" onClick={()=>
-                  {setChecked(!checked)}}>
-                <input type="checkbox" name="terms" id="termsCheckbox" 
-                onChange={() => setChecked(!checked)} checked={checked}/>
-                <span className="small-font"> By signing {props.type === 'Register' ? 'up' : 'in'}
-                , you agree to the Terms of Service and Privacy Policy</span>
-              </div>
-            <input style={{cursor: validData ? 'pointer' : 'default', 
-            backgroundColor: validData ? '#050F19' : 'grey'}} type="submit" 
-            value={props.type} className="button" disabled={!validData}/>
-            {props.type === 'Register' ? <div className="small-font">
-              Already have an account? <Link to="/login">Sign in.</Link></div>
-            : <div className="small-font">Not a member? <Link to='/register'>Sign up</Link></div>}
-          </form>
+            <form onSubmit={submitForm}>
+                <div>
+                  <span className="error-message">
+                    {errorMessage}
+                  </span>
+                </div>
+                <div className="input-container">
+                  <input 
+                    className="input-field" 
+                    type="email" 
+                    name="email"
+                    id="email"
+                    value={email} 
+                    onChange={handleChange} 
+                    onKeyPress={handleKeyPress} 
+                    onBlur={handleBlur}
+                  />
+                  <label htmlFor="email">Email Address</label>
+                </div>
+                <div className="input-container">
+                  <input 
+                    className="input-field" 
+                    type={passwordType} 
+                    name="password"
+                    id='password'
+                    value={password} 
+                    onChange={handleChange}
+                    onKeyPress={handleKeyPress} 
+                    onBlur={handleBlur}
+                  />
+                  <label htmlFor="password">
+                    Password
+                  </label>
+                  <i className={`${iconType} password-toggle cursor-pointer`} 
+                    onClick={togglePassword}>
+                  </i>
+                </div>
+                {props.type === 'Register' && <div>
+                      <div className="input-container">
+                          <input 
+                            className="input-field" 
+                            type="text" 
+                            name="first-name"
+                            id="first-name"
+                            value={firstName} 
+                            onChange={handleChange} 
+                            onKeyPress={handleKeyPress} 
+                            onBlur={handleBlur}
+                          />
+                          <label htmlFor="first-name">First Name</label>
+                      </div>
+                      <div className="input-container">
+                          <input 
+                            className="input-field" 
+                            type="text" 
+                            name="last-name"
+                            id="last-name"
+                            value={lastName} 
+                            onChange={handleChange} 
+                            onKeyPress={handleKeyPress} 
+                            onBlur={handleBlur}
+                          />
+                          <label htmlFor="last-name">Last Name</label>
+                      </div>
+                </div> 
+                }
+                <div className="terms-container cursor-pointer" 
+                    onClick={()=> {setChecked(!checked)}}>
+                    <input 
+                        type="checkbox" 
+                        name="terms" 
+                        id="termsCheckbox" 
+                        onChange={() => setChecked(!checked)} 
+                        checked={checked}
+                      />
+                  <span 
+                    className="small-font"> By signing {props.type === 'Register' ? 'up' : 'in'}
+                    , you agree to the Terms of Service and Privacy Policy
+                  </span>
+                </div>
+                <input 
+                  style={{cursor: validData ?
+                            'pointer' : 'default', 
+                          backgroundColor: validData ?
+                            '#050F19' : 'grey'}} 
+                          type="submit" 
+                          value={props.type} 
+                          className="button" 
+                          disabled={!validData}
+                />
+                {props.type === 'Register' ?
+                <div className="small-font">
+                    Already have an account? <Link to="/login">
+                      Sign in.
+                    </Link>
+                </div>
+                  : 
+                <div 
+                    className="small-font">
+                      Not a member? <Link to='/register'>
+                        Sign up
+                      </Link>
+                </div>
+                }
+            </form>
           </div>
         </div>
-     </div>
+    </div>
   );
 }
 
