@@ -35,10 +35,9 @@ export const Browse = props => {
         retrieveCategories();
     }, [])
 
-    return (
+   return (
         <div className="browse-container">
             <div className="sortBy-container">
-                <span></span>
                 <form className="filter-form">
                     <select className="cursor-pointer" id="filter" name="filter">
                         <option value="max">Max Buy-Now</option>
@@ -55,18 +54,27 @@ export const Browse = props => {
                     {/*<input type="submit"/>*/}
                 </form>
             </div>
-            {!categories ? <div>
-                <div><h1>Dummy Categories</h1></div>
-                <div><CategoryList categories={dummyCategories} handleClick={handleClick}/></div>
-            </div>:
             <div>
-                <div><h1>Categories</h1></div>
-                <div><CategoryList categories={categories} handleClick={handleClick}/></div>
-            </div>}
+                <h1>
+                    {!categories && 'Dummy'}  Categories
+                </h1>
+                <CategoryList 
+                    categories={categories || dummyCategories} 
+                    handleClick={handleClick}
+                />
+            </div>
             <div>
-                <div><h2>{category}</h2></div>
+                <div>
+                    <h2>{category}</h2>
+                </div>
                 <div className="browse-products">
-                    {category && <ProductList products={products} authenticated={props.authenticated}/>}</div>
+                    {category && 
+                        <ProductList 
+                            products={products} 
+                            authenticated={props.authenticated}
+                        />
+                    }
+                </div>
             </div>
         </div>
     )

@@ -69,11 +69,9 @@ export const Sell = props => {
         createData('https://tonyadi.loca.lt/products', data).then(value => {
             if(value){
                 NotificationManager.success('Listing was created.');
-                //alert('Listing was created.');
             }else{
                 NotificationManager.error('Something went wrong. Try again.');
-                //alert('Something went wrong. Try again.')
-                console.log('Product was not listed. Most likely due to invalid data being provided')
+                console.log('Product was not listed. Most likely due to invalid data being provided');
             }
 
         })
@@ -86,7 +84,7 @@ export const Sell = props => {
             setDisplay('flex');
             setCategory(name);
         }else{
-            window.location.replace('/login');
+            window.location.assign('login');
         }
     }
 
@@ -106,13 +104,18 @@ export const Sell = props => {
         <div id="sell-body">
             <NotificationContainer />
             <div>
-                <div id="searchbar-heading"><h1>What product are you trying to list</h1></div>
+                <div id="searchbar-heading">
+                    <h1>What product are you trying to list</h1>
+                </div>
                 <div id="search-bar">
                     <SearchBar />
                 </div>
             </div>
             <div>
-                <CategoryList categories={categories} handleClick={handleClick}/>
+                <CategoryList 
+                    categories={categories} 
+                    handleClick={handleClick}
+                />
                 {categories && <div className="inline-display" >
                     <Category name="New Category" handleClick={addNewCategory}
                     src="https://img.icons8.com/ios-glyphs/64/ffffff/plus-math.png"/>
@@ -121,30 +124,72 @@ export const Sell = props => {
                 <div id='result-container' style={{display: display}}>
                     <div id='sample-flex'>
                         <div id="sample-listing">
-                            <Product name={category} disabled={true} initialAsk={initialAsk} currentAsk={0} 
-                            buyNow={buyNow} duration={duration}/>
+                            <Product 
+                                name={category} 
+                                disabled={true} 
+                                initialAsk={initialAsk} 
+                                currentAsk={0} 
+                                buyNow={buyNow} 
+                                duration={duration}
+                            />
                         </div>
                     </div>
                     <div id='form-flex'>
                         <form onSubmit={createListing}>
                             <div className="input-container">
-                                <span>Initial Ask</span><input className="input-field" type="number" onBlur={canSubmit}
-                                name="initial-ask" placeholder="Enter Amount (Less than Final Ask)" 
-                                value={initialAsk} onChange={handleChange}/>
+                                <span>Initial Ask</span>
+                                <input 
+                                    className="input-field" 
+                                    type="number" 
+                                    onBlur={canSubmit}
+                                    name="initial-ask" 
+                                    placeholder="Enter Amount (Less than Final Ask)" 
+                                    value={initialAsk} 
+                                    onChange={handleChange}
+                                />
                             </div>
                             <div className="input-container">
-                                <span>Final Ask</span><input className="input-field" type="number" name="buy-now" 
-                                placeholder="Enter Amount (At least 1)" value={buyNow} onChange={handleChange} 
-                                onBlur={canSubmit}/>
+                                <span>Final Ask</span>
+                                <input 
+                                    className="input-field" 
+                                    type="number" 
+                                    name="buy-now" 
+                                    placeholder="Enter Amount (At least 1)" 
+                                    value={buyNow} 
+                                    onChange={handleChange} 
+                                    onBlur={canSubmit}
+                                />
                             </div>
                             <div className="input-container">
-                                <span>Duration</span><input className="input-field" type="datetime-local" name="duration" 
-                                value={duration} onChange={handleChange} onBlur={canSubmit}/>
-                                {!duration && <div className="error-message">Duration needs to be at least an hour</div>}
+                                <span>Duration</span>
+                                <input 
+                                    className="input-field" 
+                                    type="datetime-local" 
+                                    name="duration" 
+                                    value={duration} 
+                                    onChange={handleChange} 
+                                    onBlur={canSubmit}
+                                />
+                                {!duration && 
+                                <div className="error-message">
+                                    Duration needs to be at least an hour
+                                </div>
+                                }
                             </div>
-                            <input  type="submit" style={{cursor: validData ? 'pointer' : 'default', 
-                            backgroundColor: validData ? '#050F19' : 'grey'}}
-                            value="List Product" className="button" disabled={!validData}/>
+                            <input 
+                                type="submit" 
+                                style={{
+                                        cursor: validData ?
+                                            'pointer' : 
+                                            'default', 
+                                        backgroundColor: validData ?
+                                            '#050F19' : 
+                                            'grey'
+                                      }}   
+                                value="List Product" 
+                                className="button" 
+                                disabled={!validData}
+                            />
                         </form>
                     </div>
                 </div>
