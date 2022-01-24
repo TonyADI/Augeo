@@ -47,7 +47,7 @@ export const Home = props => {
     }
     
 
-    const countDownDate = new Date("Jan 10, 2022 10:49:25").getTime();
+    const countDownDate = new Date("Jan 24, 2022 16:55:25").getTime();
     const countDownDate2 = new Date("Feb 22, 2022 15:58:25").getTime();
     const countDownDate3 = new Date("Mar 29, 2022 20:59:25").getTime();
 
@@ -56,26 +56,27 @@ export const Home = props => {
                       initial_price: 1840, 
                       current_ask: 0, 
                       buy_now: 2500, 
-                      duration: countDownDate
-                    }
+                      duration: countDownDate,
+                      id: 1
+                    };
+                    
     const product2 = { category_name: 'iPhone 11', 
                        initial_price: 670, 
                        current_ask:845, 
                        buy_now: 1600, 
-                       duration: countDownDate2
-                    }
+                       duration: countDownDate2,
+                       id: 2
+                    };
+
     const product3 = { category_name: 'G-Shock', 
                        initial_price: 70, 
                        current_ask:0, 
                        buy_now: 200, 
-                       duration: countDownDate3
-                     }
-    const dummyProducts =  [product, product2, 
-                            product3,product, 
-                            product2, product3,
-                            product, product, 
-                            product2, product3,
-                            product, product2]
+                       duration: countDownDate3,
+                       id: 3
+                     };
+
+    const dummyProducts =  [product, product2, product3];
 
     useEffect(()=> {
         retrieveFeaturedProduct();
