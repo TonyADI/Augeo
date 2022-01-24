@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { createData } from '../../utilities/projectAPI';
-import './Product.css'
-
-//import hp from '../../utilities/images/xps.jfif';
-//import iphone11 from '../../utilities/images/iphone11.png';
 import watch from '../../utilities/images/gshock.jfif';
 import imageError from '../../utilities/images/image-error.png';
+import './Product.css'
 
 export const Product = props => {
     const [days, setDays] = useState('');
@@ -14,36 +11,18 @@ export const Product = props => {
     const [seconds, setSeconds] = useState('');
     const [duration, setDuration] = useState(''); 
     const [timer, setTimer] = useState('');
-    const [currentAsk, setCurrentAsk] = useState(props.currentAsk);
+    const [currentAsk, setCurrentAsk] = useState('');
     const [validAsk, setValidAsk] = useState('');
     const [display, setDisplay] = useState('none');
     const [imageSrc, setImageSrc] = useState('');
 
-    const data = {id: props.id, current_ask: validAsk, userid: props.userId};
-    const countDownDate = new Date(props.duration).getTime();
+    const data = {  id: props.id, 
+                    current_ask: validAsk, 
+                    userid: props.userId
+                 };
 
     const handleChange = e => {
         setValidAsk(parseInt(e.target.value));
-    }
-
-    const iphone11 = 'https://images.unsplash.com/photo-1574755297613-7b2c' +
-    '5fee60ce?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=2392&q=80';
-    const hp = 'https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?ixid=MXwxM' 
-    + 'jA3fDF8MHxzZWFyY2h8Mzl8fGxhcHRvcHxlbnwwfDB8MHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=60';
-    const handleImageChange = () => {
-        switch(props.name){
-            case 'HP Spectre x360':
-                setImageSrc(hp);
-                break;
-            case 'iPhone 11':
-                setImageSrc(iphone11);
-                break;
-            case 'G-Shock':
-                setImageSrc(watch);
-                break;
-            default:
-                setImageSrc(imageError);
-        }
     }
 
     const canBid = e => {
@@ -55,7 +34,7 @@ export const Product = props => {
                     setDisplay('block');
                 }
                 else{
-                    window.location.replace('/login');
+                    window.location.assign('login');
                 }
                 break;
             default:
@@ -111,7 +90,7 @@ export const Product = props => {
         }
         else{
             alert('Amount needs to be higher than the current ask' + 
-            'and lower than or equal to the buy now price.')
+            ' and lower than or equal to the buy now price.')
         }
         e.preventDefault();
     }
@@ -136,13 +115,15 @@ export const Product = props => {
         else{
             setDuration('Expired');
             setTimer('');
+            handleTimeout();
         }
     }
-
+    
     useEffect(()=> {
         const durationFunction = () => {
             const now = new Date().getTime();
             // Adds a second delay so timeout function is called at the right time
+            const countDownDate = new Date(props.duration).getTime();
             const distance = countDownDate - now + 1000;
             // Checks if the duration is still valid or if it the product has been bought
             if(distance > 0 && (currentAsk !== props.buyNow)) {
@@ -156,19 +137,21 @@ export const Product = props => {
                 setHours('');
                 setMinutes('');
                 setSeconds('');
-                clearInterval(durationInterval);
+                clearInterval(durationInterval); 
             }
           };
         durationFunction();
         var durationInterval = setInterval(durationFunction, 1000); 
         return () => clearInterval(durationInterval);
-     }, [props.duration, currentAsk])
+     }, [props.duration, currentAsk, props.buyNow])
 
+     useEffect(() => setCurrentAsk(props.currentAsk), 
+     [props.currentAsk]);
 
     useEffect(() => {
         displayDuration();
-        handleTimeout();
-    }, [seconds])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [seconds]);
 
     /* currently unavailable because it might inhibit performance
     useEffect(() => {
@@ -179,7 +162,25 @@ export const Product = props => {
     */
 
     useEffect(() => {
-        handleImageChange();
+        const iphone11 = `https://images.unsplash.com/photo-1574755297613-7b2c5fee60ce?
+                            ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto
+                            =format&fit=crop&w=2392&q=80`;
+        const hp = `https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?ixid=MXwxM
+                        jA3fDF8MHxzZWFyY2h8Mzl8fGxhcHRvcHxlbnwwfDB8MHw%3D&ixlib=rb-1.2.1&auto
+                        =format&fit=crop&w=1000&q=60`;
+        switch(props.name){
+            case 'HP Spectre x360':
+                setImageSrc(hp);
+                break;
+            case 'iPhone 11':
+                setImageSrc(iphone11);
+                break;
+            case 'G-Shock':
+                setImageSrc(watch);
+                break;
+            default:
+                setImageSrc(imageError);
+        }
     }, [props.name])
 
     const handleDisplay = e => {
@@ -200,40 +201,83 @@ export const Product = props => {
             <div className="product-container" style={{animationName: timer}}>
                 <div className="card-container">
                     <div className="card">
-                            <div className="image-container">
-                                <img className="product-image" src={imageSrc} 
-                                alt={`The ${props.name} being listed`}></img>
+                        <div className="image-container">
+                            <img className="product-image" 
+                                 src={imageSrc} 
+                                 alt={`The ${props.name} being listed`}>
+                            </img>
+                        </div>
+                        <div className="product-details">
+                            <div className="product-detail">
+                                <span className="product-name">
+                                    {props.name}
+                                </span>
                             </div>
-                            <div className="product-details">
-                                <div className="product-detail"><span className="product-name">{props.name}</span></div>
-                                <div className="product-detail"><span>${props.initialAsk}</span></div>
-                                <div className="product-detail">{(currentAsk !== 0) && <span>${currentAsk}</span>}</div>
-                            <div className="product-detail product-buynow"><span>${props.buyNow}</span></div>
-                            <div className="product-detail"><span>{duration}</span></div>
+                            <div className="product-detail">
+                                <span>
+                                    ${props.initialAsk}
+                                </span>
                             </div>
-                            {(duration !=='Expired' && !props.disabled)  && <div>
-                                <button onClick={canBid} className="bid-button" 
-                            name='Bid'>Bid</button></div>}
+                            <div className="product-detail">
+                                {(currentAsk !== 0) &&
+                                 <span>
+                                     ${currentAsk}
+                                </span>}
+                            </div>
+                            <div className="product-detail product-buynow">
+                                <span>
+                                    ${props.buyNow}
+                                </span>
+                            </div>
+                            <div className="product-detail">
+                                <span>
+                                    {duration}
+                                </span>
+                            </div>
+                            </div>
+                            {(duration !=='Expired' && !props.disabled)  && 
+                                <div>
+                                    <button 
+                                        onClick={canBid} 
+                                        className="bid-button" 
+                                        name='Bid'
+                                    >
+                                        Bid
+                                    </button>
+                                </div>
+                            }
                     </div>
                 </div>
 
-                {/* Bid container */}
-
                 <div className="bid-container" style={{display: display}}>
-                        <div className="form-container">
-                            <form onSubmit={placeBid}>
-                                <div className="input-container">
-                                    <h2>Place Bid</h2>
-                                    <div><input className="input-field" type="number" name="Bid" 
-                                    onChange={handleChange} placeholder={`Enter a value higher than $${(currentAsk === 0) 
-                                        ? props.initialAsk : currentAsk}`} 
-                                    /></div>
-                                    <input type="submit" className="button" 
-                                    value={validAsk === props.buyNow ? 'Buy Now' : 'Bid'}/>
+                    <div className="form-container">
+                        <form onSubmit={placeBid}>
+                            <div className="input-container">
+                                <h2>Place Bid</h2>
+                                <div>
+                                    <input 
+                                        className="input-field" 
+                                        type="number" 
+                                        name="Bid" 
+                                        onChange={handleChange} 
+                                        placeholder={`Enter a value higher than $
+                                        ${(currentAsk === 0) ? 
+                                            props.initialAsk :
+                                            currentAsk}`
+                                        } 
+                                    />
                                 </div>
-                            </form>
-                        </div>
+                                <input 
+                                    type="submit" 
+                                    className="button" 
+                                    value={validAsk === props.buyNow ?
+                                     'Buy Now' : 
+                                     'Bid'}
+                                />
+                            </div>
+                        </form>
+                    </div>
                 </div>
-        </div>
+            </div>
     );
 }
