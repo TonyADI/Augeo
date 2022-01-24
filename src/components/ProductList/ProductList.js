@@ -61,21 +61,38 @@ export const ProductList = props => {
     return(
         <div className="product-carousel">
             <div className="carousel-inner">
-                    <div className="track">
-                        {props.products ? props.products.length ? props.products.map(product => {
-                            return <Product id={product.id} name={product.category_name} 
-                            imageSrc={product.imageSrc} currentAsk={product.current_ask} 
-                            initialAsk={product.initial_price} buyNow={product.buy_now} 
-                            duration={product.duration} handleClick={props.handleClick} 
-                            authenticated={props.authenticated} disabled={props.disabled} setTransform={setTransform}
-                            key={product.id}
-                            />
-                        }) : <div>No Products to display</div> : <div>Server is currently down</div>}
-                    </div>
+                <div className="track">
+                    {props.products ? 
+                        props.products.length ?
+                            props.products.map(product => {
+                                return <Product 
+                                            id={product.id} 
+                                            name={product.category_name} 
+                                            imageSrc={product.imageSrc} 
+                                            currentAsk={product.current_ask} 
+                                            initialAsk={product.initial_price} 
+                                            buyNow={product.buy_now} 
+                                            duration={product.duration} 
+                                            handleClick={props.handleClick} 
+                                            authenticated={props.authenticated} 
+                                            disabled={props.disabled} 
+                                            setTransform={setTransform}
+                                            key={product.id}
+                                        />
+                            }) 
+                        :
+                        <div>No Products to display</div> 
+                    :
+                    <div>Server is currently down</div>}
+                </div>
             </div>
             <div className='carousel-nav'>
-                <button className="prev"><i className="fa fa-angle-left direction-icon"></i></button>
-                <button className="next" ><i className="fa fa-angle-right direction-icon"></i></button>
+                <button className="prev">
+                    <i className="fa fa-angle-left direction-icon"></i>
+                </button>
+                <button className="next">
+                    <i className="fa fa-angle-right direction-icon"></i>
+                </button>
             </div>
         </div>
     )
