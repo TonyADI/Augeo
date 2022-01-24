@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import { ProductList } from '../../components/ProductList/ProductList';
 import { deleteData, retrieveData, updateData, createData } from '../../utilities/projectAPI';
@@ -30,6 +30,7 @@ export const Account = props => {
     }
 
     // Not currently in use
+    /*
     const deleteAccount = e => { 
         const data = {email: personalDetails.email, password: password};
         deleteData(`https://tonyadi.loca.lt/users/${props.userId}`, data).then(value => {
@@ -43,6 +44,7 @@ export const Account = props => {
         });
         e.preventDefault();
     }
+    */
 
     const togglePassword = () => {
         const newPasswordType = (passwordType === 'password') ? 'text' : 'password';
@@ -51,7 +53,7 @@ export const Account = props => {
         setIconType(newIconType);
       }
 
-                                                                            // Manage Account
+                                                                        // Manage Account
 
     const modifyDetails = () => {;
         if(personalDetails.first_name && personalDetails.last_name){
@@ -77,8 +79,10 @@ export const Account = props => {
         }
     }
     const updatePassword = () => {
-        const data = {email: personalDetails.email, password: password, 
-            new_password: newPassword};
+        const data = {  email: personalDetails.email, 
+                        password: password, 
+                        new_password: newPassword
+                     };
         if(newPassword.length >= 6){
             updateData(`https://tonyadi.loca.lt/users/password`, data).then(value => {
                 if(value){
@@ -205,6 +209,7 @@ export const Account = props => {
     }
 
     // Unused for the time being
+    /*
     const handleDelete = () => {
         if(authenticated){
             const bool = window.confirm('You are about to delete your account. Proceed?');
@@ -216,17 +221,13 @@ export const Account = props => {
             setPasswordDisplay('block');
         }
     }
+    */
 
     const handlePassword = () => {
+        setNewPassword('');
+        setPassword('')
         setPasswordDisplay('block');
     }
-
-    useEffect(() => {
-        if(!authenticated){
-            setPassword('')
-        }
-        setNewPassword('');
-    }, [passwordDisplay])
 
     useEffect(() => {
         retrieveDetails();
@@ -247,107 +248,211 @@ export const Account = props => {
     return (
         <div className="account-container">
             <NotificationContainer />
-            <div><h1>Your Account</h1></div>
+            <div>
+                <h1>Your Account</h1>
+            </div>
             <div>
                 <div className="accmenu-container">
-                    <div><h2>Personal Details</h2></div>
+                    <div>
+                        <h2>Personal Details</h2>
+                    </div>
                     <form className="personal-details-form">
-                        {errorMessage && <div><span className="error-message">
-                            {errorMessage}</span></div>}
+                        {errorMessage && 
+                            <div>
+                                <span className="error-message">
+                                    {errorMessage}
+                                </span>
+                            </div>
+                        }
                         <div className="space-between">
                             <div>
-                                <span className="details-heading">First Name</span>
-                                <input className="input-field" type="text" name="first-name" 
-                                 value={personalDetails.first_name} 
-                                onChange={handleChange}/>
+                                <span className="details-heading">
+                                    First Name
+                                </span>
+                                <input 
+                                    className="input-field" 
+                                    type="text" 
+                                    name="first-name" 
+                                    value={personalDetails.first_name} 
+                                    onChange={handleChange}
+                                />
                             </div>
                             <div>
-                                <span className="details-heading">Last Name</span>
-                                <input className="input-field" type="text" name="last-name" 
-                                 value={personalDetails.last_name} 
-                                onChange={handleChange}/>
+                                <span className="details-heading">
+                                    Last Name
+                                </span>
+                                <input 
+                                    className="input-field" 
+                                    type="text" 
+                                    name="last-name" 
+                                    value={personalDetails.last_name} 
+                                    onChange={handleChange}
+                                />
                             </div>
                         </div>
                         <div>
-                            <span className="details-heading">Email</span><input 
-                            className="input-field email" type="email" name="email" 
-                            value={personalDetails.email} disabled/>
+                            <span className="details-heading">
+                                Email
+                            </span>
+                        <input 
+                            className="input-field email" 
+                            type="email" 
+                            name="email" 
+                            value={personalDetails.email} 
+                            disabled
+                        />
                         </div>
                         <div>
-                            <span className="details-heading">Address Line</span>
-                            <input className="input-field email" type="text" name="address-line" 
-                            value={personalDetails.address_line} onChange={handleChange}/>
+                            <span className="details-heading">
+                                Address Line
+                            </span>
+                            <input 
+                                className="input-field email" 
+                                type="text" 
+                                name="address-line" 
+                                value={personalDetails.address_line} 
+                                onChange={handleChange}
+                            />
                         </div>
                         <div className="space-between">
                             <div>
-                                <span className="details-heading">City</span>
-                                <input className="input-field email" type="text" name="city" 
-                                value={personalDetails.city} onChange={handleChange}/>
+                                <span className="details-heading">
+                                    City
+                                </span>
+                                <input 
+                                    className="input-field email" 
+                                    type="text" 
+                                    name="city" 
+                                    value={personalDetails.city} 
+                                    onChange={handleChange}
+                                />
                             </div>
                             <div>
-                                <span className="details-heading">Province</span>
-                                <input className="input-field email" type="text" name="province" 
-                                value={personalDetails.province} onChange={handleChange}/>
+                                <span className="details-heading">
+                                    Province
+                                </span>
+                                <input  
+                                    className="input-field email" 
+                                    type="text" 
+                                    name="province" 
+                                    value={personalDetails.province} 
+                                    onChange={handleChange}
+                                />
                             </div>
                         </div>
                         <div className="space-between">
                             <div>
-                                <span className="details-heading">Postal Code</span>
-                                <input className="input-field email" type="text" name="postal-code" 
-                                value={personalDetails.postal_code} onChange={handleChange}/>
+                                <span className="details-heading">
+                                    Postal Code
+                                </span>
+                                <input 
+                                    className="input-field email" 
+                                    type="text" 
+                                    name="postal-code" 
+                                    value={personalDetails.postal_code} 
+                                    onChange={handleChange}
+                                />
                             </div>
                             <div>
-                                <span className="details-heading">Country</span>
-                                <input className="input-field email" type="text" name="country" 
-                                value={personalDetails.country} onChange={handleChange}/>
+                                <span className="details-heading">
+                                    Country
+                                </span>
+                                <input 
+                                    className="input-field email" 
+                                    type="text" 
+                                    name="country" 
+                                    value={personalDetails.country} 
+                                    onChange={handleChange}
+                                />
                             </div>
                         </div>
                     </form>
-                    <div><button className="button" onClick={modifyDetails}>
-                        Save Changes</button></div>
-                </div>
-
-                <div className="accmenu-container">
-                    <div><h2>Listings</h2></div>
-                    <div><ProductList products={listings} disabled={true}/></div>
-                </div>
-
-                <div className="accmenu-container">
-                    <div><h2>Purchases</h2></div>
-                    <div> <ProductList products={purchases}/></div>
-                </div>
-
-                <div className="accmenu-container">
-                    <div><h2>Bids</h2></div>
-                   <div><ProductList products={bids} 
-                   authenticated={props.authenticated}/></div>
-                </div>
-
-                <div className="accmenu-container">
-                    <div><h2>Manage Account</h2></div>
                     <div>
-                        <span><b>Change Password</b></span>
+                        <button className="button" onClick={modifyDetails}>
+                            Save Changes
+                        </button>
+                    </div>
+                </div>
+
+                <div className="accmenu-container">
+                    <div>
+                        <h2>
+                            Listings
+                        </h2>
+                    </div>
+                    <div>
+                        <ProductList 
+                            products={listings} 
+                            disabled={true}
+                        />
+                    </div>
+                </div>
+
+                <div className="accmenu-container">
+                    <div>
+                        <h2>
+                            Purchases
+                        </h2>
+                    </div>
+                    <div>
+                        <ProductList products={purchases}/>
+                    </div>
+                </div>
+
+                <div className="accmenu-container">
+                    <div>
+                        <h2>
+                            Bids
+                        </h2>
+                    </div>
+                   <div>
+                       <ProductList 
+                            products={bids} 
+                            authenticated={props.authenticated}
+                        />
+                    </div>
+                </div>
+
+                <div className="accmenu-container">
+                    <div>
+                        <h2>Manage Account</h2>
+                    </div>
+                    <div>
+                        <span>
+                            <b>Change Password</b>
+                        </span>
                         <p>Once you change your current password, 
                             you will not be able to use it again.</p>
-                        <div><button className="button" onClick={handlePassword}>
-                            Change Password</button></div>
+                        <div>
+                            <button className="button" onClick={handlePassword}>
+                                Change Password
+                            </button>
+                        </div>
                     </div>
                     <hr></hr>
                     <div>
-                        <span><b>Delete Account</b></span>
+                        <span>
+                            <b>Delete Account</b>
+                        </span>
                         <p>If you delete your account, you will not be able to recover it.</p>
-                        <div><button className="button" onClick={() => {
-                            NotificationManager.info('Currently Unavailable.');
-                        }}>
-                            Delete Account</button></div>
+                        <div>
+                            <button 
+                                className="button" 
+                                onClick={() => 
+                                    { NotificationManager.info('Currently Unavailable.');
+                                }}
+                            >
+                                Delete Account
+                            </button>
+                        </div>
                     </div>
                 </div>
-                <div><button className="sign-out button" onClick={signOut}>
-                    Sign Out</button></div>
+                <div>
+                    <button className="sign-out button" onClick={signOut}>
+                        Sign Out
+                    </button>
+                </div>
 
-
-
-                {/*PASSWORD MODAL CONTAINER */}
 
                 <div id="password-modal" style={{display: passwordDisplay}}>
                     <div className="password-container">
@@ -355,21 +460,29 @@ export const Account = props => {
                             <div className="input-container">
                                 <h2>Enter {authenticated ? 'new' : 'your'} password</h2>
                                 <div className="input-container">
-                                    <input className="input-field" type={passwordType}
-                                     name="password" placeholder="Password" 
-                                    value={authenticated ? newPassword : password} 
-                                    onChange={handleChange} onKeyPress={handleKeyPress}/>
+                                    <input 
+                                        className="input-field" 
+                                        type={passwordType}
+                                        name="password" 
+                                        placeholder="Password" 
+                                        value={authenticated ?
+                                             newPassword :
+                                             password} 
+                                        onChange={handleChange} 
+                                        onKeyPress={handleKeyPress}
+                                    />
                                     <i className={`${iconType} password-toggle cursor-pointer`} 
                                     onClick={togglePassword}></i>
                                 </div>
-                                {(!validPassword && (password.length >= 6)) && <span className=
-                                "error-message">Password was entered incorrectly.</span>
+                                {(!validPassword && (password.length >= 6)) &&
+                                    <span className="error-message">
+                                        Password was entered incorrectly.
+                                    </span>
                                 }
-                                <input type="submit" className="button" />
+                                <input type="submit" className="button"/>
                             </div>
                         </form>
                     </div>
-
                 </div>
             </div>
         </div>

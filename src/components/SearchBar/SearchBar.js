@@ -14,8 +14,13 @@ export const SearchBar = props => {
     return (
         <div id="search-container">
             <i className="fa fa-search search-icon"></i>
-            <input id="search-field" value={term} placeholder="Search" 
-            onChange={handleChange} onKeyPress={handleKeyPress}/>
+            <input 
+                id="search-field" 
+                value={term} 
+                placeholder="Search" 
+                onChange={handleChange} 
+                onKeyPress={handleKeyPress}
+            />
         </div>
     )
 }
