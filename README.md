@@ -81,7 +81,7 @@ GET https://tonyadi.loca.lt/categories/:category/products
     <td>Required. Returns a list of products with the specified category name.</td>
   </tr>
 </table>
-<br>
+
 ### Product Endpoints
 <b>Request</b>
 <br>
@@ -142,8 +142,8 @@ GET https://tonyadi.loca.lt/users/details
     <th>Description</th>
   </tr>
   <tr>
-    <td>user</td>
-    <td>string</td>
+    <td>N/A</td>
+    <td>N/A</td>
     <td>Returns a user object containing the authenticted users email, first name and last name.</td>
   </tr>
 </table>
