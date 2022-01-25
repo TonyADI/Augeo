@@ -82,7 +82,6 @@ GET https://tonyadi.loca.lt/categories/:category/products
   </tr>
 </table>
 <br>
-
 ### Product Endpoints
 <b>Request</b>
 <br>
