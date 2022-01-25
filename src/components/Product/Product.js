@@ -260,8 +260,7 @@ export const Product = props => {
                                         type="number" 
                                         name="Bid" 
                                         onChange={handleChange} 
-                                        placeholder={`Enter a value higher than $
-                                        ${(currentAsk === 0) ? 
+                                        placeholder={`Enter a value higher than $${(currentAsk === 0) ? 
                                             props.initialAsk :
                                             currentAsk}`
                                         } 
