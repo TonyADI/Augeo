@@ -80,6 +80,10 @@
       right: 20px;
 }
 
+.accmenu-container .delete-acc {
+    background-color: #f53649;
+}
+
 /* move to app.css */
 .space-between{
   display: flex;            

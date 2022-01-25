@@ -295,7 +295,7 @@ export const Account = props => {
                                 Email
                             </span>
                         <input 
-                            className="input-field email" 
+                            className="input-field" 
                             type="email" 
                             name="email" 
                             value={personalDetails.email} 
@@ -307,7 +307,7 @@ export const Account = props => {
                                 Address Line
                             </span>
                             <input 
-                                className="input-field email" 
+                                className="input-field" 
                                 type="text" 
                                 name="address-line" 
                                 value={personalDetails.address_line} 
@@ -320,7 +320,7 @@ export const Account = props => {
                                     City
                                 </span>
                                 <input 
-                                    className="input-field email" 
+                                    className="input-field" 
                                     type="text" 
                                     name="city" 
                                     value={personalDetails.city} 
@@ -332,7 +332,7 @@ export const Account = props => {
                                     Province
                                 </span>
                                 <input  
-                                    className="input-field email" 
+                                    className="input-field" 
                                     type="text" 
                                     name="province" 
                                     value={personalDetails.province} 
@@ -346,7 +346,7 @@ export const Account = props => {
                                     Postal Code
                                 </span>
                                 <input 
-                                    className="input-field email" 
+                                    className="input-field" 
                                     type="text" 
                                     name="postal-code" 
                                     value={personalDetails.postal_code} 
@@ -358,7 +358,7 @@ export const Account = props => {
                                     Country
                                 </span>
                                 <input 
-                                    className="input-field email" 
+                                    className="input-field" 
                                     type="text" 
                                     name="country" 
                                     value={personalDetails.country} 
@@ -437,7 +437,7 @@ export const Account = props => {
                         <p>If you delete your account, you will not be able to recover it.</p>
                         <div>
                             <button 
-                                className="button" 
+                                className="button delete-acc" 
                                 onClick={() => 
                                     { NotificationManager.info('Currently Unavailable.');
                                 }}
