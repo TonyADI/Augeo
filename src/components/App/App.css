@@ -190,6 +190,10 @@ button:hover{
   .account-container .email {
     margin-left: 10px;
   }
+  .product-carousel .bid-container .form-container {
+    box-sizing: border-box;
+    width: 90%;
+  }
   #footer{
     font-size: 13px;
   }

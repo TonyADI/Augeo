@@ -127,4 +127,8 @@
         margin-left: 0;
         display: block;
     }
+    .password-container {
+        box-sizing: border-box;
+        width: 90%;
+    }
 }
