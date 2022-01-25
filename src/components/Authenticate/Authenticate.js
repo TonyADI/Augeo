@@ -113,7 +113,7 @@ export const Authenticate = (props) => {
                  };
     const url = (props.type === 'Register') ? 
                   'https://tonyadi.loca.lt/users' :
-                  `https://tonyadi.loca.lt/users/session`;
+                  'https://tonyadi.loca.lt/users/session';
     createData(url, data).then(value => {
       if(value){
         props.setAuthenticated(true);
