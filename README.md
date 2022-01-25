@@ -60,8 +60,8 @@ GET https://tonyadi.loca.lt/categories
     <th>Description</th>
   </tr>
   <tr>
-    <td>category</td>
-    <td>string</td>
+    <td>N/A</td>
+    <td>N/A</td>
     <td>Returns a list of categories.</td>
   </tr>
 </table>
