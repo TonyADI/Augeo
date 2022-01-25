@@ -21,10 +21,10 @@
     top: 0px;
     width: 100%;
     border: 1px solid #000;
+    height: 100%;
     background-color: #555;
     background-color: rgba(0,0,0,0.3);
     z-index: 1;
-    padding-bottom: 200px;
     animation: fade-down 0.5s forwards;
 }
 
