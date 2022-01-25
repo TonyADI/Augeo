@@ -24,11 +24,13 @@
 }
 
 .sortBy-container select{
-    padding: 15px;
-    font-size: 15px;
     border: 0.5px solid lightgrey;
     box-shadow: 1px 1px 5px #ddd;
     border-radius: 5px;
+    background-color: #fff;
+    color: #000;
+    font-size: 15px;
+    padding: 15px;
 }
 
 .sortBy-container select:focus{
