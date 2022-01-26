@@ -1,4 +1,5 @@
 import React from 'react';
+import defaultCategory from '../../utilities/images/default-category.png';
 import './Category.css';
 
 export const Category = props => {
@@ -20,4 +21,8 @@ export const Category = props => {
             </div>
         </div>
     )
+}
+
+Category.defaultProps = {
+    src: defaultCategory
 }
