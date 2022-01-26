@@ -1,8 +1,15 @@
 import React, { useState, useEffect } from 'react';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+import { Link } from "react-router-dom";
 import { createData } from '../../utilities/projectAPI';
 import watch from '../../utilities/images/gshock.jfif';
 import imageError from '../../utilities/images/image-error.png';
-import './Product.css'
+import './Product.css';
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 export const Product = props => {
     const [days, setDays] = useState('');
@@ -12,17 +19,27 @@ export const Product = props => {
     const [duration, setDuration] = useState(''); 
     const [timer, setTimer] = useState('');
     const [currentAsk, setCurrentAsk] = useState('');
-    const [validAsk, setValidAsk] = useState('');
+    const [bid, setBid] = useState('');
     const [display, setDisplay] = useState('none');
     const [imageSrc, setImageSrc] = useState('');
+    const [bidSuccessOpen, setBidSuccessOpen] = useState(false);
+    const [bidFailureOpen, setBidFailureOpen] = useState(false);
 
     const data = {  id: props.id, 
-                    current_ask: validAsk, 
+                    current_ask: bid, 
                     userid: props.userId
                  };
 
+    const handleBidSuccessClose = () => {
+        setBidSuccessOpen(false);
+    };
+    
+    const handleBidFailureClose = () => {
+        setBidFailureOpen(false);
+    }
+
     const handleChange = e => {
-        setValidAsk(parseInt(e.target.value));
+        setBid(parseInt(e.target.value));
     }
 
     const canBid = e => {
@@ -32,9 +49,6 @@ export const Product = props => {
                 if(props.authenticated){
                     props.setTransform(); // Reset product list transform style
                     setDisplay('block');
-                }
-                else{
-                    window.location.assign('login');
                 }
                 break;
             default:
@@ -51,7 +65,7 @@ export const Product = props => {
                         console.log('Product time ran out. Someone won the product.');
                     }
                     else{
-                        console.log('Something went wrong with handleTimeout function in product.')
+                        console.log('Something went wrong with handleTimeout.')
                     }
                 })
             }
@@ -62,35 +76,34 @@ export const Product = props => {
     }
 
     const placeBid = e => {
-        if(validAsk > currentAsk && validAsk < props.buyNow){
+        if(bid > currentAsk && bid >= props.initialAsk && bid < props.buyNow){
             createData(`https://tonyadi.loca.lt/products/${props.id}/?action=bid`, data)
             .then(value => {
                if(value){
-                    console.log('Bid was accepted');
+                    setCurrentAsk(bid);
+                    setBidSuccessOpen(true);
                     setDisplay('none');
-                    setCurrentAsk(validAsk);
                 }
                 else{
-                   alert('Bid could not be placed. Please refresh.');
+                    setBidFailureOpen(true);
                 }
             });
         }
-        else if(validAsk === props.buyNow){
+        else if(bid === props.buyNow){
             createData(`https://tonyadi.loca.lt/products/${props.id}/?action=sell`, data)
             .then(value => {
                 if(value){
-                    alert('Congratulations, you just won this item!');
-                    setCurrentAsk(validAsk);
+                    setCurrentAsk(bid);
+                    setBidSuccessOpen(true);
                     setDisplay('none');
                 }
                 else{
-                    alert('Bid could not be placed. Please refresh.')
+                    setBidFailureOpen(true);
                 }
             })
         }
         else{
-            alert('Amount needs to be higher than the current ask' + 
-            ' and lower than or equal to the buy now price.')
+            setBidFailureOpen(true);
         }
         e.preventDefault();
     }
@@ -119,13 +132,14 @@ export const Product = props => {
         }
     }
     
+    // Calculates the duration
     useEffect(()=> {
         const durationFunction = () => {
             const now = new Date().getTime();
             // Adds a second delay so timeout function is called at the right time
             const countDownDate = new Date(props.duration).getTime();
             const distance = countDownDate - now + 1000;
-            // Checks if the duration is still valid or if it the product has been bought
+            // Checks if the duration has run out or if the product has been bought
             if(distance > 0 && (currentAsk !== props.buyNow)) {
                setDays(Math.floor(distance / (1000 * 60 * 60 * 24)));
                setHours(Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
@@ -153,14 +167,7 @@ export const Product = props => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [seconds]);
 
-    /* currently unavailable because it might inhibit performance
-    useEffect(() => {
-        if((minutes < 5) && (hours === 0) && (days === 0)){
-            setTimer('timer');
-        }
-    }, [minutes])
-    */
-
+    // Set Product Image
     useEffect(() => {
         const iphone11 = `https://images.unsplash.com/photo-1574755297613-7b2c5fee60ce?
                             ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto
@@ -184,21 +191,59 @@ export const Product = props => {
     }, [props.name])
 
     const handleDisplay = e => {
-        const productModals = document.getElementsByClassName('bid-container');
-        for(let i = 0; i < productModals.length; i++){
-            const productModal = productModals[i];
-            if(e.target === productModal){
-                setDisplay('none');
-            }
+        if(e.target.className === 'bid-container'){
+            setDisplay('none');
         }
     }
     
     useEffect(() => {
         document.addEventListener('mousedown', handleDisplay);
-    }, [])
+    }, []);
+
+    /* currently unavailable because it might inhibit performance
+    useEffect(() => {
+        if((minutes < 5) && (hours === 0) && (days === 0)){
+            setTimer('timer');
+        }
+    }, [minutes])
+    */
 
     return(
             <div className="product-container" style={{animationName: timer}}>
+                <Snackbar 
+                    open={bidSuccessOpen} 
+                    autoHideDuration={4000} 
+                    onClose={handleBidSuccessClose}
+                >
+                    <Alert 
+                        onClose={handleBidSuccessClose} 
+                        severity="success" 
+                        sx={{ width: '100%' }}
+                    >
+                        {bid === props.buyNow ? 
+                            'Congratulations, you just won this item!' :
+                            'Bid was accepted!'
+                        }
+                    </Alert>
+                </Snackbar>
+                <Snackbar 
+                    open={bidFailureOpen} 
+                    autoHideDuration={4000} 
+                    onClose={handleBidFailureClose}
+                >
+                    <Alert 
+                        onClose={handleBidFailureClose} 
+                        severity="warning" 
+                        sx={{ width: '100%' }}
+                    >
+                        {(bid > currentAsk && bid >= props.initialAsk &&
+                             bid <= props.buyNow) ?
+                            'Bid could not be placed. Please refresh!' :
+                            'Bid is lower than the current ask' + 
+                            ' or more than the buy now price.'
+                        }
+                    </Alert>
+                </Snackbar>
                 <div className="card-container">
                     <div className="card">
                         <div className="image-container">
@@ -237,13 +282,19 @@ export const Product = props => {
                             </div>
                             {(duration !=='Expired' && !props.disabled)  && 
                                 <div>
-                                    <button 
-                                        onClick={canBid} 
-                                        className="bid-button" 
-                                        name='Bid'
+                                    <Link to={!props.authenticated ? 
+                                            '/login' :
+                                            '/'
+                                             }
                                     >
-                                        Bid
-                                    </button>
+                                        <button 
+                                            onClick={canBid} 
+                                            className="bid-button" 
+                                            name='Bid'
+                                        >
+                                            Bid
+                                        </button>
+                                    </Link>
                                 </div>
                             }
                     </div>
@@ -269,7 +320,7 @@ export const Product = props => {
                                 <input 
                                     type="submit" 
                                     className="button" 
-                                    value={validAsk === props.buyNow ?
+                                    value={bid === props.buyNow ?
                                      'Buy Now' : 
                                      'Bid'}
                                 />

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { NotificationContainer, NotificationManager } from 'react-notifications';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
 import { Category } from '../../components/Category/Category';
 import { CategoryList } from '../../components/CategoryList/CategoryList';
 import { Product } from '../../components/Product/Product';
@@ -7,6 +8,10 @@ import { SearchBar } from '../../components/SearchBar/SearchBar';
 import { createData, retrieveData } from '../../utilities/projectAPI';
 import 'react-notifications/lib/notifications.css';
 import './Sell.css';
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 export const Sell = props => {
     const [initialAsk, setInitialAsk] = useState('');
@@ -16,6 +21,16 @@ export const Sell = props => {
     const [categories, setCategories] = useState([]);
     const [validData, setValidData] = useState(false);
     const [display, setDisplay] = useState('none');
+    const [listingSuccessOpen, setListingSuccessOpen] = useState(false);
+    const [listingFailureOpen, setListingFailureOpen] = useState(false);
+
+    const handleListingSuccessClose = () => {
+        setListingSuccessOpen(false);
+    };
+    
+    const handleListingFailureClose = () => {
+        setListingFailureOpen(false);
+    }
 
     const retrieveCategories = () => {
         retrieveData('https://tonyadi.loca.lt/categories').then(data => {
@@ -23,7 +38,6 @@ export const Sell = props => {
     }
 
     const addNewCategory = () => {
-        NotificationManager.info('Currently Unavailable.');
     }
 
     const canSubmit = () => {
@@ -62,15 +76,14 @@ export const Sell = props => {
         }
     }
 
-
     const createListing = e => {
         const data = {category: category, buy_now: buyNow,
              initial_ask: initialAsk, duration: duration};
         createData('https://tonyadi.loca.lt/products', data).then(value => {
             if(value){
-                NotificationManager.success('Listing was created.');
+                setListingSuccessOpen(true);
             }else{
-                NotificationManager.error('Something went wrong. Try again.');
+                setListingFailureOpen(true);
                 console.log('Product was not listed. Most likely due to invalid data being provided');
             }
 
@@ -102,7 +115,6 @@ export const Sell = props => {
 
     return(
         <div id="sell-body">
-            <NotificationContainer />
             <div>
                 <div id="searchbar-heading">
                     <h1>What product are you trying to list</h1>
@@ -111,6 +123,32 @@ export const Sell = props => {
                     <SearchBar />
                 </div>
             </div>
+            <Snackbar 
+                    open={listingSuccessOpen} 
+                    autoHideDuration={4000} 
+                    onClose={handleListingSuccessClose}
+            >
+                    <Alert 
+                        onClose={handleListingSuccessClose} 
+                        severity="success" 
+                        sx={{ width: '100%' }}
+                    >
+                        Listing was created!
+                    </Alert>
+            </Snackbar>
+            <Snackbar 
+                    open={listingFailureOpen} 
+                    autoHideDuration={4000} 
+                    onClose={handleListingFailureClose}
+            >
+                    <Alert 
+                        onClose={handleListingFailureClose} 
+                        severity="warning" 
+                        sx={{ width: '100%' }}
+                    >
+                        Something went wrong. Try Again.
+                    </Alert>
+            </Snackbar>
             <div>
                 <CategoryList 
                     categories={categories} 

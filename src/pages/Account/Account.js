@@ -1,8 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { NotificationContainer, NotificationManager } from 'react-notifications';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
 import { ProductList } from '../../components/ProductList/ProductList';
 import { deleteData, retrieveData, updateData, createData } from '../../utilities/projectAPI';
 import './Account.css';
+
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 export const Account = props => {
     const [passwordDisplay, setPasswordDisplay] = useState('none');
@@ -17,6 +25,16 @@ export const Account = props => {
     const [passwordType, setPasswordType] = useState('password');
     const [iconType, setIconType] = useState('fa fa-eye-slash')
     const [errorMessage, setErrorMessage] = useState('');
+    const [changesOpen, setChangesOpen] = useState(false);
+    const [deleteOpen, setDeleteOpen] = useState(false);
+
+    const handleChangesClose = () => {
+        setChangesOpen(false);
+    };
+
+    const handleDeleteClose = () => {
+        setDeleteOpen(false);
+    };
 
     const signOut = () => {
         deleteData(`https://tonyadi.loca.lt/users/session`).then(value => {
@@ -61,8 +79,7 @@ export const Account = props => {
             personalDetails.last_name.match(/^(?:[A-Za-z]+|)$/)){
                 updateData('https://tonyadi.loca.lt/users/details', personalDetails).then(value => {
                     if(value){
-                        NotificationManager.success('Your modifications have been saved!', '', 4000)
-                        console.log('Data was modified');
+                        setChangesOpen(true);
                         setErrorMessage('');
                     }
                     else{
@@ -71,11 +88,11 @@ export const Account = props => {
                 });
             }
             else{
-                setErrorMessage('First Name and Last Name can only be letters.');
+                setErrorMessage('First name and last name can only be letters.');
             }
         }
         else{
-            setErrorMessage('First Name and Last Name cannot be empty.');
+            setErrorMessage('First name and last name cannot be empty.');
         }
     }
     const updatePassword = () => {
@@ -86,8 +103,7 @@ export const Account = props => {
         if(newPassword.length >= 6){
             updateData(`https://tonyadi.loca.lt/users/password`, data).then(value => {
                 if(value){
-                    NotificationManager.success('Password successfully changed!')
-                    console.log('Password successfully updated.');
+                    setChangesOpen(true);
                     setPassword(newPassword);
                     setPasswordDisplay('none');
                 }
@@ -106,11 +122,8 @@ export const Account = props => {
         const data = {email: personalDetails.email, password: password};
         createData(`https://tonyadi.loca.lt/users/password`, data).then(value => {
             if(value){
-                NotificationManager.info('Password was good.')
-                console.log('Password was good.')
                 setAuthenticated(true);
                 setValidPassword(true);
-                setPasswordDisplay('none');
             }
             else{
                 console.log('Wrong password provided.')
@@ -209,8 +222,9 @@ export const Account = props => {
     }
 
     // Unused for the time being
-    /*
+    
     const handleDelete = () => {
+        /*
         if(authenticated){
             const bool = window.confirm('You are about to delete your account. Proceed?');
             if(bool){
@@ -220,8 +234,10 @@ export const Account = props => {
         else{
             setPasswordDisplay('block');
         }
+        */
+       setDeleteOpen(true);
     }
-    */
+    
 
     const handlePassword = () => {
         setNewPassword('');
@@ -237,6 +253,7 @@ export const Account = props => {
         document.addEventListener('mousedown', handleDisplay)
     }, []);
 
+    // After 5 minutes clear users authentication
     useEffect(() => {
         var authenticationTimeout = setTimeout(() => {
             setAuthenticated(false);
@@ -247,7 +264,32 @@ export const Account = props => {
 
     return (
         <div className="account-container">
-            <NotificationContainer />
+            <Snackbar 
+                open={changesOpen} 
+                autoHideDuration={4000} 
+                onClose={handleChangesClose}
+            >
+                <Alert 
+                    onClose={handleChangesClose} 
+                    severity="success" 
+                    sx={{ width: '100%' }}
+                >
+                    Your modifications have been saved!
+                </Alert>
+            </Snackbar>
+            <Snackbar 
+                open={deleteOpen} 
+                autoHideDuration={4000} 
+                onClose={handleDeleteClose}
+            >
+                <Alert 
+                    onClose={handleDeleteClose} 
+                    severity="info" 
+                    sx={{ width: '100%' }}
+                >
+                    This is currently unavailable!
+                </Alert>
+            </Snackbar>
             <div>
                 <h1>Your Account</h1>
             </div>
@@ -256,117 +298,97 @@ export const Account = props => {
                     <div>
                         <h2>Personal Details</h2>
                     </div>
-                    <form className="personal-details-form">
-                        {errorMessage && 
-                            <div>
-                                <span className="error-message">
-                                    {errorMessage}
-                                </span>
-                            </div>
-                        }
-                        <div className="space-between">
-                            <div>
-                                <span className="details-heading">
-                                    First Name
-                                </span>
-                                <input 
-                                    className="input-field" 
-                                    type="text" 
-                                    name="first-name" 
-                                    value={personalDetails.first_name} 
-                                    onChange={handleChange}
-                                />
-                            </div>
-                            <div>
-                                <span className="details-heading">
-                                    Last Name
-                                </span>
-                                <input 
-                                    className="input-field" 
-                                    type="text" 
-                                    name="last-name" 
-                                    value={personalDetails.last_name} 
-                                    onChange={handleChange}
-                                />
-                            </div>
-                        </div>
+                <Box
+                component="form"
+                sx={{
+                  '& .MuiTextField-root': { m: 1.5, 
+                                            marginLeft: '0',
+                                            marginRight: '25px' },
+                  '& .MuiFormControl-fullWidth': {width: '95%'},
+                  width: 470,
+                  maxWidth: '100%'
+                }}
+                noValidate
+                autoComplete="off"
+                >
+                    <TextField 
+                        id="outlined-basic" 
+                        label="First Name" 
+                        variant="outlined"
+                        onChange={handleChange}
+                        value={personalDetails.first_name}
+                        name="first-name"
+                    />
+                    <TextField 
+                        id="outlined-basic" 
+                        label="Last Name" 
+                        variant="outlined"
+                        onChange={handleChange}
+                        value={personalDetails.last_name}
+                        name="last-name"
+                    />
+                    <br/>
+                    <TextField 
+                        disabled
+                        id="outlined-basic" 
+                        label="Email" 
+                        variant="outlined"
+                        value={personalDetails.email}
+                        name="email"
+                        fullWidth
+                    />
+                    <br/>
+                    <TextField 
+                        id="outlined-basic" 
+                        label="Address" 
+                        variant="outlined"
+                        onChange={handleChange}
+                        value={personalDetails.address_line}
+                        name="address-line"
+                        fullWidth
+                    />
+                    <br/>
+                    <TextField 
+                        id="outlined-basic" 
+                        label="City" 
+                        variant="outlined"
+                        onChange={handleChange}
+                        value={personalDetails.city}
+                        name="city"
+                    />
+                    <TextField 
+                        id="outlined-basic" 
+                        label="Province" 
+                        variant="outlined"
+                        onChange={handleChange}
+                        value={personalDetails.province}
+                        name="province"
+                    />
+                    <br/>
+                    <TextField 
+                        id="outlined-basic" 
+                        label="Postal Code" 
+                        variant="outlined"
+                        onChange={handleChange}
+                        value={personalDetails.postal_code}
+                        name="postal-code"
+                    />
+                    <TextField 
+                        id="outlined-basic" 
+                        label="Country" 
+                        variant="outlined"
+                        onChange={handleChange}
+                        value={personalDetails.country}
+                        name="country"
+                    />
+                </Box>
+                    {errorMessage && 
                         <div>
-                            <span className="details-heading">
-                                Email
+                            <span className="error-message">
+                                {errorMessage}
                             </span>
-                        <input 
-                            className="input-field" 
-                            type="email" 
-                            name="email" 
-                            value={personalDetails.email} 
-                            disabled
-                        />
                         </div>
-                        <div>
-                            <span className="details-heading">
-                                Address Line
-                            </span>
-                            <input 
-                                className="input-field" 
-                                type="text" 
-                                name="address-line" 
-                                value={personalDetails.address_line} 
-                                onChange={handleChange}
-                            />
-                        </div>
-                        <div className="space-between">
-                            <div>
-                                <span className="details-heading">
-                                    City
-                                </span>
-                                <input 
-                                    className="input-field" 
-                                    type="text" 
-                                    name="city" 
-                                    value={personalDetails.city} 
-                                    onChange={handleChange}
-                                />
-                            </div>
-                            <div>
-                                <span className="details-heading">
-                                    Province
-                                </span>
-                                <input  
-                                    className="input-field" 
-                                    type="text" 
-                                    name="province" 
-                                    value={personalDetails.province} 
-                                    onChange={handleChange}
-                                />
-                            </div>
-                        </div>
-                        <div className="space-between">
-                            <div>
-                                <span className="details-heading">
-                                    Postal Code
-                                </span>
-                                <input 
-                                    className="input-field" 
-                                    type="text" 
-                                    name="postal-code" 
-                                    value={personalDetails.postal_code} 
-                                    onChange={handleChange}
-                                />
-                            </div>
-                            <div>
-                                <span className="details-heading">
-                                    Country
-                                </span>
-                                <input 
-                                    className="input-field" 
-                                    type="text" 
-                                    name="country" 
-                                    value={personalDetails.country} 
-                                    onChange={handleChange}
-                                />
-                            </div>
-                        </div>
-                    </form>
+                    }
                     <div>
                         <button className="button" onClick={modifyDetails}>
                             Save Changes
@@ -375,48 +397,34 @@ export const Account = props => {
                 </div>
 
                 <div className="accmenu-container">
-                    <div>
-                        <h2>
-                            Listings
-                        </h2>
-                    </div>
-                    <div>
-                        <ProductList 
-                            products={listings} 
-                            disabled={true}
-                        />
-                    </div>
+                    <h2>
+                        Listings
+                    </h2>
+                    <ProductList 
+                        products={listings} 
+                        disabled={true}
+                    />
                 </div>
 
                 <div className="accmenu-container">
-                    <div>
-                        <h2>
-                            Purchases
-                        </h2>
-                    </div>
-                    <div>
-                        <ProductList products={purchases}/>
-                    </div>
+                    <h2>
+                        Purchases
+                    </h2>
+                    <ProductList products={purchases}/>
                 </div>
 
                 <div className="accmenu-container">
-                    <div>
-                        <h2>
-                            Bids
-                        </h2>
-                    </div>
-                   <div>
-                       <ProductList 
-                            products={bids} 
-                            authenticated={props.authenticated}
-                        />
-                    </div>
+                    <h2>
+                        Bids
+                    </h2>
+                   <ProductList 
+                        products={bids} 
+                        authenticated={props.authenticated}
+                    />
                 </div>
-
+                
                 <div className="accmenu-container">
-                    <div>
-                        <h2>Manage Account</h2>
-                    </div>
+                    <h2>Manage Account</h2>
                     <div>
                         <span>
                             <b>Change Password</b>
@@ -438,9 +446,7 @@ export const Account = props => {
                         <div>
                             <button 
                                 className="button delete-acc" 
-                                onClick={() => 
-                                    { NotificationManager.info('Currently Unavailable.');
-                                }}
+                                onClick={handleDelete}
                             >
                                 Delete Account
                             </button>
