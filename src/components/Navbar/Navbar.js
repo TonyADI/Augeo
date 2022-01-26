@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect } from 'react';
 import { Link } from "react-router-dom";
 import './Navbar.css'
 import logo from '../../utilities/images/logo-transparent.svg';
@@ -6,19 +6,19 @@ import logo from '../../utilities/images/logo-transparent.svg';
 export const Navbar = props => {
     const openMobileMenu = () => {
         document.querySelector('.mobile-menu-container').style.display = 'block';
+        document.querySelector('.mobile-menu-container').classList.add('fade-in');
     }
     const closeMobileMenu = () => {
         document.querySelector('.mobile-menu-container').style.display = 'none';
     }
-    /*
     const handleMobileMenu = e => {
-        if(e.target.className === 'mobile-menu-container'){
+        if(e.target.className === 'mobile-menu-container fade-in'){
             document.querySelector('.mobile-menu-container').style.display = 'none';
         }
     }
     useEffect(() => {
         document.addEventListener('mousedown', handleMobileMenu);
-    }, [])*/
+    }, [])
     return(
         <div className="full-width">
             <nav>
