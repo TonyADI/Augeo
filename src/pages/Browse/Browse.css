@@ -1,12 +1,14 @@
 /* Browse Page */
+.browse-container{
+    animation: fade-in 0.5s forwards;
+    margin-top: 50px;
+}
+
 
 .browse-products{
     min-height: 200px;
 }
 
-.browse-container{
-    margin-top: 50px;
-}
 
 .sortBy-container{
     min-height: 100px;

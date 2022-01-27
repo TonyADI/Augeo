@@ -1,3 +1,7 @@
+.home-container {
+    animation: fade-in 0.5s forwards;
+}
+
 .home-container .banner-container{
     min-height: 300px;
     width: 90%;
@@ -60,6 +64,4 @@
 .home-container .greeting-container .button{
     width: auto;
     padding: 15px 25px;
-    margin: 40px 20px;
-
 }

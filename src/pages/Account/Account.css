@@ -1,4 +1,5 @@
   .account-container{
+    animation: fade-in 0.5s forwards;
     position: relative;
     margin: 50px 100px;
 }

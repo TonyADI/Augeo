@@ -1,3 +1,7 @@
+#sell-body {
+    animation: fade-in 0.5s forwards;
+}
+
 #sell-body #search-bar{
     margin:auto;
     width: 50vw;
@@ -25,7 +29,6 @@
     background-color: #555;
     background-color: rgba(0,0,0,0.3);
     z-index: 1;
-    animation: fade-down 0.5s forwards;
 }
 
 #sample-flex{
