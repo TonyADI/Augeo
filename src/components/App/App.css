@@ -64,7 +64,7 @@ input:not(#termsCheckbox), select, form {
 }
 
 .button{
-  background-color: #050F19;
+  background-color: #519ec0;
   color: #fff;
   border-style: none;
   border-radius: 5px;
@@ -72,15 +72,23 @@ input:not(#termsCheckbox), select, form {
   margin: 10px auto;
   width: 100%;
   font-size: 18px;
+  transition: all 0.35s;
 }
 
-.button:hover{
+.button:not(:disabled):hover{
   cursor: pointer;
+  filter: brightness(125%);
 }
 
 .button:focus{
   outline: none;
 }
+
+.category-list {
+  display: flex;
+  justify-content: center;
+}
+
 .error-message{
   color: #dc3545;
   font-size: 12px;
@@ -147,6 +155,16 @@ button:hover{
   #nav-container #burger, #nav-container #logo{
     display: block;
   }
+  .account-container {
+    margin: 50px 0;
+  }
+  .category-container {
+    margin: 15px 10px;
+    width: 95px;
+  }
+  .category-background {
+    height: 59px;
+  }
   .jumbo-header{
     font-size: 2.6em;
     padding: 3em 0.5em 0;
@@ -187,8 +205,8 @@ button:hover{
   #sell-body #search-bar{
     width: auto;
   }
-  .account-container .email {
-    margin-left: 10px;
+  .css-wzsuv8 .MuiTextField-root {
+    width: 95%;
   }
   .product-carousel .bid-container .form-container {
     box-sizing: border-box;
@@ -219,7 +237,3 @@ button:hover{
   }
 }
 
-
-.button{
-  transition: background-color 0.5s;
-}
