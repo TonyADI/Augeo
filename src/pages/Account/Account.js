@@ -16,7 +16,7 @@ export const Account = props => {
     const [passwordDisplay, setPasswordDisplay] = useState('none');
     const [password, setPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
-    const [validPassword, setValidPassword] = useState(true);
+    const [invalidPassword, setInvalidPassword] = useState(false);
     const [authenticated, setAuthenticated] = useState(false);
     const [personalDetails, setPersonalDetails] = useState({});
     const [purchases, setPurchases] = useState([]);
@@ -26,10 +26,15 @@ export const Account = props => {
     const [iconType, setIconType] = useState('fa fa-eye-slash')
     const [errorMessage, setErrorMessage] = useState('');
     const [changesOpen, setChangesOpen] = useState(false);
+    const [changesFailureOpen, setChangesFailureOpen] = useState(false);
     const [deleteOpen, setDeleteOpen] = useState(false);
 
     const handleChangesClose = () => {
         setChangesOpen(false);
+    };
+
+    const handleChangesFailureClose = () => {
+        setChangesFailureOpen(false);
     };
 
     const handleDeleteClose = () => {
@@ -83,7 +88,7 @@ export const Account = props => {
                         setErrorMessage('');
                     }
                     else{
-                        setErrorMessage('Something went wrong. Try again.')
+                        setChangesFailureOpen(true);
                     }
                 });
             }
@@ -108,13 +113,13 @@ export const Account = props => {
                     setPasswordDisplay('none');
                 }
                 else{
-                    alert('Something went wrong. Please try again.');
+                    setChangesFailureOpen(true);
                     console.log('Password was not updated.');
                 }
             })
         }
         else{
-            setValidPassword(false);
+            setInvalidPassword(true);
         }
     }
 
@@ -123,11 +128,11 @@ export const Account = props => {
         createData(`https://tonyadi.loca.lt/users/password`, data).then(value => {
             if(value){
                 setAuthenticated(true);
-                setValidPassword(true);
+                setInvalidPassword(false);
             }
             else{
                 console.log('Wrong password provided.')
-                setValidPassword(false);
+                setInvalidPassword(true);
             }
         })
     }
@@ -181,6 +186,9 @@ export const Account = props => {
                 else{
                     setPassword(e.target.value);
                 }
+                if(e.target.value === ''){
+                    setInvalidPassword(false);
+                }
                 break;
             case 'first-name':
                 setPersonalDetails({...personalDetails, first_name: e.target.value})
@@ -208,18 +216,27 @@ export const Account = props => {
         }
     }
 
-    const handleKeyPress = e => {
-        if(e.which === 13){
-            manageAccount(e);
-        }
-      }
-
     const handleDisplay  = e => {
         const passwordModal = document.getElementById('password-modal');
         if(e.target === passwordModal){
             setPasswordDisplay('none');
         }
     }
+
+    const handlePassword = () => {
+        setNewPassword('');
+        setPassword('')
+        setInvalidPassword(false);
+        setPasswordDisplay('block');
+    }
+
+    useEffect(() => {
+        retrieveDetails();
+        retrieveListings();
+        retrieveBids();
+        retrievePurchases();
+        document.addEventListener('mousedown', handleDisplay)
+    }, []);
 
     // Unused for the time being
     
@@ -238,21 +255,6 @@ export const Account = props => {
        setDeleteOpen(true);
     }
     
-
-    const handlePassword = () => {
-        setNewPassword('');
-        setPassword('')
-        setPasswordDisplay('block');
-    }
-
-    useEffect(() => {
-        retrieveDetails();
-        retrieveListings();
-        retrieveBids();
-        retrievePurchases();
-        document.addEventListener('mousedown', handleDisplay)
-    }, []);
-
     // After 5 minutes clear users authentication
     useEffect(() => {
         var authenticationTimeout = setTimeout(() => {
@@ -288,6 +290,19 @@ export const Account = props => {
                     sx={{ width: '100%' }}
                 >
                     This is currently unavailable!
+                </Alert>
+            </Snackbar>
+            <Snackbar 
+                open={changesFailureOpen} 
+                autoHideDuration={4000} 
+                onClose={handleChangesFailureClose}
+            >
+                <Alert 
+                    onClose={handleChangesFailureClose} 
+                    severity="warning" 
+                    sx={{ width: '100%' }}
+                >
+                    Something went wrong. Please try again.
                 </Alert>
             </Snackbar>
             <div>
@@ -472,15 +487,14 @@ export const Account = props => {
                                         name="password" 
                                         placeholder="Password" 
                                         value={authenticated ?
-                                             newPassword :
-                                             password} 
-                                        onChange={handleChange} 
-                                        onKeyPress={handleKeyPress}
+                                                newPassword :
+                                                password} 
+                                        onChange={handleChange}
                                     />
                                     <i className={`${iconType} password-toggle cursor-pointer`} 
                                     onClick={togglePassword}></i>
                                 </div>
-                                {(!validPassword && (password.length >= 6)) &&
+                                {invalidPassword &&
                                     <span className="error-message">
                                         Password was entered incorrectly.
                                     </span>
