@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.css": "/Augeo/static/css/main.af0c01bd.chunk.css",
-    "main.js": "/Augeo/static/js/main.8a53fbee.chunk.js",
-    "main.js.map": "/Augeo/static/js/main.8a53fbee.chunk.js.map",
-    "runtime-main.js": "/Augeo/static/js/runtime-main.dad7c29c.js",
-    "runtime-main.js.map": "/Augeo/static/js/runtime-main.dad7c29c.js.map",
+    "main.css": "/Augeo/static/css/main.7a11ab4b.chunk.css",
+    "main.js": "/Augeo/static/js/main.84878a84.chunk.js",
+    "main.js.map": "/Augeo/static/js/main.84878a84.chunk.js.map",
+    "runtime-main.js": "/Augeo/static/js/runtime-main.e697e615.js",
+    "runtime-main.js.map": "/Augeo/static/js/runtime-main.e697e615.js.map",
     "static/css/2.bca4cdc4.chunk.css": "/Augeo/static/css/2.bca4cdc4.chunk.css",
-    "static/js/2.c9d42b7b.chunk.js": "/Augeo/static/js/2.c9d42b7b.chunk.js",
-    "static/js/2.c9d42b7b.chunk.js.map": "/Augeo/static/js/2.c9d42b7b.chunk.js.map",
-    "static/js/3.868bedf1.chunk.js": "/Augeo/static/js/3.868bedf1.chunk.js",
-    "static/js/3.868bedf1.chunk.js.map": "/Augeo/static/js/3.868bedf1.chunk.js.map",
+    "static/js/2.4a3abd85.chunk.js": "/Augeo/static/js/2.4a3abd85.chunk.js",
+    "static/js/2.4a3abd85.chunk.js.map": "/Augeo/static/js/2.4a3abd85.chunk.js.map",
+    "static/js/3.4ec80c9a.chunk.js": "/Augeo/static/js/3.4ec80c9a.chunk.js",
+    "static/js/3.4ec80c9a.chunk.js.map": "/Augeo/static/js/3.4ec80c9a.chunk.js.map",
     "index.html": "/Augeo/index.html",
     "static/css/2.bca4cdc4.chunk.css.map": "/Augeo/static/css/2.bca4cdc4.chunk.css.map",
-    "static/css/main.af0c01bd.chunk.css.map": "/Augeo/static/css/main.af0c01bd.chunk.css.map",
-    "static/js/2.c9d42b7b.chunk.js.LICENSE.txt": "/Augeo/static/js/2.c9d42b7b.chunk.js.LICENSE.txt",
+    "static/css/main.7a11ab4b.chunk.css.map": "/Augeo/static/css/main.7a11ab4b.chunk.css.map",
+    "static/js/2.4a3abd85.chunk.js.LICENSE.txt": "/Augeo/static/js/2.4a3abd85.chunk.js.LICENSE.txt",
     "static/media/NotFound.css": "/Augeo/static/media/404.a6b92039.jpg",
     "static/media/Home.css": "/Augeo/static/media/image2.7e3029a7.jfif",
     "static/media/default-category.d6a05a17.png": "/Augeo/static/media/default-category.d6a05a17.png",
@@ -23,10 +23,10 @@
     "static/media/notifications.css": "/Augeo/static/media/notification.c5d9251e.ttf"
   },
   "entrypoints": [
-    "static/js/runtime-main.dad7c29c.js",
+    "static/js/runtime-main.e697e615.js",
     "static/css/2.bca4cdc4.chunk.css",
-    "static/js/2.c9d42b7b.chunk.js",
-    "static/css/main.af0c01bd.chunk.css",
-    "static/js/main.8a53fbee.chunk.js"
+    "static/js/2.4a3abd85.chunk.js",
+    "static/css/main.7a11ab4b.chunk.css",
+    "static/js/main.84878a84.chunk.js"
   ]
 }
