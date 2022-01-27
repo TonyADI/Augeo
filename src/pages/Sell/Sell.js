@@ -6,7 +6,6 @@ import { CategoryList } from '../../components/CategoryList/CategoryList';
 import { Product } from '../../components/Product/Product';
 import { SearchBar } from '../../components/SearchBar/SearchBar';
 import { createData, retrieveData } from '../../utilities/projectAPI';
-import 'react-notifications/lib/notifications.css';
 import './Sell.css';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
