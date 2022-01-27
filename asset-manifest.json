@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/Augeo/static/css/main.7f555977.chunk.css",
+    "main.css": "/Augeo/static/css/main.ea9ccc70.chunk.css",
     "main.js": "/Augeo/static/js/main.84878a84.chunk.js",
     "main.js.map": "/Augeo/static/js/main.84878a84.chunk.js.map",
     "runtime-main.js": "/Augeo/static/js/runtime-main.e697e615.js",
@@ -12,7 +12,7 @@
     "static/js/3.4ec80c9a.chunk.js.map": "/Augeo/static/js/3.4ec80c9a.chunk.js.map",
     "index.html": "/Augeo/index.html",
     "static/css/2.bca4cdc4.chunk.css.map": "/Augeo/static/css/2.bca4cdc4.chunk.css.map",
-    "static/css/main.7f555977.chunk.css.map": "/Augeo/static/css/main.7f555977.chunk.css.map",
+    "static/css/main.ea9ccc70.chunk.css.map": "/Augeo/static/css/main.ea9ccc70.chunk.css.map",
     "static/js/2.4a3abd85.chunk.js.LICENSE.txt": "/Augeo/static/js/2.4a3abd85.chunk.js.LICENSE.txt",
     "static/media/NotFound.css": "/Augeo/static/media/404.a6b92039.jpg",
     "static/media/Home.css": "/Augeo/static/media/image2.7e3029a7.jfif",
@@ -26,7 +26,7 @@
     "static/js/runtime-main.e697e615.js",
     "static/css/2.bca4cdc4.chunk.css",
     "static/js/2.4a3abd85.chunk.js",
-    "static/css/main.7f555977.chunk.css",
+    "static/css/main.ea9ccc70.chunk.css",
     "static/js/main.84878a84.chunk.js"
   ]
 }
