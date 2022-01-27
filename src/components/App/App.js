@@ -5,10 +5,12 @@ import { Authenticate } from '../Authenticate/Authenticate';
 import { Browse } from '../../pages/Browse/Browse';
 import { Footer } from '../Footer/Footer';
 import { Home } from '../../pages/Home/Home';
+import { Intro } from '../../components/Intro/Intro';
 import { Navbar } from '../Navbar/Navbar';
 import { NotFound } from '../../pages/NotFound/NotFound';
 import { Sell } from '../../pages/Sell/Sell';
 import { retrieveData } from '../../utilities/projectAPI';
+import logo from '../../utilities/images/logo-transparent.svg';
 import './App.css';
 
 
@@ -29,6 +31,10 @@ const App = () => {
   return (
     <Router basename={process.env.PUBLIC_URL}>
       <div id="app-body">
+          <Intro 
+              title={'Augeo'} 
+              logo={logo}
+          />
         <Navbar authenticated={authenticated}/>
         <Switch>
           <Route path="/browse">
@@ -65,7 +71,8 @@ const App = () => {
               }
           </Route>
           <Route exact path="/">
-              <Home authenticated={authenticated}/>
+              <Home authenticated={authenticated}
+              />
           </Route>
           <Route component={NotFound}/>
         </Switch>
