@@ -13,6 +13,7 @@ export const Authenticate = (props) => {
   const [passwordType, setPasswordType] = useState('password');
   const [iconType, setIconType] = useState('fa fa-eye-slash');
   const [errorMessage, setErrorMessage] = useState('');
+  const [focus, setFocus] = useState(false);
   
   const canSubmit = () => {
     const validEmail = email.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/);
@@ -65,7 +66,7 @@ export const Authenticate = (props) => {
     switch(e.target.name){
       case 'email':
         if(email.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)){
-          setErrorMessage('')
+          setErrorMessage('');
         }
         else{
           setErrorMessage('Enter a valid Email Address');
@@ -73,7 +74,7 @@ export const Authenticate = (props) => {
         break;
       case 'password':
         if(password.length >= 6){
-          setErrorMessage('')
+          setErrorMessage('');
         }
         else{
           setErrorMessage('Enter a valid Password');
@@ -98,7 +99,7 @@ export const Authenticate = (props) => {
       default:
         setErrorMessage('');
     }
-    canSubmit();
+    setFocus(false);
   }
 
   const submitForm = e => {
@@ -140,9 +141,11 @@ export const Authenticate = (props) => {
   }
   
   useEffect(()=>{
-    canSubmit();
+    if(!focus){
+      canSubmit();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [checked]);
+  }, [checked, focus]);
 
 
   useEffect(() => {
@@ -175,6 +178,8 @@ export const Authenticate = (props) => {
                     onChange={handleChange} 
                     onKeyPress={handleKeyPress} 
                     onBlur={handleBlur}
+                    onFocus={() => setFocus(true)}
+                    required
                   />
                   <label htmlFor="email">Email Address</label>
                 </div>
@@ -188,6 +193,7 @@ export const Authenticate = (props) => {
                     onChange={handleChange}
                     onKeyPress={handleKeyPress} 
                     onBlur={handleBlur}
+                    onFocus={() => setFocus(true)}
                   />
                   <label htmlFor="password">
                     Password
@@ -207,6 +213,7 @@ export const Authenticate = (props) => {
                             onChange={handleChange} 
                             onKeyPress={handleKeyPress} 
                             onBlur={handleBlur}
+                            onFocus={() => setFocus(true)}
                           />
                           <label htmlFor="first-name">First Name</label>
                       </div>
@@ -220,6 +227,7 @@ export const Authenticate = (props) => {
                             onChange={handleChange} 
                             onKeyPress={handleKeyPress} 
                             onBlur={handleBlur}
+                            onFocus={() => setFocus(true)}
                           />
                           <label htmlFor="last-name">Last Name</label>
                       </div>
@@ -243,7 +251,7 @@ export const Authenticate = (props) => {
                   style={{cursor: validData ?
                             'pointer' : 'default', 
                           backgroundColor: validData ?
-                            '#050F19' : 'grey'}} 
+                            '#519ec0' : 'grey'}} 
                           type="submit" 
                           value={props.type} 
                           className="button" 
