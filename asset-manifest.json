@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/Augeo/static/css/main.526ecf0a.chunk.css",
+    "main.css": "/Augeo/static/css/main.cc73c1a3.chunk.css",
     "main.js": "/Augeo/static/js/main.3b9478c2.chunk.js",
     "main.js.map": "/Augeo/static/js/main.3b9478c2.chunk.js.map",
     "runtime-main.js": "/Augeo/static/js/runtime-main.dad7c29c.js",
@@ -10,7 +10,7 @@
     "static/js/3.868bedf1.chunk.js": "/Augeo/static/js/3.868bedf1.chunk.js",
     "static/js/3.868bedf1.chunk.js.map": "/Augeo/static/js/3.868bedf1.chunk.js.map",
     "index.html": "/Augeo/index.html",
-    "static/css/main.526ecf0a.chunk.css.map": "/Augeo/static/css/main.526ecf0a.chunk.css.map",
+    "static/css/main.cc73c1a3.chunk.css.map": "/Augeo/static/css/main.cc73c1a3.chunk.css.map",
     "static/js/2.8875128d.chunk.js.LICENSE.txt": "/Augeo/static/js/2.8875128d.chunk.js.LICENSE.txt",
     "static/media/NotFound.css": "/Augeo/static/media/404.a6b92039.jpg",
     "static/media/Home.css": "/Augeo/static/media/image2.7e3029a7.jfif",
@@ -22,7 +22,7 @@
   "entrypoints": [
     "static/js/runtime-main.dad7c29c.js",
     "static/js/2.8875128d.chunk.js",
-    "static/css/main.526ecf0a.chunk.css",
+    "static/css/main.cc73c1a3.chunk.css",
     "static/js/main.3b9478c2.chunk.js"
   ]
 }
