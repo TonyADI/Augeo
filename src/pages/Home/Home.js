@@ -103,7 +103,7 @@ export const Home = props => {
         retrieveRecentBids();
         },
     []);
-
+    // Hero can be component
     return(
         <div className="home-container">
             <div className="jumbo">
@@ -145,46 +145,12 @@ export const Home = props => {
                     </div>
                 </div>
             </div>
-            <div>
-                <div>
-                    <h1>Dummy Products</h1>
-                </div>
-                <div>
-                    <ProductList 
-                        products={dummyProducts}
-                    />
-                </div>
-            </div>
-            <div>
-                <div>
-                    <h1>Featured Product</h1>
-                </div>
-                <div>
-                    <ProductList 
-                        products={featured}
-                    />
-                </div>
-            </div>
-            <div>
-                <div>
-                    <h1>Most Popular</h1>
-                </div>
-                <div>
-                    <ProductList 
-                        products={popular}
-                    />
-                </div>
-            </div>
-            <div>
-                <div>
-                    <h1>Trending</h1>
-                </div>
-                <div>
-                    <ProductList 
-                        products={trending}
-                    />
-                </div>
-            </div>    
+
+            <ProductList heading='Dummy Products' products={dummyProducts}/>
+            <ProductList heading='Featured Product' products={featured}/>
+            <ProductList heading='Most Popular' products={popular}/>
+            <ProductList heading='Trending' products={trending}/>
+
             <div className="banner-container">
                 <div className="collection-text">
                     Cannot find the category you are trying to list? Just add it</div>
@@ -194,26 +160,9 @@ export const Home = props => {
                     </button>
                 </div>
             </div>
-            <div>
-                <div>
-                    <h1>Latest Category</h1>
-                </div>
-                <div>
-                    <ProductList 
-                        products={latest}
-                    />
-                </div>
-            </div>
-            <div>
-                <div>
-                    <h1>Recent Bids</h1>
-                </div>
-                <div>
-                    <ProductList 
-                        products={recentBids}
-                    />
-                </div>
-            </div>
+            
+            <ProductList heading='Latest Category' products={latest}/>
+            <ProductList heading='Recent Bids' products={recentBids}/>
         </div>
     )
 }

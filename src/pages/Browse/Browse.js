@@ -73,17 +73,12 @@ export const Browse = () => {
                     handleClick={handleClick}
                 />
             </div>
-            <div>
-                <div>
-                    <h2>{category}</h2>
-                </div>
-                <div className="browse-products">
-                    {category && 
-                        <ProductList 
-                            products={products}
-                        />
-                    }
-                </div>
+            <div className="browse-products">
+                {category && 
+                    <ProductList 
+                        heading={category}
+                        products={products}/>
+                }
             </div>
         </div>
     )

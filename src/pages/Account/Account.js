@@ -415,27 +415,22 @@ export const Account = props => {
                 </div>
 
                 <div className="accmenu-container">
-                    <h2>
-                        Listings
-                    </h2>
                     <ProductList 
+                        heading="Listings"
                         products={listings} 
                         disabled={true}
                     />
                 </div>
 
                 <div className="accmenu-container">
-                    <h2>
-                        Purchases
-                    </h2>
-                    <ProductList products={purchases}/>
+                    <ProductList 
+                        heading="Purchases"
+                        products={purchases}/>
                 </div>
 
                 <div className="accmenu-container">
-                    <h2>
-                        Bids
-                    </h2>
                    <ProductList 
+                        heading='Bids'
                         products={bids}
                     />
                 </div>

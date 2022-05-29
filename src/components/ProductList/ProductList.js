@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Product } from '../Product/Product'
 import './ProductList.css'
 
-export const ProductList = props => {
+export const ProductList = ({heading, handleClick, disabled, products}) => {
     // Reset transform to inherit so product modal box can display corretly.
     // Currently affects all tracks but should affect only one.
     const setTransform = () => {
@@ -56,42 +56,45 @@ export const ProductList = props => {
             });
         }
         },
-    [props.products]);
+    [products]);
 
     return(
-        <div className="product-carousel">
-            <div className="carousel-inner">
-                <div className="track">
-                    {props.products ? 
-                        props.products.length ?
-                            props.products.map(product => {
-                                return <Product 
-                                            id={product.id} 
-                                            name={product.category_name} 
-                                            imageSrc={product.imageSrc} 
-                                            currentAsk={product.current_ask} 
-                                            initialAsk={product.initial_price} 
-                                            buyNow={product.buy_now} 
-                                            duration={product.duration} 
-                                            handleClick={props.handleClick}
-                                            disabled={props.disabled} 
-                                            setTransform={setTransform}
-                                            key={product.id}
-                                        />
-                            }) 
+        <div>
+            <h2>{heading || 'Products'}</h2>
+            <div className="product-carousel">
+                <div className="carousel-inner">
+                    <div className="track">
+                        {products ? 
+                            products.length ?
+                                products.map(product => {
+                                    return <Product 
+                                                id={product.id} 
+                                                name={product.category_name} 
+                                                imageSrc={product.imageSrc} 
+                                                currentAsk={product.current_ask} 
+                                                initialAsk={product.initial_price} 
+                                                buyNow={product.buy_now} 
+                                                duration={product.duration} 
+                                                handleClick={handleClick}
+                                                disabled={disabled} 
+                                                setTransform={setTransform}
+                                                key={product.id}
+                                            />
+                                }) 
+                            :
+                            <div>No Products to display</div> 
                         :
-                        <div>No Products to display</div> 
-                    :
-                    <div>Server is currently down</div>}
+                        <div>Server is currently down</div>}
+                    </div>
                 </div>
-            </div>
-            <div className='carousel-nav'>
-                <button className="prev">
-                    <i className="fa fa-angle-left direction-icon"></i>
-                </button>
-                <button className="next">
-                    <i className="fa fa-angle-right direction-icon"></i>
-                </button>
+                <div className='carousel-nav'>
+                    <button className="prev">
+                        <i className="fa fa-angle-left direction-icon"></i>
+                    </button>
+                    <button className="next">
+                        <i className="fa fa-angle-right direction-icon"></i>
+                    </button>
+                </div>
             </div>
         </div>
     )
