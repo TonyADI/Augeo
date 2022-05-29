@@ -1,7 +1,6 @@
 #app-body{
   font-family: Segoe UI, "Roboto", sans-serif;
   text-align: center;
-  max-width: 1400px;
   margin: auto;
 }
 
@@ -178,7 +177,7 @@ button:hover{
     width: 100% !important;
   }
   .greeting-container .button{
-    margin: auto 10px;
+    margin: 25px auto;
     font-size: 13px;
   }
   .home-container .jumbo{
@@ -228,12 +227,3 @@ button:hover{
     font-size: 15px;
   }
 }
-
-@media only screen and (min-width: 1400px){
-  .full-width{
-    width: 98.9vw;
-    left: -60px;
-    position: relative;
-  }
-}
-
