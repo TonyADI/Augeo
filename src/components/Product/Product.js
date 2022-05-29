@@ -1,16 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react';
-import Snackbar from '@mui/material/Snackbar';
-import MuiAlert from '@mui/material/Alert';
 import { Link } from "react-router-dom";
 import { createData } from '../../utilities/projectAPI';
-import { AuthenticatedContext } from '../App/App';
+import { AuthenticatedContext, AlertContext } from '../App/App';
 import watch from '../../utilities/images/gshock.jfif';
 import imageError from '../../utilities/images/image-error.png';
 import './Product.css';
-
-const Alert = React.forwardRef(function Alert(props, ref) {
-    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-});
 
 export const Product = props => {
     const [days, setDays] = useState('');
@@ -23,22 +17,13 @@ export const Product = props => {
     const [bid, setBid] = useState('');
     const [display, setDisplay] = useState('none');
     const [imageSrc, setImageSrc] = useState('');
-    const [bidSuccessOpen, setBidSuccessOpen] = useState(false);
-    const [bidFailureOpen, setBidFailureOpen] = useState(false);
     const authenticated = useContext(AuthenticatedContext);
+    const setAlertData = useContext(AlertContext);
 
     const data = {  id: props.id, 
                     current_ask: bid, 
                     userid: props.userId
                  };
-
-    const handleBidSuccessClose = () => {
-        setBidSuccessOpen(false);
-    };
-    
-    const handleBidFailureClose = () => {
-        setBidFailureOpen(false);
-    }
 
     const handleChange = e => {
         setBid(parseInt(e.target.value));
@@ -83,11 +68,11 @@ export const Product = props => {
             .then(value => {
                if(value){
                     setCurrentAsk(bid);
-                    setBidSuccessOpen(true);
+                    setAlertData({message: 'Congratulations, you just won this item!', severity: 'success', open: true});
                     setDisplay('none');
                 }
                 else{
-                    setBidFailureOpen(true);
+                    setAlertData({message: 'Bid could not be placed. Please refresh!', severity: 'warning', open: true});
                 }
             });
         }
@@ -96,16 +81,16 @@ export const Product = props => {
             .then(value => {
                 if(value){
                     setCurrentAsk(bid);
-                    setBidSuccessOpen(true);
+                    setAlertData({message: 'Congratulations, you just won this item!', severity: 'success', open: true});
                     setDisplay('none');
                 }
                 else{
-                    setBidFailureOpen(true);
+                    setAlertData({message: 'Bid could not be placed. Please refresh!', severity: 'warning', open: true});
                 }
             })
         }
         else{
-            setBidFailureOpen(true);
+            setAlertData({message: 'Bid is lower than the current ask or more than the buy now price.', severity: 'warning', open: true});
         }
         e.preventDefault();
     }
@@ -212,40 +197,6 @@ export const Product = props => {
 
     return(
             <div className="product-container" style={{animationName: timer}}>
-                <Snackbar 
-                    open={bidSuccessOpen} 
-                    autoHideDuration={4000} 
-                    onClose={handleBidSuccessClose}
-                >
-                    <Alert 
-                        onClose={handleBidSuccessClose} 
-                        severity="success" 
-                        sx={{ width: '100%' }}
-                    >
-                        {bid === props.buyNow ? 
-                            'Congratulations, you just won this item!' :
-                            'Bid was accepted!'
-                        }
-                    </Alert>
-                </Snackbar>
-                <Snackbar 
-                    open={bidFailureOpen} 
-                    autoHideDuration={4000} 
-                    onClose={handleBidFailureClose}
-                >
-                    <Alert 
-                        onClose={handleBidFailureClose} 
-                        severity="warning" 
-                        sx={{ width: '100%' }}
-                    >
-                        {(bid > currentAsk && bid >= props.initialAsk &&
-                             bid <= props.buyNow) ?
-                            'Bid could not be placed. Please refresh!' :
-                            'Bid is lower than the current ask' + 
-                            ' or more than the buy now price.'
-                        }
-                    </Alert>
-                </Snackbar>
                 <div className="card-container">
                     <div className="card">
                         <div className="image-container">

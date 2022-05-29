@@ -1,15 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react';
-import Snackbar from '@mui/material/Snackbar';
-import MuiAlert from '@mui/material/Alert';
 import { Link } from "react-router-dom";
 import { ProductList } from '../../components/ProductList/ProductList';
 import { retrieveData } from '../../utilities/projectAPI';
-import { AuthenticatedContext } from '../../components/App/App';
+import { AuthenticatedContext, AlertContext } from '../../components/App/App';
 import './Home.css';
-
-const Alert = React.forwardRef(function Alert(props, ref) {
-    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-});
 
 export const Home = props => {
     const [featured, setFeatured] = useState([]);
@@ -17,17 +11,13 @@ export const Home = props => {
     const [popular, setPopular] = useState([]);
     const [trending, setTrending] = useState([]);
     const [recentBids, setRecentBids] = useState([]);
-    const [open, setOpen] = useState(false);
     const authenticated = useContext(AuthenticatedContext);
-    
+    const setAlertData = useContext(AlertContext);
+
     const handleClick = () => {
-        setOpen(true);
-    };
-
-    const handleClose = () => {
-        setOpen(false);
-    };
-
+        setAlertData({message: 'This is currently unavailable', severity: 'info', open: true});
+    }
+    
     const retrieveFeaturedProduct = () => {
         retrieveData(`https://tonyadi.loca.lt/products?sortBy=featured`)
         .then(data => {
@@ -108,19 +98,6 @@ export const Home = props => {
         <div className="home-container">
             <div className="jumbo">
                 <div className="jumbo-overlay">
-                    <Snackbar 
-                        open={open} 
-                        autoHideDuration={4000} 
-                        onClose={handleClose}
-                    >
-                        <Alert 
-                            onClose={handleClose} 
-                            severity="info" 
-                            sx={{ width: '100%' }}
-                        >
-                            This is currently unavailable!
-                        </Alert>
-                    </Snackbar>
                     <div>
                         <h1 className="jumbo-header">
                             Shop and sell at your own pace

@@ -1,17 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react';
-import Snackbar from '@mui/material/Snackbar';
-import MuiAlert from '@mui/material/Alert';
 //import { Category } from '../../components/Category/Category';
 import { CategoryList } from '../../components/CategoryList/CategoryList';
 import { Product } from '../../components/Product/Product';
 import { SearchBar } from '../../components/SearchBar/SearchBar';
 import { createData, retrieveData } from '../../utilities/projectAPI';
-import { AuthenticatedContext } from '../../components/App/App';
+import { AuthenticatedContext, AlertContext } from '../../components/App/App';
 import './Sell.css';
-
-const Alert = React.forwardRef(function Alert(props, ref) {
-    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-});
 
 export const Sell = () => {
     const [initialAsk, setInitialAsk] = useState('');
@@ -21,17 +15,8 @@ export const Sell = () => {
     const [categories, setCategories] = useState([]);
     const [validData, setValidData] = useState(false);
     const [display, setDisplay] = useState('none');
-    const [listingSuccessOpen, setListingSuccessOpen] = useState(false);
-    const [listingFailureOpen, setListingFailureOpen] = useState(false);
     const authenticated = useContext(AuthenticatedContext);
-
-    const handleListingSuccessClose = () => {
-        setListingSuccessOpen(false);
-    };
-    
-    const handleListingFailureClose = () => {
-        setListingFailureOpen(false);
-    }
+    const setAlertData = useContext(AlertContext);
 
     const retrieveCategories = () => {
         retrieveData('https://tonyadi.loca.lt/categories').then(data => {
@@ -83,9 +68,10 @@ export const Sell = () => {
              initial_ask: initialAsk, duration: duration};
         createData('https://tonyadi.loca.lt/products', data).then(value => {
             if(value){
-                setListingSuccessOpen(true);
+                setAlertData({message: 'Listing was created!', severity: 'success', open: true});
+                
             }else{
-                setListingFailureOpen(true);
+                setAlertData({message: 'Something went wrong. Try again.', severity: 'warning', open: true});
                 console.log('Product was not listed. Most likely due to invalid data being provided');
             }
 
@@ -99,7 +85,7 @@ export const Sell = () => {
             setDisplay('flex');
             setCategory(name);
         }else{
-            setListingFailureOpen(true);
+            setAlertData({message: 'You need to login before listing a product.', severity: 'info', open: true});
         }
     }
 
@@ -125,37 +111,6 @@ export const Sell = () => {
                     <SearchBar />
                 </div>
             </div>
-            <Snackbar 
-                    open={listingSuccessOpen} 
-                    autoHideDuration={4000} 
-                    onClose={handleListingSuccessClose}
-            >
-                    <Alert 
-                        onClose={handleListingSuccessClose} 
-                        severity="success" 
-                        sx={{ width: '100%' }}
-                    >
-                        Listing was created!
-                    </Alert>
-            </Snackbar>
-            <Snackbar 
-                    open={listingFailureOpen} 
-                    autoHideDuration={4000} 
-                    onClose={handleListingFailureClose}
-            >
-                    <Alert 
-                        onClose={handleListingFailureClose} 
-                        severity="warning" 
-                        sx={{ width: '100%' }}
-                    >
-                        {authenticated ? 
-                            'Something went wrong. Try Again.' :
-                            'You need to login before listing a product!'
-                        }
-
-
-                    </Alert>
-            </Snackbar>
             <div>
                 <CategoryList 
                     categories={categories} 

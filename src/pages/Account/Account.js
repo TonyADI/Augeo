@@ -1,16 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import Snackbar from '@mui/material/Snackbar';
-import MuiAlert from '@mui/material/Alert';
+import React, { useState, useEffect, useContext } from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { ProductList } from '../../components/ProductList/ProductList';
 import { deleteData, retrieveData, updateData, createData } from '../../utilities/projectAPI';
+import { AlertContext } from '../../components/App/App';
 import './Account.css';
-
-
-const Alert = React.forwardRef(function Alert(props, ref) {
-    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-});
 
 export const Account = props => {
     const [passwordDisplay, setPasswordDisplay] = useState('none');
@@ -25,21 +19,7 @@ export const Account = props => {
     const [passwordType, setPasswordType] = useState('password');
     const [iconType, setIconType] = useState('fa fa-eye-slash')
     const [errorMessage, setErrorMessage] = useState('');
-    const [changesOpen, setChangesOpen] = useState(false);
-    const [changesFailureOpen, setChangesFailureOpen] = useState(false);
-    const [deleteOpen, setDeleteOpen] = useState(false);
-
-    const handleChangesClose = () => {
-        setChangesOpen(false);
-    };
-
-    const handleChangesFailureClose = () => {
-        setChangesFailureOpen(false);
-    };
-
-    const handleDeleteClose = () => {
-        setDeleteOpen(false);
-    };
+    const setAlertData = useContext(AlertContext);
 
     const signOut = () => {
         deleteData(`https://tonyadi.loca.lt/users/session`).then(value => {
@@ -84,11 +64,11 @@ export const Account = props => {
             personalDetails.last_name.match(/^(?:[A-Za-z]+|)$/)){
                 updateData('https://tonyadi.loca.lt/users/details', personalDetails).then(value => {
                     if(value){
-                        setChangesOpen(true);
+                        setAlertData({open: true, message: 'Your modifications have been saved!', severity: 'success'});
                         setErrorMessage('');
                     }
                     else{
-                        setChangesFailureOpen(true);
+                        setAlertData({open: true, message: 'Something went wrong. Please try again.', severity: 'warning'});
                     }
                 });
             }
@@ -108,12 +88,12 @@ export const Account = props => {
         if(newPassword.length >= 6){
             updateData(`https://tonyadi.loca.lt/users/password`, data).then(value => {
                 if(value){
-                    setChangesOpen(true);
+                    setAlertData({open: true, message: 'Your modifications have been saved!', severity: 'success'});
                     setPassword(newPassword);
                     setPasswordDisplay('none');
                 }
                 else{
-                    setChangesFailureOpen(true);
+                    setAlertData({open: true, message: 'Something went wrong. Please try again.', severity: 'warning'});
                     console.log('Password was not updated.');
                 }
             })
@@ -252,7 +232,7 @@ export const Account = props => {
             setPasswordDisplay('block');
         }
         */
-       setDeleteOpen(true);
+        setAlertData({open: true, message: 'This is currently unavailable', severity: 'info'});
     }
     
     // After 5 minutes clear users authentication
@@ -263,51 +243,11 @@ export const Account = props => {
         }, 300000);
         return () => clearTimeout(authenticationTimeout);
     }, [authenticated]);
-    // Make alerts just one
     // make textfield into array?
     // make product list into component
     // password modal a component
     return (
         <div className="account-container">
-            <Snackbar 
-                open={changesOpen} 
-                autoHideDuration={4000} 
-                onClose={handleChangesClose}
-            >
-                <Alert 
-                    onClose={handleChangesClose} 
-                    severity="success" 
-                    sx={{ width: '100%' }}
-                >
-                    Your modifications have been saved!
-                </Alert>
-            </Snackbar>
-            <Snackbar 
-                open={deleteOpen} 
-                autoHideDuration={4000} 
-                onClose={handleDeleteClose}
-            >
-                <Alert 
-                    onClose={handleDeleteClose} 
-                    severity="info" 
-                    sx={{ width: '100%' }}
-                >
-                    This is currently unavailable!
-                </Alert>
-            </Snackbar>
-            <Snackbar 
-                open={changesFailureOpen} 
-                autoHideDuration={4000} 
-                onClose={handleChangesFailureClose}
-            >
-                <Alert 
-                    onClose={handleChangesFailureClose} 
-                    severity="warning" 
-                    sx={{ width: '100%' }}
-                >
-                    Something went wrong. Please try again.
-                </Alert>
-            </Snackbar>
             <div>
                 <h1>Your Account</h1>
             </div>
