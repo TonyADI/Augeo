@@ -1,19 +1,22 @@
-import { useEffect } from 'react';
+import { useEffect, useContext } from 'react';
+import { AuthenticatedContext } from '../App/App';
 import { Link } from "react-router-dom";
-import './Navbar.css'
+import './Navbar.css';
 import logo from '../../utilities/images/logo-transparent.svg';
 
-export const Navbar = props => {
+// link can be a component
+export const Navbar = ({mobileMenuRef}) => {
+    const authenticated = useContext(AuthenticatedContext);
     const openMobileMenu = () => {
-        document.querySelector('.mobile-menu-container').style.display = 'block';
-        document.querySelector('.mobile-menu-container').classList.add('fade-in');
+        mobileMenuRef.current.style.display = 'block';
+        mobileMenuRef.current.classList.add('fade-in');
     }
     const closeMobileMenu = () => {
-        document.querySelector('.mobile-menu-container').style.display = 'none';
+        mobileMenuRef.current.style.display = 'none';
     }
     const handleMobileMenu = e => {
         if(e.target.className === 'mobile-menu-container fade-in'){
-            document.querySelector('.mobile-menu-container').style.display = 'none';
+            mobileMenuRef.current.style.display = 'none';
         }
     }
     useEffect(() => {
@@ -31,17 +34,17 @@ export const Navbar = props => {
                             <Link to="/"><img id="logo" src={logo} 
                             alt="logo"/></Link>
                         </li>
-                        {!props.authenticated && 
+                        {!authenticated && 
                         <li>
                             <Link to="/login">Login</Link>
                         </li>
                         }
-                        {!props.authenticated && 
+                        {!authenticated && 
                             <li>
                                 <Link to="/register">Register</Link>
                             </li>
                         }
-                        {props.authenticated &&
+                        {authenticated &&
                             <li>
                                 <Link to="/account">Account</Link>
                             </li>
@@ -58,21 +61,21 @@ export const Navbar = props => {
                         </li>
                     </ul>
                 </div>
-                <div className="mobile-menu-container">
+                <div className="mobile-menu-container" ref={mobileMenuRef}>
                     <div className="mobile-menu">
                         <i className="fa fa-close close-button" onClick={closeMobileMenu}></i>
                         <ul>
-                            {!props.authenticated && 
+                            {!authenticated && 
                                 <li onClick={closeMobileMenu}>
                                     <Link to="/login">Login</Link>
                                 </li>
                             }
-                            {!props.authenticated && 
+                            {!authenticated && 
                                 <li onClick={closeMobileMenu}>
                                     <Link to="/register">Register</Link>
                                 </li>
                             }
-                            {props.authenticated &&
+                            {authenticated &&
                                 <li onClick={closeMobileMenu}>
                                     <Link to="/account">Account</Link>
                                 </li>
