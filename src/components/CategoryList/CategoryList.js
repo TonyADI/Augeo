@@ -2,14 +2,14 @@ import React from 'react';
 import { Category } from '../Category/Category';
 
 
-export const CategoryList = props => {
+export const CategoryList = ({categories, handleClick}) => {
     return (
-        <div className="inline-display">
-            {props.categories ? 
-                props.categories.length ?
-                    props.categories.map(category => 
+        <div className="category-list">
+            {categories ? 
+                categories.length ?
+                    categories.map(category => 
                         <Category 
-                            handleClick={props.handleClick} 
+                            handleClick={handleClick} 
                             name={category.name} 
                             key={category.id}
                             src={category.image_src}

@@ -1,10 +1,9 @@
 import React from 'react';
 import './Footer.css';
-export const Footer = props => {
+export const Footer = ({text}) => {
     return (
-        <footer id="footer" className="full-width">
-          &#169; Copyright TonyADI. All Rights Reserved.
-          v1.0
+        <footer id="footer">
+          {text}
         </footer>
     )
 }

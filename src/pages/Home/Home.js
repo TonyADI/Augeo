@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import { Link } from "react-router-dom";
 import { ProductList } from '../../components/ProductList/ProductList';
 import { retrieveData } from '../../utilities/projectAPI';
-import './Home.css'
+import { AuthenticatedContext } from '../../components/App/App';
+import './Home.css';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -17,6 +18,7 @@ export const Home = props => {
     const [trending, setTrending] = useState([]);
     const [recentBids, setRecentBids] = useState([]);
     const [open, setOpen] = useState(false);
+    const authenticated = useContext(AuthenticatedContext);
     
     const handleClick = () => {
         setOpen(true);
@@ -104,7 +106,7 @@ export const Home = props => {
 
     return(
         <div className="home-container">
-            <div className="jumbo full-width">
+            <div className="jumbo">
                 <div className="jumbo-overlay">
                     <Snackbar 
                         open={open} 
@@ -131,7 +133,7 @@ export const Home = props => {
                                 }
                             </p>
                             <div className="button-container">
-                                <Link to={!props.authenticated ? 
+                                <Link to={!authenticated ? 
                                             '/login' :
                                             '/browse'
                                          }
@@ -149,8 +151,7 @@ export const Home = props => {
                 </div>
                 <div>
                     <ProductList 
-                        products={dummyProducts} 
-                        authenticated={props.authenticated}
+                        products={dummyProducts}
                     />
                 </div>
             </div>
@@ -160,8 +161,7 @@ export const Home = props => {
                 </div>
                 <div>
                     <ProductList 
-                        products={featured} 
-                        authenticated={props.authenticated}
+                        products={featured}
                     />
                 </div>
             </div>
@@ -171,8 +171,7 @@ export const Home = props => {
                 </div>
                 <div>
                     <ProductList 
-                        products={popular} 
-                        authenticated={props.authenticated}
+                        products={popular}
                     />
                 </div>
             </div>
@@ -182,8 +181,7 @@ export const Home = props => {
                 </div>
                 <div>
                     <ProductList 
-                        products={trending} 
-                        authenticated={props.authenticated}
+                        products={trending}
                     />
                 </div>
             </div>    
@@ -202,8 +200,7 @@ export const Home = props => {
                 </div>
                 <div>
                     <ProductList 
-                        products={latest} 
-                        authenticated={props.authenticated}
+                        products={latest}
                     />
                 </div>
             </div>
@@ -213,8 +210,7 @@ export const Home = props => {
                 </div>
                 <div>
                     <ProductList 
-                        products={recentBids} 
-                        authenticated={props.authenticated}
+                        products={recentBids}
                     />
                 </div>
             </div>

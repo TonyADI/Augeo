@@ -1,18 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
-import { Category } from '../../components/Category/Category';
+//import { Category } from '../../components/Category/Category';
 import { CategoryList } from '../../components/CategoryList/CategoryList';
 import { Product } from '../../components/Product/Product';
 import { SearchBar } from '../../components/SearchBar/SearchBar';
 import { createData, retrieveData } from '../../utilities/projectAPI';
+import { AuthenticatedContext } from '../../components/App/App';
 import './Sell.css';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-export const Sell = props => {
+export const Sell = () => {
     const [initialAsk, setInitialAsk] = useState('');
     const [buyNow, setBuyNow] = useState('');
     const [duration, setDuration] = useState('');
@@ -22,6 +23,7 @@ export const Sell = props => {
     const [display, setDisplay] = useState('none');
     const [listingSuccessOpen, setListingSuccessOpen] = useState(false);
     const [listingFailureOpen, setListingFailureOpen] = useState(false);
+    const authenticated = useContext(AuthenticatedContext);
 
     const handleListingSuccessClose = () => {
         setListingSuccessOpen(false);
@@ -36,8 +38,9 @@ export const Sell = props => {
             setCategories(data)});
     }
 
+    /*
     const addNewCategory = () => {
-    }
+    }*/
 
     const canSubmit = () => {
         if((initialAsk < buyNow) && (buyNow > 0) && duration){
@@ -92,11 +95,11 @@ export const Sell = props => {
     }
 
     const handleClick = name => {
-        if(props.authenticated){
+        if(authenticated){
             setDisplay('flex');
             setCategory(name);
         }else{
-            window.location.assign('login');
+            setListingFailureOpen(true);
         }
     }
 
@@ -145,7 +148,12 @@ export const Sell = props => {
                         severity="warning" 
                         sx={{ width: '100%' }}
                     >
-                        Something went wrong. Try Again.
+                        {authenticated ? 
+                            'Something went wrong. Try Again.' :
+                            'You need to login before listing a product!'
+                        }
+
+
                     </Alert>
             </Snackbar>
             <div>
@@ -153,10 +161,10 @@ export const Sell = props => {
                     categories={categories} 
                     handleClick={handleClick}
                 />
-                {categories && <div className="inline-display" >
+                {/*categories && <div className="inline-display" >
                     <Category name="New Category" handleClick={addNewCategory}
                     src="https://img.icons8.com/ios-glyphs/64/ffffff/plus-math.png"/>
-                </div>}
+                    </div>*/}
             </div>
                 <div id='result-container' style={{display: display}}>
                     <div id='sample-flex'>

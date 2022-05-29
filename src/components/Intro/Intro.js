@@ -1,16 +1,16 @@
 import './Intro.css';
 
-export const Intro = props => {
+export const Intro = ({logo, title}) => {
     return (
         <div className="intro-container">
             <div className='logo-container'>
                 <div>
                     <img 
-                        src={props.logo} 
+                        src={logo} 
                         alt="site-logo"
                     />
                     <h1>
-                        {props.title}
+                        {title}
                     </h1>
                 </div>
             </div>

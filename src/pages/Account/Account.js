@@ -263,7 +263,10 @@ export const Account = props => {
         }, 300000);
         return () => clearTimeout(authenticationTimeout);
     }, [authenticated]);
-
+    // Make alerts just one
+    // make textfield into array?
+    // make product list into component
+    // password modal a component
     return (
         <div className="account-container">
             <Snackbar 
@@ -327,74 +330,74 @@ export const Account = props => {
                 autoComplete="off"
                 >
                     <TextField 
-                        id="outlined-basic" 
                         label="First Name" 
                         variant="outlined"
                         onChange={handleChange}
                         value={personalDetails.first_name}
                         name="first-name"
+                        InputLabelProps={{ shrink: true }}
                     />
-                    <TextField 
-                        id="outlined-basic" 
+                    <TextField
                         label="Last Name" 
                         variant="outlined"
                         onChange={handleChange}
                         value={personalDetails.last_name}
                         name="last-name"
+                        InputLabelProps={{ shrink: true }}
                     />
                     <br/>
                     <TextField 
                         disabled
-                        id="outlined-basic" 
                         label="Email" 
                         variant="outlined"
                         value={personalDetails.email}
                         name="email"
                         fullWidth
+                        InputLabelProps={{ shrink: true }}
                     />
                     <br/>
-                    <TextField 
-                        id="outlined-basic" 
+                    <TextField
                         label="Address" 
                         variant="outlined"
                         onChange={handleChange}
                         value={personalDetails.address_line}
                         name="address-line"
                         fullWidth
+                        InputLabelProps={{ shrink: true }}
                     />
                     <br/>
-                    <TextField 
-                        id="outlined-basic" 
+                    <TextField
                         label="City" 
                         variant="outlined"
                         onChange={handleChange}
                         value={personalDetails.city}
                         name="city"
+                        InputLabelProps={{ shrink: true }}
                     />
-                    <TextField 
-                        id="outlined-basic" 
+                    <TextField
                         label="Province" 
                         variant="outlined"
                         onChange={handleChange}
                         value={personalDetails.province}
                         name="province"
+                        InputLabelProps={{ shrink: true }}
                     />
                     <br/>
-                    <TextField 
-                        id="outlined-basic" 
+                    <TextField
                         label="Postal Code" 
                         variant="outlined"
                         onChange={handleChange}
                         value={personalDetails.postal_code}
                         name="postal-code"
+                        InputLabelProps={{ shrink: true }}
                     />
-                    <TextField 
-                        id="outlined-basic" 
+                    <TextField
                         label="Country" 
                         variant="outlined"
                         onChange={handleChange}
                         value={personalDetails.country}
                         name="country"
+                        InputLabelProps={{ shrink: true }}
                     />
                 </Box>
                     {errorMessage && 
@@ -433,8 +436,7 @@ export const Account = props => {
                         Bids
                     </h2>
                    <ProductList 
-                        products={bids} 
-                        authenticated={props.authenticated}
+                        products={bids}
                     />
                 </div>
                 

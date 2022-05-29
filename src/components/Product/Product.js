@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import { Link } from "react-router-dom";
 import { createData } from '../../utilities/projectAPI';
+import { AuthenticatedContext } from '../App/App';
 import watch from '../../utilities/images/gshock.jfif';
 import imageError from '../../utilities/images/image-error.png';
 import './Product.css';
@@ -24,6 +25,7 @@ export const Product = props => {
     const [imageSrc, setImageSrc] = useState('');
     const [bidSuccessOpen, setBidSuccessOpen] = useState(false);
     const [bidFailureOpen, setBidFailureOpen] = useState(false);
+    const authenticated = useContext(AuthenticatedContext);
 
     const data = {  id: props.id, 
                     current_ask: bid, 
@@ -46,7 +48,7 @@ export const Product = props => {
         // More cases will be added to handle archiving products.
         switch(e.target.name){
             case 'Bid':
-                if(props.authenticated){
+                if(authenticated){
                     props.setTransform(); // Reset product list transform style
                     setDisplay('block');
                 }
@@ -282,7 +284,7 @@ export const Product = props => {
                             </div>
                             {(duration !=='Expired' && !props.disabled)  && 
                                 <div>
-                                    <Link to={!props.authenticated ? 
+                                    <Link to={!authenticated ? 
                                             '/login' :
                                             '/'
                                              }

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './SearchBar.css';
 
-export const SearchBar = props => {
+export const SearchBar = () => {
     const [term, setTerm] = useState('');
     const [focus, setFocus] = useState(false);
 

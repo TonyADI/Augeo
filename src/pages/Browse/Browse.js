@@ -4,7 +4,7 @@ import { ProductList } from '../../components/ProductList/ProductList';
 import { retrieveData } from '../../utilities/projectAPI';
 import './Browse.css';
 
-export const Browse = props => {
+export const Browse = () => {
     const [categories, setCategories] = useState([]);
     const [category, setCategory] = useState('');
     const [products, setProducts] = useState([]);
@@ -29,11 +29,11 @@ export const Browse = props => {
     const dummyCategories = [
         {   id: 1, 
             name: 'iPhone 11', 
-            image_src: 'https://img.icons8.com/pastel-glyph/564/000000/iphone-x--v1.png'
+            image_src: 'https://img.icons8.com/officel/344/iphone-x.png'
         },
         {   id: 2, 
             name: 'HP Spectre x360', 
-            image_src: 'https://img.icons8.com/cotton/564/000000/laptop--v1.png'
+            image_src: 'https://img.icons8.com/officel/344/laptop.png'
         },
         {   id: 3, 
             name: 'G-Shock', 
@@ -80,8 +80,7 @@ export const Browse = props => {
                 <div className="browse-products">
                     {category && 
                         <ProductList 
-                            products={products} 
-                            authenticated={props.authenticated}
+                            products={products}
                         />
                     }
                 </div>

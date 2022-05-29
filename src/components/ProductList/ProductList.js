@@ -73,8 +73,7 @@ export const ProductList = props => {
                                             initialAsk={product.initial_price} 
                                             buyNow={product.buy_now} 
                                             duration={product.duration} 
-                                            handleClick={props.handleClick} 
-                                            authenticated={props.authenticated} 
+                                            handleClick={props.handleClick}
                                             disabled={props.disabled} 
                                             setTransform={setTransform}
                                             key={product.id}

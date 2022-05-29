@@ -78,7 +78,8 @@ const App = () => {
             </Route>
             <Route component={NotFound}/>
           </Switch>
-          <Footer />
+          <Footer 
+            text="&#169; Copyright TonyADI. All Rights Reserved. v1.0"/>
         </div>
       </AuthenticatedContext.Provider>
     </Router>
