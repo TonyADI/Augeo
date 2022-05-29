@@ -1,3 +1,4 @@
+// Creates data at the specifield endpoint.
 export const createData = async (url, data) => {
     try{
         let response = await fetch(url, {method: 'POST', credentials: 'include',
@@ -26,11 +27,13 @@ export const createData = async (url, data) => {
         }
         throw new Error('Create request was invalid.');
     }
+    // If promise is rejected
     catch(error){
         console.log(error.message)
     }
 }
 
+// Fetch data from the specified endpoint.
 export const retrieveData = async (url) => {
     try{
         let response = await fetch(url, {
@@ -48,11 +51,13 @@ export const retrieveData = async (url) => {
         }
         throw new Error('Fetch request was invalid');
     }
+    // If promise is rejected.
     catch(error){
         console.log(error.message);
     }
 }
 
+// Update data at the specified endpoint with the data being passed in.
 export const updateData = async (url, data) => {
     try{
         let response = await fetch(url, {method: 'PUT', credentials: 'include',
@@ -66,11 +71,13 @@ export const updateData = async (url, data) => {
         }
         throw new Error('Update request was invalid.')
     }
+    // If promise is rejected
     catch(error){
         console.log(error.message);
     }
 }
 
+// Delete data at the specified endpoint.
 export const deleteData = async (url, data = []) => {
     try{
         let response = await fetch(url, {method: 'DELETE', credentials: 'include',
@@ -83,6 +90,7 @@ export const deleteData = async (url, data = []) => {
         }
         throw new Error('Delete request was invalid.');
     }
+    // If promise is rejected.
     catch(error){
         console.log(error.message);
     }
