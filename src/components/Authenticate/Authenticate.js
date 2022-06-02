@@ -18,8 +18,8 @@ export const Authenticate = (props) => {
   const canSubmit = () => {
     const validEmail = email.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/);
     const validPassword = password.length >= 6;
-    const validFirstName = firstName.match(/^(?:[A-Za-z]+|)$/) && firstName;
-    const validLastName = lastName.match(/^(?:[A-Za-z]+|)$/) && lastName;
+    const validFirstName = firstName && firstName.match(/^(?:[A-Za-z]+|)$/);
+    const validLastName = lastName && lastName.match(/^(?:[A-Za-z]+|)$/);
 
     if(!errorMessage && checked && validEmail && validPassword && 
       ((props.type === 'Login') || (validFirstName && validLastName))){
