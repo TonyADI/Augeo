@@ -1,7 +1,7 @@
-export const Info = ({info, detailStyle, containerStyle}) => {
+export const Info = ({info, infoStyle, containerStyle}) => {
     return (
-        <div className={`product-detail ${containerStyle}`}>
-                <span className={detailStyle}>
+        <div className={`product-detail ${containerStyle || ''}`}>
+                <span className={infoStyle || ''}>
                     {info}
                 </span>
         </div>
