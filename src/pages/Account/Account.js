@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { ProductList } from '../../components/ProductList/ProductList';
+import { Modal } from '../../components/Modal/Modal';
 import { deleteData, retrieveData, updateData, createData } from '../../utilities/projectAPI';
 import { AlertContext } from '../../components/App/App';
 import './Account.css';
@@ -10,62 +11,23 @@ export const Account = props => {
     const [passwordDisplay, setPasswordDisplay] = useState('none');
     const [password, setPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
-    const [invalidPassword, setInvalidPassword] = useState(false);
     const [authenticated, setAuthenticated] = useState(false);
     const [personalDetails, setPersonalDetails] = useState({});
     const [purchases, setPurchases] = useState([]);
     const [listings, setListings] = useState([]);
     const [bids, setBids] = useState([]);
     const [passwordType, setPasswordType] = useState('password');
-    const [iconType, setIconType] = useState('fa fa-eye-slash')
-    const [errorMessage, setErrorMessage] = useState('');
     const setAlertData = useContext(AlertContext);
-
-    const signOut = () => {
-        deleteData(`https://tonyadi.loca.lt/users/session`).then(value => {
-            if(value){
-                props.setAuthenticated(false);
-            }
-            else{
-                console.log('Logout was unsuccessful.');
-            }
-        })
-    }
-
-    // Not currently in use
-    /*
-    const deleteAccount = e => { 
-        const data = {email: personalDetails.email, password: password};
-        deleteData(`https://tonyadi.loca.lt/users/${props.userId}`, data).then(value => {
-            if(value){
-                signOut();
-            }
-            else{
-                console.log('There was an error with the request');
-                alert('Something went wrong. Please try again.');
-            }
-        });
-        e.preventDefault();
-    }
-    */
-
-    const togglePassword = () => {
-        const newPasswordType = (passwordType === 'password') ? 'text' : 'password';
-        const newIconType = (iconType === 'fa fa-eye-slash') ? 'fa fa-eye' : 'fa fa-eye-slash';
-        setPasswordType(newPasswordType);
-        setIconType(newIconType);
-      }
 
                                                                         // Manage Account
 
-    const modifyDetails = () => {;
+    const modifyDetails = () => {
         if(personalDetails.first_name && personalDetails.last_name){
             if(personalDetails.first_name.match(/^(?:[A-Za-z]+|)$/) && 
-            personalDetails.last_name.match(/^(?:[A-Za-z]+|)$/)){
+               personalDetails.last_name.match(/^(?:[A-Za-z]+|)$/)){
                 updateData('https://tonyadi.loca.lt/users/details', personalDetails).then(value => {
                     if(value){
                         setAlertData({open: true, message: 'Your modifications have been saved!', severity: 'success'});
-                        setErrorMessage('');
                     }
                     else{
                         setAlertData({open: true, message: 'Something went wrong. Please try again.', severity: 'warning'});
@@ -73,13 +35,14 @@ export const Account = props => {
                 });
             }
             else{
-                setErrorMessage('First name and last name can only be letters.');
+                setAlertData({open: true, message: 'First name and last name can only be letters.', severity: 'warning'});
             }
         }
         else{
-            setErrorMessage('First name and last name cannot be empty.');
+            setAlertData({open: true, message: 'First name and last name cannot be empty.', severity: 'warning'});
         }
     }
+
     const updatePassword = () => {
         const data = {  email: personalDetails.email, 
                         password: password, 
@@ -99,7 +62,7 @@ export const Account = props => {
             })
         }
         else{
-            setInvalidPassword(true);
+            setAlertData({open: true, message: 'Password needs to be at least 6 characters.', severity: 'warning'});
         }
     }
 
@@ -108,11 +71,10 @@ export const Account = props => {
         createData(`https://tonyadi.loca.lt/users/password`, data).then(value => {
             if(value){
                 setAuthenticated(true);
-                setInvalidPassword(false);
             }
             else{
                 console.log('Wrong password provided.')
-                setInvalidPassword(true);
+                setAlertData({open: true, message: 'Wrong password provided', severity: 'warning'});
             }
         })
     }
@@ -126,7 +88,6 @@ export const Account = props => {
         }
         e.preventDefault();
     }
-
 
                                                                         // Retrieve Data
 
@@ -166,39 +127,14 @@ export const Account = props => {
                 else{
                     setPassword(e.target.value);
                 }
-                if(e.target.value === ''){
-                    setInvalidPassword(false);
-                }
-                break;
-            case 'first-name':
-                setPersonalDetails({...personalDetails, first_name: e.target.value})
-                break;
-            case 'last-name':
-                setPersonalDetails({...personalDetails, last_name: e.target.value})
-                break;
-            case 'address-line':
-                setPersonalDetails({...personalDetails, address_line: e.target.value});
-                break;
-            case 'city':
-                setPersonalDetails({...personalDetails, city: e.target.value});
-                break;
-            case 'province':
-                setPersonalDetails({...personalDetails, province: e.target.value});
-                break;
-            case 'postal-code':
-                setPersonalDetails({...personalDetails, postal_code: e.target.value});
-                break;
-            case 'country':
-                setPersonalDetails({...personalDetails, country: e.target.value});
                 break;
             default:
-                console.log('The selected input does not exist.');
+                setPersonalDetails({...personalDetails, [e.target.name]: e.target.value});
         }
     }
 
     const handleDisplay  = e => {
-        const passwordModal = document.getElementById('password-modal');
-        if(e.target === passwordModal){
+        if(e.target.className === 'password-modal'){
             setPasswordDisplay('none');
         }
     }
@@ -206,8 +142,23 @@ export const Account = props => {
     const handlePassword = () => {
         setNewPassword('');
         setPassword('')
-        setInvalidPassword(false);
         setPasswordDisplay('block');
+    }
+
+    const signOut = () => {
+        deleteData(`https://tonyadi.loca.lt/users/session`).then(value => {
+            if(value){
+                props.setAuthenticated(false);
+            }
+            else{
+                setAlertData({open: true, message: 'Something went wrong. Please try again.', severity: 'warning'});
+            }
+        })
+    }
+
+    const togglePassword = () => {
+        const newPasswordType = (passwordType === 'password') ? 'text' : 'password';
+        setPasswordType(newPasswordType);
     }
 
     useEffect(() => {
@@ -219,19 +170,7 @@ export const Account = props => {
     }, []);
 
     // Unused for the time being
-    
     const handleDelete = () => {
-        /*
-        if(authenticated){
-            const bool = window.confirm('You are about to delete your account. Proceed?');
-            if(bool){
-                deleteAccount();
-            }
-        }
-        else{
-            setPasswordDisplay('block');
-        }
-        */
         setAlertData({open: true, message: 'This is currently unavailable', severity: 'info'});
     }
     
@@ -243,38 +182,34 @@ export const Account = props => {
         }, 300000);
         return () => clearTimeout(authenticationTimeout);
     }, [authenticated]);
-    // make textfield into array?
-    // make product list into component
-    // password modal a component
+
     return (
         <div className="account-container">
-            <div>
-                <h1>Your Account</h1>
-            </div>
+            <h1>Your Account</h1>
             <div>
                 <div className="accmenu-container">
                     <div>
                         <h2>Personal Details</h2>
                     </div>
                 <Box
-                component="form"
-                sx={{
-                  '& .MuiTextField-root': { m: 1.5, 
-                                            marginLeft: '0',
-                                            marginRight: '25px' },
-                  '& .MuiFormControl-fullWidth': {width: '95%'},
-                  width: 470,
-                  maxWidth: '100%'
-                }}
-                noValidate
-                autoComplete="off"
-                >
+                    component="form"
+                    sx={{
+                    '& .MuiTextField-root': { m: 1.5, 
+                                                marginLeft: '0',
+                                                marginRight: '25px' },
+                    '& .MuiFormControl-fullWidth': {width: '95%'},
+                    width: 470,
+                    maxWidth: '100%'
+                    }}
+                    noValidate
+                    autoComplete="off"
+                    >
                     <TextField 
                         label="First Name" 
                         variant="outlined"
                         onChange={handleChange}
                         value={personalDetails.first_name}
-                        name="first-name"
+                        name="first_name"
                         InputLabelProps={{ shrink: true }}
                     />
                     <TextField
@@ -282,7 +217,7 @@ export const Account = props => {
                         variant="outlined"
                         onChange={handleChange}
                         value={personalDetails.last_name}
-                        name="last-name"
+                        name="last_name"
                         InputLabelProps={{ shrink: true }}
                     />
                     <br/>
@@ -301,7 +236,7 @@ export const Account = props => {
                         variant="outlined"
                         onChange={handleChange}
                         value={personalDetails.address_line}
-                        name="address-line"
+                        name="address_line"
                         fullWidth
                         InputLabelProps={{ shrink: true }}
                     />
@@ -328,7 +263,7 @@ export const Account = props => {
                         variant="outlined"
                         onChange={handleChange}
                         value={personalDetails.postal_code}
-                        name="postal-code"
+                        name="postal_code"
                         InputLabelProps={{ shrink: true }}
                     />
                     <TextField
@@ -339,14 +274,7 @@ export const Account = props => {
                         name="country"
                         InputLabelProps={{ shrink: true }}
                     />
-                </Box>
-                    {errorMessage && 
-                        <div>
-                            <span className="error-message">
-                                {errorMessage}
-                            </span>
-                        </div>
-                    }
+                    </Box>
                     <div>
                         <button className="button" onClick={modifyDetails}>
                             Save Changes
@@ -411,36 +339,22 @@ export const Account = props => {
                     </button>
                 </div>
 
-
-                <div id="password-modal" style={{display: passwordDisplay}}>
-                    <div className="password-container">
-                        <form onSubmit={manageAccount}>
-                            <div className="input-container">
-                                <h2>Enter {authenticated ? 'new' : 'your'} password</h2>
-                                <div className="input-container">
-                                    <input 
-                                        className="input-field" 
-                                        type={passwordType}
-                                        name="password" 
-                                        placeholder="Password" 
-                                        value={authenticated ?
-                                                newPassword :
-                                                password} 
-                                        onChange={handleChange}
-                                    />
-                                    <i className={`${iconType} password-toggle cursor-pointer`} 
-                                    onClick={togglePassword}></i>
-                                </div>
-                                {invalidPassword &&
-                                    <span className="error-message">
-                                        Password was entered incorrectly.
-                                    </span>
-                                }
-                                <input type="submit" className="button"/>
-                            </div>
-                        </form>
-                    </div>
-                </div>
+                <Modal 
+                    modalStyle='password-modal'
+                    containerStyle='password-container'
+                    heading={`Enter ${authenticated ? 'new' : 'your'} password`}
+                    handleChange={handleChange}
+                    handleSubmit={manageAccount}
+                    display={passwordDisplay}
+                    name='password'
+                    value={authenticated ? newPassword : password} 
+                    type={passwordType}
+                    placeholder='Password'
+                    children={<i className={`${passwordType === 'text' ? 
+                                'fa fa-eye' : 'fa fa-eye-slash'} 
+                                password-toggle cursor-pointer`}
+                                onClick={togglePassword}/>}
+                    />
             </div>
         </div>
     )
