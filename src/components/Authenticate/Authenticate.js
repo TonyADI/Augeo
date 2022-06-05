@@ -11,7 +11,6 @@ export const Authenticate = (props) => {
   const [checked, setChecked] = useState(false);
   const [validData, setValidData] = useState(false);
   const [passwordType, setPasswordType] = useState('password');
-  const [iconType, setIconType] = useState('fa fa-eye-slash');
   const [errorMessage, setErrorMessage] = useState('');
   const [focus, setFocus] = useState(false);
   
@@ -21,20 +20,14 @@ export const Authenticate = (props) => {
     const validFirstName = firstName && firstName.match(/^(?:[A-Za-z]+|)$/);
     const validLastName = lastName && lastName.match(/^(?:[A-Za-z]+|)$/);
 
-    if(!errorMessage && checked && validEmail && validPassword && 
-      ((props.type === 'Login') || (validFirstName && validLastName))){
-      setValidData(true);
-    }
-    else{
-      setValidData(false);
-    }
+    let value = !errorMessage && checked && validEmail && validPassword && 
+                ((props.type === 'Login') || (validFirstName && validLastName));
+    setValidData(value);
   }
 
   const togglePassword = () => {
     const newPasswordType = (passwordType === 'password') ? 'text' : 'password';
-    const newIconType = (iconType === 'fa fa-eye-slash') ? 'fa fa-eye' : 'fa fa-eye-slash';
     setPasswordType(newPasswordType);
-    setIconType(newIconType);
   }
 
   const handleChange = e => {
@@ -52,16 +45,10 @@ export const Authenticate = (props) => {
         setLastName(e.target.value);
         break;
       default:
-        console.log('Error!')
+        return;
     }
   }
   
-  const handleKeyPress = e => {
-    if(e.which === 13 && validData){
-        submitForm(e);
-    }
-  }
-
   const handleBlur = e => {
     switch(e.target.name){
       case 'email':
@@ -112,10 +99,8 @@ export const Authenticate = (props) => {
                   first_name: firstName, 
                   last_name: lastName
                  };
-    const url = (props.type === 'Register') ? 
-                  'https://tonyadi.loca.lt/users' :
-                  'https://tonyadi.loca.lt/users/session';
-    createData(url, data).then(value => {
+    const path = props.type === 'Login' ? '/session' : '';
+    createData(`https://tonyadi.loca.lt/users${path}`, data).then(value => {
       if(value){
         props.setAuthenticated(true);
       }
@@ -157,9 +142,7 @@ export const Authenticate = (props) => {
 
   return (
     <div>
-        <h1>
-          {props.type}
-        </h1>
+        <h1>{props.type}</h1>
         <div id="authenticate-container">
           <div id="authenticate-form">
             <form onSubmit={submitForm}>
@@ -175,8 +158,7 @@ export const Authenticate = (props) => {
                     name="email"
                     id="email"
                     value={email} 
-                    onChange={handleChange} 
-                    onKeyPress={handleKeyPress} 
+                    onChange={handleChange}
                     onBlur={handleBlur}
                     onFocus={() => setFocus(true)}
                     required
@@ -191,15 +173,15 @@ export const Authenticate = (props) => {
                     id='password'
                     value={password} 
                     onChange={handleChange}
-                    onKeyPress={handleKeyPress} 
                     onBlur={handleBlur}
                     onFocus={() => setFocus(true)}
                   />
                   <label htmlFor="password">
                     Password
                   </label>
-                  <i className={`${iconType} password-toggle cursor-pointer`} 
-                    onClick={togglePassword}>
+                  <i className={`${passwordType === 'text' ? 'fa fa-eye' : 'fa fa-eye-slash'} 
+                                   password-toggle cursor-pointer`}
+                      onClick={togglePassword}>
                   </i>
                 </div>
                 {props.type === 'Register' && <div>
@@ -210,8 +192,7 @@ export const Authenticate = (props) => {
                             name="first-name"
                             id="first-name"
                             value={firstName} 
-                            onChange={handleChange} 
-                            onKeyPress={handleKeyPress} 
+                            onChange={handleChange}
                             onBlur={handleBlur}
                             onFocus={() => setFocus(true)}
                           />
@@ -224,8 +205,7 @@ export const Authenticate = (props) => {
                             name="last-name"
                             id="last-name"
                             value={lastName} 
-                            onChange={handleChange} 
-                            onKeyPress={handleKeyPress} 
+                            onChange={handleChange}
                             onBlur={handleBlur}
                             onFocus={() => setFocus(true)}
                           />
@@ -233,30 +213,29 @@ export const Authenticate = (props) => {
                       </div>
                 </div> 
                 }
-                <div className="terms-container cursor-pointer" 
-                    onClick={()=> {setChecked(!checked)}}>
+                <div 
+                  className="terms-container cursor-pointer" 
+                  onClick={()=> {setChecked(!checked)}}>
                     <input 
                         type="checkbox" 
                         name="terms" 
                         id="termsCheckbox" 
                         onChange={() => setChecked(!checked)} 
-                        checked={checked}
-                      />
-                  <span 
-                    className="small-font"> By signing {props.type === 'Register' ? 'up' : 'in'}
-                    , you agree to the Terms of Service and Privacy Policy
-                  </span>
+                        checked={checked}/>
+                    <span className="small-font"> 
+                        By signing {props.type === 'Register' ? 'up' : 'in'}
+                      , you agree to the Terms of Service and Privacy Policy
+                    </span>
                 </div>
                 <input 
                   style={{cursor: validData ?
                             'pointer' : 'default', 
                           backgroundColor: validData ?
                             '#519ec0' : 'grey'}} 
-                          type="submit" 
-                          value={props.type} 
-                          className="button" 
-                          disabled={!validData}
-                />
+                  type="submit" 
+                  value={props.type} 
+                  className="button" 
+                  disabled={!validData}/>
                 {props.type === 'Register' ?
                 <div className="small-font">
                     Already have an account? <Link to="/login">
@@ -277,5 +256,3 @@ export const Authenticate = (props) => {
     </div>
   );
 }
-
-export default Authenticate;
