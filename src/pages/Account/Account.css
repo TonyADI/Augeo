@@ -13,7 +13,7 @@
     position: relative;
 }
 
-#password-modal{
+.password-modal{
     background-color: #555;
     background-color: rgba(0,0,0,0.1);
     animation: fade-down 0.5s forwards;
