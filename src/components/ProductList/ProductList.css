@@ -1,5 +1,6 @@
 .product-carousel{
-    width: 1290px;
+    animation: fade-in ease 0.5s forwards;
+    width: 92%;
     margin: 50px auto;
     position: relative;
 }
