@@ -7,6 +7,8 @@ const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const app = express();
 
+// 'e1ZIYeVgCUIykpqWMENQ'
+
 const connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
