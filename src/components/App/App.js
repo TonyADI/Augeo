@@ -17,7 +17,7 @@ export const AuthenticatedContext = React.createContext(false);
 const App = () => {
   const [authenticated, setAuthenticated] = useState(false);
   const mobileMenuRef = useRef();
-  // retrieve cookie from local storage instead?
+  
   const verifyAuthentication = () => {
     retrieveData('https://tonyadi.loca.lt/verify-authentication').then(data => {
       if(data){
