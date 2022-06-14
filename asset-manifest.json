@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/Augeo/static/css/main.52384bf6.chunk.css",
-    "main.js": "/Augeo/static/js/main.0d39f65b.chunk.js",
-    "main.js.map": "/Augeo/static/js/main.0d39f65b.chunk.js.map",
+    "main.js": "/Augeo/static/js/main.a2821500.chunk.js",
+    "main.js.map": "/Augeo/static/js/main.a2821500.chunk.js.map",
     "runtime-main.js": "/Augeo/static/js/runtime-main.dad7c29c.js",
     "runtime-main.js.map": "/Augeo/static/js/runtime-main.dad7c29c.js.map",
     "static/js/2.c665efd7.chunk.js": "/Augeo/static/js/2.c665efd7.chunk.js",
@@ -21,6 +21,6 @@
     "static/js/runtime-main.dad7c29c.js",
     "static/js/2.c665efd7.chunk.js",
     "static/css/main.52384bf6.chunk.css",
-    "static/js/main.0d39f65b.chunk.js"
+    "static/js/main.a2821500.chunk.js"
   ]
 }
