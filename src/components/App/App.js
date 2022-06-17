@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
 import { Account } from '../../pages/Account/Account';
 import { Authenticate } from '../Authenticate/Authenticate';
 import { Browse } from '../../pages/Browse/Browse';
@@ -13,19 +15,31 @@ import { retrieveData } from '../../utilities/projectAPI';
 import logo from '../../utilities/images/logo-transparent.svg';
 import './App.css';
 export const AuthenticatedContext = React.createContext(false);
+export const AlertContext = React.createContext();
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 const App = () => {
-  const [authenticated, setAuthenticated] = useState(false);
+  const [authenticated, setAuthenticated] = useState(true);
+  const [alertData, setAlertData] = useState({open: false, message: '', severity: ''});
   const mobileMenuRef = useRef();
   
   const verifyAuthentication = () => {
-    retrieveData('https://tonyadi.loca.lt/verify-authentication').then(data => {
+    retrieveData('https://augeo-server.herokuapp.com/verify-authentication').then(data => {
       if(data){
         setAuthenticated(true);
       }
       console.log('User is not logged in');
     })
   }
+
+  // set session storage to true so animation doesnt run on refresh
+  useEffect(() => {
+    sessionStorage.setItem('session', true);
+  }, []);
+
   useEffect(() => {
     verifyAuthentication();
   }, []);
@@ -33,11 +47,25 @@ const App = () => {
   return (
     <Router basename={process.env.PUBLIC_URL}>
       <AuthenticatedContext.Provider value={authenticated}>
+      <AlertContext.Provider value={setAlertData}>
         <div id="app-body">
-            <Intro 
+            {!sessionStorage.getItem('session') && <Intro 
                 title={'Augeo'} 
                 logo={logo}
-            />
+            />}
+            <Snackbar 
+                open={alertData.open} 
+                autoHideDuration={4000} 
+                onClose={() => setAlertData({...alertData, open: false})}
+            >
+                <Alert 
+                    onClose={() => setAlertData({...alertData, open: false})} 
+                    severity={alertData.severity}
+                    sx={{ width: '100%' }}
+                >
+                    {alertData.message}
+                </Alert>
+            </Snackbar>
           <Navbar mobileMenuRef={mobileMenuRef}/>
           <Switch>
             <Route path="/browse">
@@ -82,6 +110,7 @@ const App = () => {
           <Footer 
             text="&#169; Copyright TonyADI. All Rights Reserved. v1.0"/>
         </div>
+        </AlertContext.Provider>
       </AuthenticatedContext.Provider>
     </Router>
   );
