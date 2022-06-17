@@ -40,7 +40,7 @@ export const Product = props => {
     const handleTimeout = () => {
         if(duration === 'Expired'){
             if(currentAsk){
-                createData(`https://tonyadi.loca.lt/products/${props.id}/?action=timeout`, data)
+                createData(`https://augeo-server.herokuapp.com/products/${props.id}/?action=timeout`, data)
                 .then(value => {
                     if(value){
                         console.log('Product time ran out. Someone won the product.');
@@ -55,7 +55,7 @@ export const Product = props => {
 
     const placeBid = e => {
         if(bid > currentAsk && bid >= props.initialAsk && bid < props.buyNow){
-            createData(`https://tonyadi.loca.lt/products/${props.id}/?action=bid`, data)
+            createData(`https://augeo-server.herokuapp.com/products/${props.id}/?action=bid`, data)
             .then(value => {
                if(value){
                     setCurrentAsk(bid);
@@ -68,7 +68,7 @@ export const Product = props => {
             });
         }
         else if(bid === props.buyNow){
-            createData(`https://tonyadi.loca.lt/products/${props.id}/?action=sell`, data)
+            createData(`https://augeo-server.herokuapp.com/products/${props.id}/?action=sell`, data)
             .then(value => {
                 if(value){
                     setCurrentAsk(bid);
@@ -161,9 +161,9 @@ export const Product = props => {
                              alt={`The ${props.name} being listed`}
                         />
                     </div>
-                    {details.map(detail => 
+                    {details.map((detail, i) => 
                         <Info 
-                            key={detail.info}
+                            key={detail.info + i}
                             info={detail.info}
                             containerStyle={detail.containerStyle}
                             infoStyle={detail.infoStyle}/>
