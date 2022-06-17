@@ -6,22 +6,21 @@ const cors = require('cors');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const app = express();
-
-// 'e1ZIYeVgCUIykpqWMENQ'
+const accessTokenSecret = 'c7ba8766ee42ae68303d1e3cff5ea649';
 
 const connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
+    host: 'augeo-db1.cpkxs17rmhai.us-east-2.rds.amazonaws.com',
+    user: 'admin',
     password: 'Roman618!',
     database: 'database',
-    port: 3307
+    port: 3306,
+    database: 'AUGEO'
   });
 
 connection.connect(error => {
     if(error) throw error;
     console.log('Connected');
 });
-
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
 
@@ -31,12 +30,10 @@ app.use(bodyParser.json());
 // parse cookies from request
 app.use(cookieParser());
 
-app.use(cors({credentials: true, origin: 'https://localhost:3001'}));
-
-const accessTokenSecret = 'c7ba8766ee42ae68303d1e3cff5ea649';
+app.use(cors({credentials: true, origin: 'https://tonyadi.com'}));
 
 app.use(function(req, res, next) {
-    res.header('Access-Control-Allow-Origin', 'https://localhost:3001');
+    res.header('Access-Control-Allow-Origin', 'https://tonyadi.com');
     res.header('Access-Control-Allow-Credentials', true);
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,UPDATE,OPTIONS');
     res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept');
@@ -133,7 +130,7 @@ app.post('/users/session', (req, res) => {
         if(validEmail && validPassword){
             const sha256 = crypto.createHash('sha256');
             const securePassword = sha256.update(req.body.password).digest('base64');
-            connection.query("SELECT id FROM USER WHERE email = ? AND password = ?;", [req.body.email, securePassword], 
+            connection.query("SELECT id FROM User WHERE email = ? AND password = ?;", [req.body.email, securePassword], 
             (error, result) => {
                 if (error) throw error;
                 if(result.length){
@@ -163,7 +160,7 @@ app.post('/users/session', (req, res) => {
 app.post('/users/password', checkAuth, (req, res) => {
     const sha256 = crypto.createHash('sha256');
     const securePassword = sha256.update(req.body.password).digest('base64');
-        connection.query("SELECT id FROM USER WHERE id = ? AND email = ? AND password = ?;", [req.user, req.body.email, securePassword], 
+        connection.query("SELECT id FROM User WHERE id = ? AND email = ? AND password = ?;", [req.user, req.body.email, securePassword], 
         (error, result) => {
             if (error) throw error;
             if(result.length){
@@ -179,9 +176,8 @@ app.post('/users/password', checkAuth, (req, res) => {
     
 // Fetch account personal details for the authenticated user
 app.get('/users/details', checkAuth, (req, res) => {
-    connection.query(`SELECT email, first_name, last_name, address.* FROM user,
-     address, useraddress where useraddress.user_id = ? and user.id = ?;`, 
-    [req.user, req.user], (error, result) => {
+    connection.query(`SELECT email, first_name, last_name FROM User where id = ?;`, 
+    [req.user], (error, result) => {
         if(error) throw error;
         console.log('Account details retreived');
         res.status(200).send(result[0]);
@@ -193,9 +189,10 @@ app.get('/users/products', checkAuth, (req, res) => {
     switch(req.query.type){
         case 'bid':           
             // Get bids for this account
-            connection.query(`SELECT * FROM PRODUCT WHERE product.id IN 
-            (SELECT DISTINCT bid.product_id FROM PRODUCT, 
-                bid WHERE bid.user_id = ?) ORDER BY sold, duration;`, [req.user],
+            connection.query(`SELECT Product.*, Category.product_img FROM Product, 
+            Category WHERE Category.name = Product.category_name AND Product.id IN 
+            (SELECT DISTINCT Bid.product_id FROM Product, 
+                Bid WHERE Bid.user_id = ?) ORDER BY sold, duration;`, [req.user],
                 (error, result) => {
                     if (error) throw error;
                     if(result.length){
@@ -206,7 +203,8 @@ app.get('/users/products', checkAuth, (req, res) => {
             break;
         case 'listing':
             // Get the product listings for this account
-            connection.query(`SELECT * FROM PRODUCT WHERE user_id = ? 
+            connection.query(`SELECT Product.*, Category.product_img FROM Product, 
+            Category WHERE Category.name = Product.category_name AND user_id = ? 
             ORDER BY id desc, duration;`, [req.user],
              (error, result) => {
                 if (error) throw error;
@@ -218,8 +216,9 @@ app.get('/users/products', checkAuth, (req, res) => {
             break;
         case 'purchase':
             // Get purchases for this account
-            connection.query(`SELECT * FROM Product WHERE product.id IN 
-            (SELECT product_id FROM sale WHERE user_id= ?);`, 
+            connection.query(`SELECT Product.*, Category.product_img FROM Product, 
+            Category WHERE Category.name = Product.category_name AND Product.id IN 
+            (SELECT product_id FROM Sale WHERE user_id= ?);`, 
             [req.user], (error, result) => {
                 if (error) throw error;
                 if(result.length){
@@ -236,12 +235,8 @@ app.get('/users/products', checkAuth, (req, res) => {
 
 // Modify personal details of the current authenticated user.
 app.put('/users/details', checkAuth, (req, res) => {
-    connection.query(`UPDATE user, address, useraddress SET user.first_name = ?, 
-    user.last_name = ?, address.address_line = ?, address.city = ?, 
-    address.province = ?, address.postal_code = ?, address.country = ? 
-    WHERE user.id = ? and useraddress.user_id = ?;`, [req.body.first_name, 
-        req.body.last_name, req.body.address_line, req.body.city, req.body.province,
-        req.body.postal_code, req.body.country, req.user, req.user], 
+    connection.query(`UPDATE User SET first_name = ?, last_name = ? WHERE User.id = ?`, 
+        [req.body.first_name, req.body.last_name, req.user], 
         (error, result) => {
             if (error) throw error;
             if(result.changedRows){
@@ -293,7 +288,7 @@ app.delete('/users/session', checkAuth, (req, res) => {
 app.post('/products', checkAuth, (req, res) => {
     // Duration needs to be validated
     if((req.body.initial_ask < req.body.buy_now) && (req.body.buy_now > 0)){
-        connection.query(`INSERT INTO product (category_name, user_id, 
+        connection.query(`INSERT INTO Product (category_name, user_id, 
             buy_now, initial_price, duration) VALUES (?, ?, 
         ?, ?, ?);`, [req.body.category, req.user, req.body.buy_now, 
             req.body.initial_ask, req.body.duration], 
@@ -314,13 +309,13 @@ app.post('/products', checkAuth, (req, res) => {
 app.post('/products/:productId', (req, res, next) => {
     if(req.query.action === 'timeout'){
         // Set sold to true and create a sale record when product times out
-        connection.query(`UPDATE product SET sold = true WHERE id = ? AND duration 
+        connection.query(`UPDATE Product SET sold = true WHERE id = ? AND duration 
         <= (SELECT current_timestamp()) 
         AND sold = false;`, [req.params.productId], (error, result) => {
             if (error) throw error;
             if(result.changedRows){
                 console.log('Product record successfully updated');
-                connection.query(`INSERT INTO sale (user_id, product_id) VALUES 
+                connection.query(`INSERT INTO Sale (user_id, product_id) VALUES 
                 ( (SELECT user_id FROM Bid WHERE product_id = ? 
                 ORDER BY value DESC LIMIT 1), ?);`, [req.params.productId, 
                     req.params.productId], (error, result) => {
@@ -343,7 +338,7 @@ app.post('/products/:productId', checkAuth, (req, res) => {
     switch(req.query.action){
         case 'bid':
             // Sets the current ask for product and creates bid record
-            connection.query(`UPDATE PRODUCT SET current_ask = ? WHERE id = ? AND 
+            connection.query(`UPDATE Product SET current_ask = ? WHERE id = ? AND 
             ? > current_ask AND ? > initial_price AND ? < buy_now AND ? <> user_id;`, 
             [req.body.current_ask, req.params.productId, 
                 req.body.current_ask, req.body.current_ask, req.body.current_ask, 
@@ -352,20 +347,20 @@ app.post('/products/:productId', checkAuth, (req, res) => {
                 if(result.changedRows){
                     console.log('Product record successfully updated.');
                     // Create bid record for the authenticated user
-                    connection.query(`INSERT INTO bid (value, user_id, product_id) VALUES (?, 
+                    connection.query(`INSERT INTO Bid (value, user_id, product_id) VALUES (?, 
                     ?, ?);`, [req.body.current_ask, req.user, req.params.productId], 
                     (error, result) => {
                         if (error) throw error;
                         console.log('Bid record successfully created.');
                         // Check if there is a previous bid record for the authenticated user on the specific product
-                        connection.query(`SELECT * FROM bid where product_id = ? 
+                        connection.query(`SELECT * FROM Bid where product_id = ? 
                         and user_id = ?;`, 
                         [req.params.productId, req.user], (error, result) => {
                             if (error) throw error;
                             if(result.length > 1){
                                 console.log('More than one bid record exists for the same product and user.')
                                 // Delete previous bid record of the same product from the same user
-                                connection.query(`DELETE FROM bid where product_id = ? 
+                                connection.query(`DELETE FROM Bid where product_id = ? 
                                 and user_id = ? order by id asc limit 1;`,
                                  [req.params.productId, req.user], (error, result) => {
                                     if (error) throw error;
@@ -384,14 +379,14 @@ app.post('/products/:productId', checkAuth, (req, res) => {
             break;
         case 'sell':
             // Sets the sold boolean to true and creates a sale record
-            connection.query(`UPDATE product SET sold = true, current_ask = ? 
+            connection.query(`UPDATE Product SET sold = true, current_ask = ? 
                 WHERE id = ? AND ? = buy_now AND sold = false AND ? <> user_id;`, 
                 [req.body.current_ask, req.params.productId, req.body.current_ask, req.user], 
                 (error, result) => {
                     if (error) throw error;
                     if(result.changedRows){
                         console.log('Product record successfully updated');
-                        connection.query(`INSERT INTO sale (user_id, product_id) 
+                        connection.query(`INSERT INTO Sale (user_id, product_id) 
                         VALUES (?, ?);`, 
                         [req.user, req.params.productId],
                         (error, result) => {
@@ -414,12 +409,13 @@ app.get('/products', (req, res) => {
     switch(req.query.sortBy){
         case 'popular':
             // Fetch product with the most sales
-            connection.query(`SELECT * FROM Product WHERE duration > 
+            connection.query(`SELECT Product.*, Category.product_img FROM Product, 
+            Category WHERE Category.name = Product.category_name AND duration > 
             (select current_timestamp()) AND 
             sold = false AND user_id <> ? AND category_name = 
             (SELECT category_name from 
-                (SELECT category_name, count(*) FROM PRODUCT 
-                WHERE Sold = true group by category_name ORDER BY 2 desc LIMIT 1)
+                (SELECT category_name, count(*) FROM Product
+                WHERE sold = true group by category_name ORDER BY 2 desc LIMIT 1)
                 as name) ORDER BY duration;`, [req.user],
             (error, result) => {
                 if (error) throw error;
@@ -429,13 +425,14 @@ app.get('/products', (req, res) => {
             break;
         case 'trending':
             // Fetch product records with the most bids in the latest 30 bid records.
-            connection.query(`SELECT * FROM Product WHERE duration > 
+            connection.query(`SELECT Product.*, Category.product_img FROM Product, 
+            Category WHERE Category.name = Product.category_name AND duration > 
             (select current_timestamp()) AND 
             sold = false AND user_id <> ? AND category_name = (SELECT category_name from
-            (SELECT count(product.category_name), product.category_name from product 
+            (SELECT count(Product.category_name), Product.category_name from Product 
             inner join 
-            (SELECT * FROM bid order by bid.id desc limit 30) as bid where bid.product_id 
-            = product.id group by product.category_name order by 1 desc limit 1)
+            (SELECT * FROM Bid order by Bid.id desc limit 30) as Bid where Bid.product_id 
+            = Product.id group by Product.category_name order by 1 desc limit 1)
             as category_name);`, [req.user],
             (error, result) => {
                 if (error) throw error;
@@ -445,10 +442,11 @@ app.get('/products', (req, res) => {
             break;
         case 'recent':
             // Fetch 15 products that were recently bid on
-            connection.query(`SELECT product.* FROM product inner join bid on bid.product_id = 
-            product.id WHERE product.duration > (select current_timestamp()) AND 
-            product.sold = false AND product.user_id <> ? group by bid.product_id 
-            order by MAX(bid.id) desc limit 15;`, 
+            connection.query(`SELECT Product.*, Category.product_img FROM Category, 
+            Product inner join Bid on Bid.product_id = Product.id WHERE Category.name = 
+            Product.category_name AND Product.duration > (select current_timestamp()) AND 
+            Product.sold = false AND Product.user_id <> ? group by Bid.product_id 
+            order by MAX(Bid.id) desc limit 15;`, 
             [req.user], (error, result) => {
                         if (error) throw error;
                         if(result.length) console.log('Product records successfully retrieved.');
@@ -457,11 +455,12 @@ app.get('/products', (req, res) => {
             break;
         case 'featured':
             // Fetch a random product
-            connection.query(`SELECT * FROM Product WHERE duration > (select 
+            connection.query(`SELECT Product.*, Category.product_img FROM Product, 
+            Category WHERE Category.name = Product.category_name AND duration > (select 
                 current_timestamp()) AND 
             sold = false AND user_id <> ? AND category_name = 
-            (SELECT name from (SELECT * FROM CATEGORY ORDER BY RAND() LIMIT 1) 
-            as name) ORDER BY duration;`, [req.user],
+            (SELECT name from (SELECT * FROM Category ORDER BY RAND() LIMIT 1) 
+            as name) ORDER BY duration;`, [req.user], // cant you just select name from category?
             (error, result) => {
                 if (error) throw error;
                 if(result.length) console.log('Product records successfully retrieved.');
@@ -470,9 +469,10 @@ app.get('/products', (req, res) => {
             break;
         case 'latest':
             // Fetch the products from the newest category
-            connection.query(`SELECT * FROM PRODUCT WHERE duration > (select current_timestamp()) AND 
+            connection.query(`SELECT Product.*, Category.product_img FROM Product, 
+            Category WHERE Category.name = Product.category_name AND duration > (select current_timestamp()) AND 
             sold = false AND user_id <> ? AND category_name = (SELECT name from 
-                (SELECT * FROM CATEGORY ORDER BY id desc LIMIT 1) as name) ORDER BY duration;`, [req.user],
+                (SELECT * FROM Category ORDER BY id desc LIMIT 1) as name) ORDER BY duration;`, [req.user],
                 (error, result) => {
                     if (error) throw error;
                     if(result.length) console.log('Product records successfully retrieved.');
@@ -489,9 +489,10 @@ app.get('/products', (req, res) => {
 // Retrieve products depending on the specified category
 app.get('/categories/:category/products', (req, res) => {
     const categoryName = decodeURI(req.params.category);
-    connection.query(`SELECT * FROM PRODUCT WHERE category_name = ? AND duration > 
+    connection.query(`SELECT Product.*, Category.product_img FROM Product, 
+    Category WHERE Category.name = ? AND category_name = ? AND duration > 
     (select current_timestamp()) AND 
-    sold = false AND user_id <> ? ORDER BY duration;`, [categoryName, req.user],
+    sold = false AND user_id <> ? ORDER BY duration;`, [categoryName, categoryName, req.user],
     (error, result) => {
         if (error) throw error;
         if(result.length) console.log('Product records successfully retrieved.');
@@ -501,12 +502,11 @@ app.get('/categories/:category/products', (req, res) => {
 })
 // Retrieve categories
 app.get('/categories', (req, res) => {
-    connection.query(`SELECT * FROM CATEGORY`, (error, result) => {
+    connection.query(`SELECT * FROM Category`, (error, result) => {
         if (error) throw error;
         if(result.length) console.log('Category records successfully retrieved.');
         res.status(200).send(result);
     })
 })
 
-
-app.listen(3000);
+app.listen(process.env.PORT || 3000);
