@@ -19,13 +19,9 @@ export const Sell = () => {
     const setAlertData = useContext(AlertContext);
 
     const retrieveCategories = () => {
-        retrieveData('https://tonyadi.loca.lt/categories').then(data => {
+        retrieveData('https://augeo-server.herokuapp.com/categories').then(data => {
             setCategories(data)});
     }
-
-    /*
-    const addNewCategory = () => {
-    }*/
 
     const canSubmit = () => {
         if((initialAsk < buyNow) && (buyNow > 0) && duration){
@@ -66,7 +62,7 @@ export const Sell = () => {
     const createListing = e => {
         const data = {category: category, buy_now: buyNow,
              initial_ask: initialAsk, duration: duration};
-        createData('https://tonyadi.loca.lt/products', data).then(value => {
+        createData('https://augeo-server.herokuapp.com/products', data).then(value => {
             if(value){
                 setAlertData({message: 'Listing was created!', severity: 'success', open: true});
                 
@@ -95,6 +91,23 @@ export const Sell = () => {
             setDisplay('none');
         }
     }
+    
+    // Initialize categories with localstorage if it exists or make api call.
+    useEffect(() => {
+        const localCategories = sessionStorage.getItem('categories') && 
+                                JSON.parse(sessionStorage.getItem('categories'));
+        if(categories){
+            setCategories(localCategories);
+        }
+        else{
+            retrieveCategories();
+        }
+    }, []);
+    
+    // Save categories to localstorage when api is called
+    useEffect(() => {
+        sessionStorage.setItem('categories', categories ? JSON.stringify(categories) : []);
+    }, [categories]);
 
     useEffect(() => {
         document.addEventListener('mousedown', handleDisplay);

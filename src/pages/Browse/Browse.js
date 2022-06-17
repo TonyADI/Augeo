@@ -10,13 +10,13 @@ export const Browse = () => {
     const [products, setProducts] = useState([]);
     
     const retrieveCategories = () => {
-        retrieveData('https://tonyadi.loca.lt/categories').then(data => {
+        retrieveData('https://augeo-server.herokuapp.com/categories').then(data => {
             setCategories(data);
         })
     }
 
     const retrieveProducts = name => {
-        retrieveData(`https://tonyadi.loca.lt/categories/${encodeURI(name)}/products`).then(data => {
+        retrieveData(`https://augeo-server.herokuapp.com/categories/${encodeURI(name)}/products`).then(data => {
             setProducts(data)});
     }
 
@@ -41,6 +41,23 @@ export const Browse = () => {
         }
     ];
 
+    // Initialize categories with localstorage if it exists or make api call.
+    useEffect(() => {
+        const localCategories = sessionStorage.getItem('categories') && 
+                                JSON.parse(sessionStorage.getItem('categories'));
+        if(categories){
+            setCategories(localCategories);
+        }
+        else{
+            retrieveCategories();
+        }
+    }, []);
+    
+    // Save categories to localstorage when api is called
+    useEffect(() => {
+        sessionStorage.setItem('categories', categories ? JSON.stringify(categories) : []);
+    }, [categories]);
+
     useEffect(() => {
         retrieveCategories();
     }, [])
@@ -52,7 +69,6 @@ export const Browse = () => {
                     <select className="cursor-pointer" id="filter" name="filter">
                         <option value="max">Max Buy-Now</option>
                     </select>
-                    {/*<input type="submit"/>*/}
                 </form>
                 <form className="sortBy-form">
                     <select className="cursor-pointer" id="order-by" name="order-by">
@@ -61,7 +77,6 @@ export const Browse = () => {
                         <option value="initial_price">Initial Ask</option>
                         <option value="buy_now">Buy Now</option>
                     </select>
-                    {/*<input type="submit"/>*/}
                 </form>
             </div>
             <div>
