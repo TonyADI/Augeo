@@ -1,26 +1,20 @@
 {
   "files": {
-    "main.css": "/Augeo/static/css/main.b94bcf40.chunk.css",
-    "main.js": "/Augeo/static/js/main.a7cddb69.chunk.js",
-    "main.js.map": "/Augeo/static/js/main.a7cddb69.chunk.js.map",
-    "runtime-main.js": "/Augeo/static/js/runtime-main.dad7c29c.js",
-    "runtime-main.js.map": "/Augeo/static/js/runtime-main.dad7c29c.js.map",
-    "static/js/2.c665efd7.chunk.js": "/Augeo/static/js/2.c665efd7.chunk.js",
-    "static/js/2.c665efd7.chunk.js.map": "/Augeo/static/js/2.c665efd7.chunk.js.map",
-    "static/js/3.868bedf1.chunk.js": "/Augeo/static/js/3.868bedf1.chunk.js",
-    "static/js/3.868bedf1.chunk.js.map": "/Augeo/static/js/3.868bedf1.chunk.js.map",
+    "main.css": "/Augeo/static/css/main.a6ac3496.css",
+    "main.js": "/Augeo/static/js/main.f6c13e2d.js",
+    "static/js/377.b7793882.chunk.js": "/Augeo/static/js/377.b7793882.chunk.js",
+    "static/media/image2.jfif": "/Augeo/static/media/image2.7e3029a7ae1ae104cb4b.jfif",
+    "static/media/logo-transparent.svg": "/Augeo/static/media/logo-transparent.e36dff0a8d58482a8d23ccc392062558.svg",
+    "static/media/banner-background.jfif": "/Augeo/static/media/banner-background.24e331dc00ffdf5b16b3.jfif",
+    "static/media/404.jpg": "/Augeo/static/media/404.a6b92039da88708a972a.jpg",
+    "static/media/default-category.png": "/Augeo/static/media/default-category.d6a05a171a3d5d64ff4d.png",
     "index.html": "/Augeo/index.html",
-    "static/css/main.b94bcf40.chunk.css.map": "/Augeo/static/css/main.b94bcf40.chunk.css.map",
-    "static/js/2.c665efd7.chunk.js.LICENSE.txt": "/Augeo/static/js/2.c665efd7.chunk.js.LICENSE.txt",
-    "static/media/NotFound.css": "/Augeo/static/media/404.a6b92039.jpg",
-    "static/media/Home.css": "/Augeo/static/media/image2.7e3029a7.jfif",
-    "static/media/default-category.d6a05a17.png": "/Augeo/static/media/default-category.d6a05a17.png",
-    "static/media/logo-transparent.e36dff0a.svg": "/Augeo/static/media/logo-transparent.e36dff0a.svg"
+    "main.a6ac3496.css.map": "/Augeo/static/css/main.a6ac3496.css.map",
+    "main.f6c13e2d.js.map": "/Augeo/static/js/main.f6c13e2d.js.map",
+    "377.b7793882.chunk.js.map": "/Augeo/static/js/377.b7793882.chunk.js.map"
   },
   "entrypoints": [
-    "static/js/runtime-main.dad7c29c.js",
-    "static/js/2.c665efd7.chunk.js",
-    "static/css/main.b94bcf40.chunk.css",
-    "static/js/main.a7cddb69.chunk.js"
+    "static/css/main.a6ac3496.css",
+    "static/js/main.f6c13e2d.js"
   ]
 }
