@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { createData } from '../../utilities/projectAPI';
-import { AuthenticatedContext, AlertContext } from '../App/App';
+import { AuthenticatedContext, AlertContext } from '../../App';
 import { Info } from '../Info/Info';
 import { Modal } from '../Modal/Modal';
 import './Product.css';
@@ -28,27 +28,21 @@ export const Product = props => {
         switch(e.target.name){
             case 'Bid':
                 if(authenticated){
-                    props.setTransform(); // Reset product list transform style
                     setDisplay('block');
+                }
+                else{
+                    setAlertData({message: 'You need to login first.', open: true, severity: 'info'})
                 }
                 break;
             default:
-                console.log('There was a problem with the handle click function in product');
+                return;
         }
     }
 
     const handleTimeout = () => {
         if(duration === 'Expired'){
             if(currentAsk){
-                createData(`https://augeo-server.herokuapp.com/products/${props.id}/?action=timeout`, data)
-                .then(value => {
-                    if(value){
-                        console.log('Product time ran out. Someone won the product.');
-                    }
-                    else{
-                        console.log('Something went wrong with handleTimeout.')
-                    }
-                })
+                createData(`https://augeo-server.herokuapp.com/products/${props.id}/?action=timeout`, data);
             }
         }
     }
@@ -59,7 +53,7 @@ export const Product = props => {
             .then(value => {
                if(value){
                     setCurrentAsk(bid);
-                    setAlertData({message: 'Congratulations, you just won this item!', severity: 'success', open: true});
+                    setAlertData({message: 'Bid was placed!', severity: 'success', open: true});
                     // removed set display none from here
                 }
                 else{
@@ -158,8 +152,7 @@ export const Product = props => {
                     <div className="image-container">
                         <img className="product-image" 
                              src={props.imageSrc} 
-                             alt={`The ${props.name} being listed`}
-                        />
+                             alt={`The ${props.name} being listed`}/>
                     </div>
                     {details.map((detail, i) => 
                         <Info 
@@ -169,13 +162,12 @@ export const Product = props => {
                             infoStyle={detail.infoStyle}/>
                     )}
                     {(duration !=='Expired' && !props.disabled)  && 
-                        <Link 
+                        <button 
                             onClick={canBid}
-                            className="bid-button"
-                            name="Bid"
-                            to={!authenticated ? '/login' : '/'}>
+                            className="product-button"
+                            name="Bid">
                                 Bid
-                        </Link>
+                        </button>
                     }
                 </div>
             </div>
@@ -191,7 +183,7 @@ export const Product = props => {
                 value={bid}
                 type='number'
                 submitValue={bid === props.buyNow ? 'Buy Now' : 'Bid'}
-                placeholder={`Enter a value higher than $${(currentAsk === 0) ? 
+                placeholder={`At least $${(currentAsk === 0) ? 
                     props.initialAsk : currentAsk}`}
                 />
             </div>
