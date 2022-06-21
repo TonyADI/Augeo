@@ -22,6 +22,7 @@ input:not(#termsCheckbox), select, form {
 }
 .input-container{
   margin: 20px 0px;
+  position: relative;
 }
 
 .input-field{
