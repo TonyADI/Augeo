@@ -11,7 +11,7 @@ const accessTokenSecret = 'c7ba8766ee42ae68303d1e3cff5ea649';
 const connection = mysql.createConnection({
     host: 'augeo-db1.cpkxs17rmhai.us-east-2.rds.amazonaws.com',
     user: 'admin',
-    password: 'Roman618!',
+    password: '',
     database: 'database',
     port: 3306,
     database: 'AUGEO'
