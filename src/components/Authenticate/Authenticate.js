@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link } from "react-router-dom";
 import { createData }  from '../../utilities/projectAPI';
+import { AlertContext } from '../../App';
+import { Modal } from '../Modal/Modal';
 import './Authenticate.css';
 
 export const Authenticate = (props) => {
@@ -12,7 +14,9 @@ export const Authenticate = (props) => {
   const [validData, setValidData] = useState(false);
   const [passwordType, setPasswordType] = useState('password');
   const [errorMessage, setErrorMessage] = useState('');
-  const [focus, setFocus] = useState(false);
+  const [focus, setFocus] = useState(false);  
+  const [display, setDisplay] = useState(false);
+  const setAlertData = useContext(AlertContext);
   
   const canSubmit = () => {
     const validEmail = email.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/);
@@ -91,22 +95,16 @@ export const Authenticate = (props) => {
 
   const submitForm = e => {
     // For testing purposes
-    if(email === 'test@test.com' && password === 'tester'){
-      props.setAuthenticated(true)
-    }
-    const data = {email: email, 
-                  password: password, 
-                  first_name: firstName, 
-                  last_name: lastName
-                 };
+    const data = {email: email, password: password, 
+                  first_name: firstName, last_name: lastName};
     const path = props.type === 'Login' ? '/session' : '';
-    createData(`https://tonyadi.loca.lt/users${path}`, data).then(value => {
+    createData(`https://augeo-server.herokuapp.com/users${path}`, data).then(value => {
       if(value){
         props.setAuthenticated(true);
       }
       else{
         if (typeof value === 'undefined'){
-            setErrorMessage('Server is currently down.')
+            setErrorMessage('Server is currently down.');
         }
         else{
           switch(props.type){
@@ -124,6 +122,36 @@ export const Authenticate = (props) => {
       });
     e.preventDefault();
   }
+
+  
+  const openModalDisplay = () => {
+    setDisplay('block');
+  }
+
+  const closeModalDisplay = e => {
+    if(e.target.className === 'bid-container'){
+        setDisplay('none');
+    }
+  }
+
+  const handleForgotPassword = () => {
+    const validEmail = email.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/);
+    const data = {email: email}
+    if(validEmail){
+        createData(`https://augeo-server.herokuapp.com/forgot-password`, data)
+        .then(value => {
+            if(value){
+                setAlertData({message: 'Email sent! Make sure to check junk as well.', open: true, severity: 'success'})
+            }
+            else{
+                setAlertData({message: 'Something went wrong. Try again.', open: true, severity: 'error'})
+            }
+        })
+    }
+    else{
+        setAlertData({message: 'Email is invalid', severity: 'warning', open: true})
+    }
+  }
   
   useEffect(()=>{
     if(!focus){
@@ -132,13 +160,16 @@ export const Authenticate = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [checked, focus]);
 
-
   useEffect(() => {
     setFirstName('');
     setLastName('');
     setErrorMessage('');
     setChecked(false);
-  }, [props.type])
+  }, [props.type]);
+
+  useEffect(() => {
+    document.addEventListener('mousedown', closeModalDisplay);
+  }, []);
 
   return (
     <div>
@@ -248,11 +279,28 @@ export const Authenticate = (props) => {
                       Not a member? <Link to='/register'>
                         Sign up
                       </Link>
+                      <span 
+                        onClick={openModalDisplay}
+                        className='forgot-password'>
+                        {' | Forgot password?'}
+                        </span>
                 </div>
                 }
             </form>
           </div>
         </div>
+        <Modal 
+            modalStyle='bid-container'
+            containerStyle='form-container'
+            heading='Forgot Password?'
+            handleChange={handleChange}
+            handleSubmit={handleForgotPassword}
+            display={display}
+            name='email'
+            value={email}
+            type='email'
+            submitValue='Send'
+            placeholder='Email'/>
     </div>
   );
 }
