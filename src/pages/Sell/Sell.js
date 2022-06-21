@@ -1,10 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
-//import { Category } from '../../components/Category/Category';
 import { CategoryList } from '../../components/CategoryList/CategoryList';
-import { Product } from '../../components/Product/Product';
 import { SearchBar } from '../../components/SearchBar/SearchBar';
 import { createData, retrieveData } from '../../utilities/projectAPI';
-import { AuthenticatedContext, AlertContext } from '../../components/App/App';
+import { AuthenticatedContext, AlertContext } from '../../App';
 import './Sell.css';
 
 export const Sell = () => {
@@ -13,7 +11,6 @@ export const Sell = () => {
     const [duration, setDuration] = useState('');
     const [category, setCategory] = useState('');
     const [categories, setCategories] = useState([]);
-    const [validData, setValidData] = useState(false);
     const [display, setDisplay] = useState('none');
     const authenticated = useContext(AuthenticatedContext);
     const setAlertData = useContext(AlertContext);
@@ -23,26 +20,35 @@ export const Sell = () => {
             setCategories(data)});
     }
 
-    const canSubmit = () => {
-        if((initialAsk < buyNow) && (buyNow > 0) && duration){
-          setValidData(true);
+    const createListing = e => {
+        if(parseInt(initialAsk) < parseInt(buyNow) && duration){
+            const data = {category: category, buy_now: buyNow,
+                          initial_ask: initialAsk, duration: duration};
+            createData('https://augeo-server.herokuapp.com/products', data).then(value => {
+                if(value){
+                    setAlertData({message: 'Listing was created!', severity: 'success', open: true});
+                    
+                }else{
+                    setAlertData({message: 'Something went wrong. Try again.', severity: 'warning', open: true});
+                }
+
+            })
+            setDisplay('none')
         }
         else{
-          setValidData(false);
+            setAlertData({open: true, severity: 'warning',
+            message: 'Initial ask must be lower than final ask and duration at least an hour.'});
         }
+        e.preventDefault();
     }
-
+    
     const handleChange = e => {
         switch(e.target.name){
             case 'initial-ask':
-                if(e.target.value >= 0){
-                    setInitialAsk(parseInt(e.target.value));
-                }
+                setInitialAsk(parseInt(e.target.value) || '');
                 break;
             case 'buy-now':
-                if(e.target.value >= 0){
-                    setBuyNow(parseInt(e.target.value));
-                }
+                setBuyNow(parseInt(e.target.value) || '');
                 break;
             case 'duration':
                 const now = new Date().getTime();
@@ -55,25 +61,8 @@ export const Sell = () => {
                 }
                 break;
             default:
-                console.log('There was an error');
+                return;
         }
-    }
-
-    const createListing = e => {
-        const data = {category: category, buy_now: buyNow,
-             initial_ask: initialAsk, duration: duration};
-        createData('https://augeo-server.herokuapp.com/products', data).then(value => {
-            if(value){
-                setAlertData({message: 'Listing was created!', severity: 'success', open: true});
-                
-            }else{
-                setAlertData({message: 'Something went wrong. Try again.', severity: 'warning', open: true});
-                console.log('Product was not listed. Most likely due to invalid data being provided');
-            }
-
-        })
-        setDisplay('none')
-        e.preventDefault();
     }
 
     const handleClick = name => {
@@ -117,95 +106,63 @@ export const Sell = () => {
     return(
         <div id="sell-body">
             <div>
-                <div id="searchbar-heading">
-                    <h1>What product are you trying to list</h1>
-                </div>
+                <h1 id="searchbar-heading">What product are you trying to list</h1>
                 <div id="search-bar">
                     <SearchBar />
                 </div>
             </div>
-            <div>
-                <CategoryList 
-                    categories={categories} 
-                    handleClick={handleClick}
-                />
-                {/*categories && <div className="inline-display" >
-                    <Category name="New Category" handleClick={addNewCategory}
-                    src="https://img.icons8.com/ios-glyphs/64/ffffff/plus-math.png"/>
-                    </div>*/}
-            </div>
-                <div id='result-container' style={{display: display}}>
+            <CategoryList 
+                categories={categories} 
+                handleClick={handleClick}/>
+            <div id='result-container' style={{display: display}}>
                     <div id='sample-flex'>
-                        <div id="sample-listing">
-                            <Product 
-                                name={category} 
-                                disabled={true} 
-                                initialAsk={initialAsk} 
-                                currentAsk={0} 
-                                buyNow={buyNow} 
-                                duration={duration}
-                            />
+                        <div className='sample-listing-container'>
+                            <form onSubmit={createListing}>
+                                <img className="sample-listing" 
+                                    src={'https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?ixid=MXwxM%%20%20=format&fit=crop&w=1000&q=60'} 
+                                    alt={`The product being listed`}/>
+                                <div className={`product-detail`}>
+                                    <span className={'product-name'}>
+                                        {category}
+                                    </span>
+                                </div>
+                                <div className={`product-detail`}>
+                                    <div>Initial Ask</div>
+                                        <input 
+                                            className="sample-listing-input" 
+                                            type="number"
+                                            name="initial-ask" 
+                                            placeholder="Enter Amount" 
+                                            value={initialAsk} 
+                                            onChange={handleChange}/>
+                                </div>
+                                <div className={`product-detail`}>
+                                    <div>Final Ask</div>
+                                        <input 
+                                            className="sample-listing-input" 
+                                            type="number"
+                                            name="buy-now" 
+                                            placeholder="Enter Amount" 
+                                            value={buyNow} 
+                                            onChange={handleChange}/>
+                                </div>
+                                <div className={`product-detail`}>
+                                    <div>Duration</div>
+                                    <input 
+                                        className='sample-listing-input'
+                                        type="datetime-local" 
+                                        name="duration" 
+                                        value={duration} 
+                                        onChange={handleChange}/>
+                                </div>
+                                <input 
+                                    type="submit"
+                                    value="List" 
+                                    className="product-button sell-button"/>
+                            </form>
                         </div>
                     </div>
-                    <div id='form-flex'>
-                        <form onSubmit={createListing}>
-                            <div className="input-container">
-                                <span>Initial Ask</span>
-                                <input 
-                                    className="input-field" 
-                                    type="number" 
-                                    onBlur={canSubmit}
-                                    name="initial-ask" 
-                                    placeholder="Enter Amount (Less than Final Ask)" 
-                                    value={initialAsk} 
-                                    onChange={handleChange}
-                                />
-                            </div>
-                            <div className="input-container">
-                                <span>Final Ask</span>
-                                <input 
-                                    className="input-field" 
-                                    type="number" 
-                                    name="buy-now" 
-                                    placeholder="Enter Amount (At least 1)" 
-                                    value={buyNow} 
-                                    onChange={handleChange} 
-                                    onBlur={canSubmit}
-                                />
-                            </div>
-                            <div className="input-container">
-                                <span>Duration</span>
-                                <input 
-                                    className="input-field" 
-                                    type="datetime-local" 
-                                    name="duration" 
-                                    value={duration} 
-                                    onChange={handleChange} 
-                                    onBlur={canSubmit}
-                                />
-                                {!duration && 
-                                <div className="error-message">
-                                    Duration needs to be at least an hour
-                                </div>
-                                }
-                            </div>
-                            <input 
-                                type="submit" 
-                                style={{
-                                        cursor: validData ?
-                                            'pointer' : 
-                                            'default', 
-                                        backgroundColor: validData ?
-                                            '#050F19' : 
-                                            'grey'
-                                      }}   
-                                value="List Product" 
-                                className="button" 
-                                disabled={!validData}
-                            />
-                        </form>
-                    </div>
-                </div>
+            </div>
         </div>
     )
 }
