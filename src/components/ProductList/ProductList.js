@@ -1,101 +1,71 @@
-import React, { useEffect } from 'react';
-import { Product } from '../Product/Product'
-import './ProductList.css'
+import React, { useState, useEffect, useRef } from 'react';
+import { FixedSizeList as List } from 'react-window';
+import { Product } from '../Product/Product';
+import './ProductList.css';
 
-export const ProductList = ({heading, handleClick, disabled, products}) => {
-    // Reset transform to inherit so product modal box can display corretly.
-    // Currently affects all tracks but should affect only one.
-    const setTransform = () => {
-        const tracks = document.getElementsByClassName('track');
-        for(let i = 0; i < tracks.length; i++){
-            const track = tracks[i];
-            track.style.transform = 'initial';
-        }
+export const ProductList = ({heading, disabled, products}) => { 
+    const [width, setWidth] = useState(1000);
+    const productListContainerRef = useRef(null);
+
+    const updateWidth = () => {
+        let innerDivWidth = productListContainerRef.current &&
+                            productListContainerRef.current.firstChild && 
+                            productListContainerRef.current.firstChild.firstChild &&
+                            productListContainerRef.current.firstChild.firstChild.style &&
+                            productListContainerRef.current.firstChild.firstChild.style.width;
+        const innerDivWidthNum = parseInt((innerDivWidth && innerDivWidth.match(/(\d+)/) && 
+                                           innerDivWidth.match(/(\d+)/)[0]));
+        const newWidth = Math.floor(92/100 * window.innerWidth) > innerDivWidthNum ? 
+                         innerDivWidthNum : 
+                         Math.floor(92/100 * window.innerWidth);
+        setWidth(newWidth)
     }
     
     useEffect(() => {
-        const productCarousels = document.getElementsByClassName('product-carousel');
-        const nextList = document.getElementsByClassName('next');
-        const prevList = document.getElementsByClassName('prev');
-        const tracks = document.getElementsByClassName('track');
-        for(let i = 0; i < productCarousels.length; i++){
-            const productCarouselWidth = productCarousels[i].offsetWidth;
-            const next = nextList[i];
-            const prev = prevList[i];
-            const track = tracks[i];
-            let index = 0;
-
-            // Restart carousel for browse page
-            track.style.transform = `translate(-${0 * productCarouselWidth}px)`;
-            prev.classList.add('hide');
-            if(track.offsetWidth - (0 * productCarouselWidth) >= productCarouselWidth){
-                next.classList.add('show');
-                next.classList.remove('hide');
-            }
-            else{
-                next.classList.remove('show');
-            }
-
-            next.addEventListener('click', () => {
-                index++;
-                prev.classList.add('show');
-                prev.classList.remove('hide');
-                track.style.transform = `translate(-${index * productCarouselWidth}px)`;
-                if(track.offsetWidth - (index * productCarouselWidth) < productCarouselWidth){
-                    next.classList.add('hide');
-                }
-            })
-
-            prev.addEventListener('click', () => {
-                index--;
-                next.classList.remove('hide');
-                track.style.transform = `translate(-${index * productCarouselWidth}px)`;
-                if(index === 0){
-                    prev.classList.add('hide');
-                }
-            });
-        }
-        },
-    [products]);
-
-    return(
-        <div>
-            <h2>{heading || 'Products'}</h2>
-            <div className="product-carousel">
-                <div className="carousel-inner">
-                    <div className="track">
-                        {products ? 
-                            products.length ?
-                                products.map(product => {
-                                    return <Product 
-                                                id={product.id} 
-                                                name={product.category_name} 
-                                                imageSrc={product.imageSrc} 
-                                                currentAsk={product.current_ask} 
-                                                initialAsk={product.initial_price} 
-                                                buyNow={product.buy_now} 
-                                                duration={product.duration} 
-                                                handleClick={handleClick}
-                                                disabled={disabled} 
-                                                setTransform={setTransform}
-                                                key={product.id}
-                                            />
-                                }) 
-                            :
-                            <div>No Products to display</div> 
-                        :
-                        <div>Server is currently down</div>}
-                    </div>
-                </div>
-                <div className='carousel-nav'>
-                    <button className="prev">
-                        <i className="fa fa-angle-left direction-icon"></i>
-                    </button>
-                    <button className="next">
-                        <i className="fa fa-angle-right direction-icon"></i>
-                    </button>
-                </div>
-            </div>
+        updateWidth();
+        window.addEventListener("resize", updateWidth);
+        return () => window.removeEventListener("resize", updateWidth);
+    }, [products]);
+    
+    const Column = ({ index, data, style }) => (
+        <div style={style}>
+            <Product 
+                id={data[index].id} 
+                name={data[index].category_name} 
+                imageSrc={data[index].product_img} 
+                currentAsk={data[index].current_ask} 
+                initialAsk={data[index].initial_price}
+                disabled={disabled} 
+                buyNow={data[index].buy_now} 
+                duration={data[index].duration}
+                key={data[index].id}
+            />
         </div>
-    )
+      );
+  
+      return(
+          <div>
+              <h2>{heading || 'Products'}</h2>
+              <div className='product-list-container'
+                   ref={productListContainerRef}>
+                    {products ? 
+                        products.length ?
+                          <List
+                            className="product-list"
+                            height={375}
+                            itemData={products}
+                            itemCount={products.length}
+                            itemSize={260}
+                            layout="horizontal"
+                            width={width}
+                          >
+                            {Column}
+                          </List>
+                              :
+                        <div>No Products to display</div> 
+                          :
+                      <div>Server is currently down</div>}
+              </div>
+          </div>
+      )
 }
