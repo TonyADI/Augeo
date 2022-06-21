@@ -4,14 +4,13 @@ import TextField from '@mui/material/TextField';
 import { ProductList } from '../../components/ProductList/ProductList';
 import { Modal } from '../../components/Modal/Modal';
 import { deleteData, retrieveData, updateData, createData } from '../../utilities/projectAPI';
-import { AlertContext } from '../../components/App/App';
+import { AlertContext } from '../../App';
 import './Account.css';
 
 export const Account = props => {
     const [passwordDisplay, setPasswordDisplay] = useState('none');
     const [password, setPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
-    const [authenticated, setAuthenticated] = useState(false);
     const [personalDetails, setPersonalDetails] = useState({});
     const [purchases, setPurchases] = useState([]);
     const [listings, setListings] = useState([]);
@@ -25,7 +24,7 @@ export const Account = props => {
         if(personalDetails.first_name && personalDetails.last_name){
             if(personalDetails.first_name.match(/^(?:[A-Za-z]+|)$/) && 
                personalDetails.last_name.match(/^(?:[A-Za-z]+|)$/)){
-                updateData('https://tonyadi.loca.lt/users/details', personalDetails).then(value => {
+                updateData('https://augeo-server.herokuapp.com/users/details', personalDetails).then(value => {
                     if(value){
                         setAlertData({open: true, message: 'Your modifications have been saved!', severity: 'success'});
                     }
@@ -49,15 +48,15 @@ export const Account = props => {
                         new_password: newPassword
                      };
         if(newPassword.length >= 6){
-            updateData(`https://tonyadi.loca.lt/users/password`, data).then(value => {
+            updateData(`https://augeo-server.herokuapp.com/users/password`, data).then(value => {
                 if(value){
                     setAlertData({open: true, message: 'Your modifications have been saved!', severity: 'success'});
                     setPassword(newPassword);
                     setPasswordDisplay('none');
                 }
                 else{
-                    setAlertData({open: true, message: 'Something went wrong. Please try again.', severity: 'warning'});
-                    console.log('Password was not updated.');
+                // setAlertData({open: true, message: 'Wrong password provided', severity: 'warning'});
+                setAlertData({open: true, message: 'Something went wrong. Please try again.', severity: 'warning'});
                 }
             })
         }
@@ -66,33 +65,15 @@ export const Account = props => {
         }
     }
 
-    const verifyPassword = () => {
-        const data = {email: personalDetails.email, password: password};
-        createData(`https://tonyadi.loca.lt/users/password`, data).then(value => {
-            if(value){
-                setAuthenticated(true);
-            }
-            else{
-                console.log('Wrong password provided.')
-                setAlertData({open: true, message: 'Wrong password provided', severity: 'warning'});
-            }
-        })
-    }
-
-    const manageAccount = e => {
-        if(authenticated){
-            updatePassword();
-        }
-        else{
-            verifyPassword();
-        }
+    const submitPassword = e => {
+        updatePassword();
         e.preventDefault();
     }
 
                                                                         // Retrieve Data
 
     const retrieveDetails = () => {
-        retrieveData(`https://tonyadi.loca.lt/users/details`).then(data => {
+        retrieveData(`https://augeo-server.herokuapp.com/users/details`).then(data => {
             if(data){
                 setPersonalDetails(data);
             }
@@ -100,19 +81,19 @@ export const Account = props => {
     }
 
     const retrieveListings = () => {
-        retrieveData(`https://tonyadi.loca.lt/users/products?type=listing`).then(data => {
+        retrieveData(`https://augeo-server.herokuapp.com/users/products?type=listing`).then(data => {
             setListings(data);
         })
     }
 
     const retrieveBids = () => {
-        retrieveData(`https://tonyadi.loca.lt/users/products?type=bid`).then(data => {
+        retrieveData(`https://augeo-server.herokuapp.com/users/products?type=bid`).then(data => {
             setBids(data);
         })
     }
 
     const retrievePurchases = () => {
-        retrieveData(`https://tonyadi.loca.lt/users/products?type=purchase`).then(data => {
+        retrieveData(`https://augeo-server.herokuapp.com/users/products?type=purchase`).then(data => {
             setPurchases(data);
         })
     }
@@ -121,12 +102,7 @@ export const Account = props => {
     const handleChange = e => {
         switch(e.target.name){
             case 'password':
-                if(authenticated){
-                    setNewPassword(e.target.value);
-                }
-                else{
-                    setPassword(e.target.value);
-                }
+                setNewPassword(e.target.value);
                 break;
             default:
                 setPersonalDetails({...personalDetails, [e.target.name]: e.target.value});
@@ -146,7 +122,7 @@ export const Account = props => {
     }
 
     const signOut = () => {
-        deleteData(`https://tonyadi.loca.lt/users/session`).then(value => {
+        deleteData(`https://augeo-server.herokuapp.com/users/session`).then(value => {
             if(value){
                 props.setAuthenticated(false);
             }
@@ -174,14 +150,6 @@ export const Account = props => {
         setAlertData({open: true, message: 'This is currently unavailable', severity: 'info'});
     }
     
-    // After 5 minutes clear users authentication
-    useEffect(() => {
-        var authenticationTimeout = setTimeout(() => {
-            setAuthenticated(false);
-            setPassword('');
-        }, 300000);
-        return () => clearTimeout(authenticationTimeout);
-    }, [authenticated]);
 
     return (
         <div className="account-container">
@@ -231,49 +199,6 @@ export const Account = props => {
                         InputLabelProps={{ shrink: true }}
                     />
                     <br/>
-                    <TextField
-                        label="Address" 
-                        variant="outlined"
-                        onChange={handleChange}
-                        value={personalDetails.address_line}
-                        name="address_line"
-                        fullWidth
-                        InputLabelProps={{ shrink: true }}
-                    />
-                    <br/>
-                    <TextField
-                        label="City" 
-                        variant="outlined"
-                        onChange={handleChange}
-                        value={personalDetails.city}
-                        name="city"
-                        InputLabelProps={{ shrink: true }}
-                    />
-                    <TextField
-                        label="Province" 
-                        variant="outlined"
-                        onChange={handleChange}
-                        value={personalDetails.province}
-                        name="province"
-                        InputLabelProps={{ shrink: true }}
-                    />
-                    <br/>
-                    <TextField
-                        label="Postal Code" 
-                        variant="outlined"
-                        onChange={handleChange}
-                        value={personalDetails.postal_code}
-                        name="postal_code"
-                        InputLabelProps={{ shrink: true }}
-                    />
-                    <TextField
-                        label="Country" 
-                        variant="outlined"
-                        onChange={handleChange}
-                        value={personalDetails.country}
-                        name="country"
-                        InputLabelProps={{ shrink: true }}
-                    />
                     </Box>
                     <div>
                         <button className="button" onClick={modifyDetails}>
@@ -342,12 +267,12 @@ export const Account = props => {
                 <Modal 
                     modalStyle='password-modal'
                     containerStyle='password-container'
-                    heading={`Enter ${authenticated ? 'new' : 'your'} password`}
+                    heading={`Enter new password`}
                     handleChange={handleChange}
-                    handleSubmit={manageAccount}
+                    handleSubmit={submitPassword}
                     display={passwordDisplay}
                     name='password'
-                    value={authenticated ? newPassword : password} 
+                    value={newPassword} 
                     type={passwordType}
                     placeholder='Password'
                     children={<i className={`${passwordType === 'text' ? 
