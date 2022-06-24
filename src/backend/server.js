@@ -12,7 +12,6 @@ const connection = mysql.createConnection({
     host: 'augeo-db1.cpkxs17rmhai.us-east-2.rds.amazonaws.com',
     user: 'admin',
     password: '',
-    database: 'database',
     port: 3306,
     database: 'AUGEO'
   });

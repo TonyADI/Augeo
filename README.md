@@ -1,5 +1,5 @@
 # Augeo
-The aim of the application is to allow users list products at any price which other users can then bid on. You can use test@test.com as the username and tester as the password to check out the application when the server is offline.
+The aim of the application is to allow users list products at any price which other users can then bid on.
 
 ## Live Demo
 <a href="https://tonyadi.com/Augeo/" target="_blank">Demo</a>
