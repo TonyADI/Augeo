@@ -17,7 +17,8 @@ export const Sell = () => {
 
     const retrieveCategories = () => {
         retrieveData('https://augeo-server.herokuapp.com/categories').then(data => {
-            setCategories(data)});
+        sessionStorage.setItem('categories', data ? JSON.stringify(data) : []);
+        setCategories(data)});
     }
 
     const createListing = e => {
@@ -40,6 +41,13 @@ export const Sell = () => {
             message: 'Initial ask must be lower than final ask and duration at least an hour.'});
         }
         e.preventDefault();
+    }
+
+    const filterCategories = (e, term) => {
+         e.preventDefault();
+         let filteredCategories = categories && categories.filter(category => 
+                                  category.name && category.name.toLowerCase().includes(term.toLowerCase()));
+         setCategories(filteredCategories.length ? filterCategories : categories);
     }
     
     const handleChange = e => {
@@ -95,12 +103,10 @@ export const Sell = () => {
     
     // Save categories to localstorage when api is called
     useEffect(() => {
-        sessionStorage.setItem('categories', categories ? JSON.stringify(categories) : []);
     }, [categories]);
 
     useEffect(() => {
         document.addEventListener('mousedown', handleDisplay);
-        retrieveCategories();
     }, [])
 
     return(
@@ -108,7 +114,8 @@ export const Sell = () => {
             <div>
                 <h1 id="searchbar-heading">What product are you trying to list</h1>
                 <div id="search-bar">
-                    <SearchBar />
+                    <SearchBar 
+                        handleSubmit={filterCategories}/>
                 </div>
             </div>
             <CategoryList 
