@@ -15,31 +15,15 @@ export const Browse = () => {
         })
     }
 
-    const retrieveProducts = name => {
-        retrieveData(`https://augeo-server.herokuapp.com/categories/${encodeURI(name)}/products`).then(data => {
-            setProducts(data)});
+    const retrieveProducts = (name, orderBy ='duration') => {
+        retrieveData(`https://augeo-server.herokuapp.com/categories/${encodeURI(name)}/products?orderBy=${orderBy}`)
+        .then(data => {setProducts(data)});
     }
 
     const handleClick = name => {
         setCategory(name);
         retrieveProducts(name);
     }
-
-    // Dummy Categories to show functionality
-    const dummyCategories = [
-        {   id: 1, 
-            name: 'iPhone 11', 
-            image_src: 'https://img.icons8.com/officel/344/iphone-x.png'
-        },
-        {   id: 2, 
-            name: 'HP Spectre x360', 
-            image_src: 'https://img.icons8.com/officel/344/laptop.png'
-        },
-        {   id: 3, 
-            name: 'G-Shock', 
-            image_src: 'https://img.icons8.com/officel/564/000000/apple-watch-apps.png'
-        }
-    ];
 
     // Initialize categories with localstorage if it exists or make api call.
     useEffect(() => {
@@ -58,9 +42,9 @@ export const Browse = () => {
         sessionStorage.setItem('categories', categories ? JSON.stringify(categories) : []);
     }, [categories]);
 
-    useEffect(() => {
-        retrieveCategories();
-    }, [])
+    const handleChange = e => {
+        retrieveProducts(category, e.target.value);
+    }
 
    return (
         <div className="browse-container">
@@ -71,20 +55,20 @@ export const Browse = () => {
                     </select>
                 </form>
                 <form className="sortBy-form">
-                    <select className="cursor-pointer" id="order-by" name="order-by">
+                    <select className="cursor-pointer" id="order-by" name="order-by" onChange={handleChange}>
                         <option value="duration">Duration</option>
                         <option value="current_ask">Current Ask</option>
-                        <option value="initial_price">Initial Ask</option>
+                        <option value="initial_ask">Initial Ask</option>
                         <option value="buy_now">Buy Now</option>
                     </select>
                 </form>
             </div>
             <div>
                 <h1>
-                    {!categories && 'Dummy'}  Categories
+                    Categories
                 </h1>
                 <CategoryList 
-                    categories={categories || dummyCategories} 
+                    categories={categories} 
                     handleClick={handleClick}
                 />
             </div>
