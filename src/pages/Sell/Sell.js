@@ -45,9 +45,21 @@ export const Sell = () => {
 
     const filterCategories = (e, term) => {
          e.preventDefault();
-         let filteredCategories = categories && categories.filter(category => 
-                                  category.name && category.name.toLowerCase().includes(term.toLowerCase()));
-         setCategories(filteredCategories.length ? filterCategories : categories);
+         const localCategories = sessionStorage.getItem('categories') && 
+                                 JSON.parse(sessionStorage.getItem('categories'));
+         const regTerm = new RegExp(`\\b${term}`, 'i');
+         let filteredCategories = localCategories && localCategories.filter(category => category.name && 
+                                  category.name.search(regTerm) !== -1);
+        //  setCategories(filteredCategories.length ? filteredCategories : localCategories);
+         if(filteredCategories && filteredCategories.length){
+            setCategories(filteredCategories)
+         }
+         else if(term){
+            setCategories([])
+         }
+         else{
+            setCategories(localCategories);
+         }
     }
     
     const handleChange = e => {
@@ -93,7 +105,7 @@ export const Sell = () => {
     useEffect(() => {
         const localCategories = sessionStorage.getItem('categories') && 
                                 JSON.parse(sessionStorage.getItem('categories'));
-        if(categories){
+        if(localCategories && localCategories.length){
             setCategories(localCategories);
         }
         else{
