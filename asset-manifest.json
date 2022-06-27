@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/Augeo/static/css/main.fb858918.css",
+    "main.css": "/Augeo/static/css/main.61144c57.css",
     "main.js": "/Augeo/static/js/main.a910c0e4.js",
     "static/js/377.b7793882.chunk.js": "/Augeo/static/js/377.b7793882.chunk.js",
     "static/media/image2.jfif": "/Augeo/static/media/image2.7e3029a7ae1ae104cb4b.jfif",
@@ -9,12 +9,12 @@
     "static/media/404.jpg": "/Augeo/static/media/404.a6b92039da88708a972a.jpg",
     "static/media/default-category.png": "/Augeo/static/media/default-category.d6a05a171a3d5d64ff4d.png",
     "index.html": "/Augeo/index.html",
-    "main.fb858918.css.map": "/Augeo/static/css/main.fb858918.css.map",
+    "main.61144c57.css.map": "/Augeo/static/css/main.61144c57.css.map",
     "main.a910c0e4.js.map": "/Augeo/static/js/main.a910c0e4.js.map",
     "377.b7793882.chunk.js.map": "/Augeo/static/js/377.b7793882.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.fb858918.css",
+    "static/css/main.61144c57.css",
     "static/js/main.a910c0e4.js"
   ]
 }
