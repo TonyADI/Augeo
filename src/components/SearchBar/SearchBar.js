@@ -6,7 +6,12 @@ export const SearchBar = ({handleSubmit}) => {
     const [focus, setFocus] = useState(false);
 
     const handleChange = e => {
-        setSearchTerm(e.target.value)
+        setSearchTerm(e.target.value);
+        handleSubmit(e, e.target.value);
+    }
+
+    const handleFormSubmit = e => {
+        handleSubmit(e, searchTerm);
     }
     
     return (
@@ -15,7 +20,7 @@ export const SearchBar = ({handleSubmit}) => {
                         '0px 0px 1px 1px #007bff': 
                         '0px 0px 1px 1px #e5e5e5'
                   }}>
-            <form onSubmit={e => handleSubmit(e, searchTerm)}>
+            <form onSubmit={handleFormSubmit}>
                 <i className="fa fa-search search-icon"/>
                     <input 
                         id="search-field" 
