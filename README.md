@@ -35,7 +35,7 @@ The aim of the application is to allow users list products at any price which ot
 - [ ] Ability to send messages between the seller and the buyer of the product.
 - [ ] Archive a listing if it has no current bids or if it has been purchased.
 - [ ] Delete expired bid records upon the users request.
-- [x] Search functionality for a product list and categories.
+- [x] Search functionality for products and categories.
 - [ ] A minimum and maximum constraint to be placed on the product prices.
 - [x] Ability to reset password.
 - [ ] Internal currency system.
