@@ -14,29 +14,30 @@ The aim of the application is to allow users list products at any price which ot
     - Most popular works by selecting the category with the most sales.
     - Trending works by selecting the category with the most bids in the latest 30 bid records.
     - Lastest category selects products from the newest category.
-    - Recent Bids selects the latest 15 products that were bid on. I am considering increasing it from 15 to 30.
+    - Recent Bids selects the latest 15 products that were bid on.
 - Browse Page
-  - Users can browse products based on their categories. Upon entering the page the user is greeted by the categories and when clicked on, all products in that category are fetched and displayed. If a user is not logged in then all products are fetched, if a user is logged in then products they listed are not fetched. 
+  - Users can browse products based on their categories. Upon entering the page the user is greeted by the categories and when clicked on, all products in that category are fetched and displayed. If a user is not logged in then all products are fetched, if a user is logged in then products they listed are not fetched. Users can sort by duration, current ask, final ask, and initial ask.
  
 - Sell Page
-  - This page consists of a search bar, which can be used to search for categories, as well as the most popular categories right under it. Clicking on one of these categories brings up a form which the user has to fill. The form contains a sample view of how the product will look when listed and is updated when the form is updated as well. The initial ask, final ask and duration all have to be set and be valid before the form can be submitted.
+  - This page consists of a search bar, which can be used to search for categories, as well as the most popular categories right under it. Clicking on one of these categories brings up a form which the user has to fill. The form contains a sample view of how the product will look when listed. The initial ask, final ask and duration all have to be set and be valid before the form can be submitted.
  
 - Account Page
-  -  The account page houses all the current users bids, listings and purchases/bids won. It also contains their personal information which they can update as well as an option to delete their account. 
+  -  The account page houses all the users bids, listings, and purchases/bids won. It also contains their personal information which they can update as well as an option to delete their account. 
 
 - Products
   -  Every product has an image which is the category image, duration which actively counts down, current ask which is updated as bids are made, and an initial ask and final ask. Before a bid is submitted it must be higher than the current bid and not higher than the final ask. If a user places a bid with the same value as the final ask they win the product outright. The products have a timeout function which works by assigning the product to the user with the highest bid when the duration expires. Expired products or products that have been bought are not displayed to users in the home and browse page.
 
+- Forgot | Reset Password
+  - Users can request to reset their password by clicking the forgot password link and entering their email. An email containing a random 4 digit code and 8 random characters encoded in the url query is sent to the user. On the reset password page the user enters the 4 digit code and their new password then in the backend the server matches the 4 digit code and encypted query to the user and sets the password if there is a match.
 
 ## Future Features
 - [ ] New categories can be added but they would need to be authorized first.
-- [x] An address table will be added as well as an address form in the account page.
 - [ ] Ability to send messages between the seller and the buyer of the product.
 - [ ] Archive a listing if it has no current bids or if it has been purchased.
 - [ ] Delete expired bid records upon the users request.
-- [ ] A robust search functionality for a product list.
+- [x] Search functionality for products and categories.
 - [ ] A minimum and maximum constraint to be placed on the product prices.
-- [ ] Ability to reset password.
+- [x] Ability to reset password.
 - [ ] Internal currency system.
 
 ## ERD Image
@@ -46,7 +47,7 @@ The aim of the application is to allow users list products at any price which ot
 ### Category Endpoints
 <b>Request</b>
 <br>
-GET https://tonyadi.loca.lt/categories
+GET https://augeo-server.herokuapp.com/categories
 <br>
 <table>
   <tr>
@@ -62,7 +63,7 @@ GET https://tonyadi.loca.lt/categories
 </table>
 <b>Request</b>
 <br>
-GET https://tonyadi.loca.lt/categories/:category/products
+GET https://augeo-server.herokuapp.com/categories/:category/products
 <br>
 <table>
   <tr>
@@ -80,11 +81,11 @@ GET https://tonyadi.loca.lt/categories/:category/products
 ### Product Endpoints
 <b>Request</b>
 <br>
-POST https://tonyadi.loca.lt/products
+POST https://augeo-server.herokuapp.com/products
 <br>
 <b>Request</b>
 <br>
-GET https://tonyadi.loca.lt/products
+GET https://augeo-server.herokuapp.com/products
 <br>
 <b>Parameters in query</b>
 <table>
@@ -104,11 +105,11 @@ GET https://tonyadi.loca.lt/products
 ### Users Endpoints
 <b>Request</b>
 <br>
-POST https://tonyadi.loca.lt/users
+POST https://augeo-server.herokuapp.com/users
 <br>
 <b>Request</b>
 <br>
-GET https://tonyadi.loca.lt/users/products
+GET https://augeo-server.herokuapp.com/users/products
 <br>
 <b>Paramters in query</b>
 <table>
@@ -128,7 +129,7 @@ GET https://tonyadi.loca.lt/users/products
 
 <b>Request</b>
 <br>
-GET https://tonyadi.loca.lt/users/details
+GET https://augeo-server.herokuapp.com/users/details
 <br>
 <table>
   <tr>
@@ -144,11 +145,8 @@ GET https://tonyadi.loca.lt/users/details
 </table>
 
 ## Installation
-The project is currently live at https://tonyadi.com/augeo/ or clone it to your machine using `git clone https://github.com/TonyADI/Augeo.git`.
+The project is currently live at https://tonyadi.com/Augeo/ or clone it to your machine using `git clone https://github.com/TonyADI/Augeo.git`.
 ## Instructions
-- Dummy account for testing purposes
-  - Email: test@test.com
-  - Password: tester
 - Frontend
   - `npm install` to install dependencies.
   - `npm start` to run the application.
@@ -162,5 +160,3 @@ The app was a learning experience and a place to hone my skills as well as bring
 ## ToDo
 - [ ] Add cookie policy page.
 - [ ] Complete Api Documentation.
-- [x] Optimize for mobile.
-- [ ] Implement Redux State Management.
